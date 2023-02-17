@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 
 class SerieController extends Controller
@@ -14,7 +15,15 @@ class SerieController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Series/Index');
+        $language = 'es-mx';
+        // Inertia::share('tmdbUrl', config('services.tmdb.url'));
+        // Inertia::share('tmdbToken', config('services.tmdb.token'));
+
+        $trendingTv = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/trending/tv/week', ['language' => $language])
+            ->json()['results'];
+
+        return Inertia::render('Series/Index', ['trendingTv' => $trendingTv]);
     }
 
     /**
