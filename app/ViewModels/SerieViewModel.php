@@ -43,9 +43,7 @@ class SerieViewModel extends ViewModel
 
     public function genres()
     {
-        return collect($this->genres)->mapWithKeys(function ($genre) {
-            return [$genre['id'] => $genre['name']];
-        });
+        return collect($this->genres);
     }
 
     private function formatTv($tv)

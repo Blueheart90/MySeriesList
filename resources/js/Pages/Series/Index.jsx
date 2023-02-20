@@ -2,11 +2,30 @@ import AppLayout from "@/Layouts/AppLayout";
 import { usePage } from "@inertiajs/react";
 import MyTabs from "@/Components/MyTabs";
 import Carousel from "@/Components/Carousel";
+import CardList from "@/Components/CardList";
+import Tags from "@/Components/Tags";
 
 const Index = ({ auth }) => {
-    const { genres, onAirTV, popularTv, topRatedTv, trendingTv } =
+    const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
         usePage().props.data;
-    console.log(trendingTv);
+    console.log(genres);
+    const tabs = [
+        {
+            id: 1,
+            label: "Populares",
+            Component: <CardList data={popularTv} />,
+        },
+        {
+            id: 2,
+            label: "Al Aire",
+            Component: <CardList data={onAirTv} />,
+        },
+        {
+            id: 3,
+            label: "Categorias",
+            Component: <Tags tags={genres} />,
+        },
+    ];
     return (
         <AppLayout auth={auth}>
             <div className="container py-20 mx-auto ">
@@ -19,7 +38,7 @@ const Index = ({ auth }) => {
                 </section>
                 <div className="grid grid-cols-4 gap-4 mt-10 ">
                     <section className="col-span-3 ">
-                        <MyTabs />
+                        <MyTabs tabs={tabs} />
                     </section>
                     <aside className="bg-red-500 ">dfdfdfg</aside>
                 </div>
