@@ -22,7 +22,7 @@ module.exports = {
                 light: "#f2f4fa",
             },
             fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                sans: ["Open sans", ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 "hero-welcome": "url('../storage/img/man-watching-his-tv.jpg')",

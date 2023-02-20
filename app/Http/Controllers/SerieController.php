@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\Client\Pool;
+use App\ViewModels\SerieViewModel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
+
 
 class SerieController extends Controller
 {
@@ -16,14 +20,33 @@ class SerieController extends Controller
     public function index()
     {
         $language = 'es-mx';
+        $tmdbToken = config('services.tmdb.token');
+        $tmdbUrl = config('services.tmdb.url');
+
         // Inertia::share('tmdbUrl', config('services.tmdb.url'));
         // Inertia::share('tmdbToken', config('services.tmdb.token'));
 
-        $trendingTv = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/trending/tv/week', ['language' => $language])
-            ->json()['results'];
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->as('trendingTv')->withToken($tmdbToken)
+                ->get("{$tmdbUrl}/trending/tv/week", ['language' => $language]),
+            $pool->as('popularTv')->withToken($tmdbToken)
+                ->get("{$tmdbUrl}/tv/popular", ['language' => $language]),
+            $pool->as('onAirTv')->withToken($tmdbToken)
+                ->get("{$tmdbUrl}/tv/on_the_air", ['language' => $language]),
+            $pool->as('topRatedTv')->withToken($tmdbToken)
+                ->get("{$tmdbUrl}/tv/top_rated", ['language' => $language]),
+            $pool->as('genres')->withToken($tmdbToken)
+                ->get("{$tmdbUrl}/genre/tv/list", ['language' => $language]),
 
-        return Inertia::render('Series/Index', ['trendingTv' => $trendingTv]);
+        ]);
+
+        $mapped = Arr::map($responses, function ($value, $key) {
+            return $key === "genres" ? $value->json()['genres'] : $value->json()['results'];
+        });
+
+        $viewModel = new SerieViewModel($mapped);
+
+        return Inertia::render('Series/Index', ['data' => $viewModel]);
     }
 
     /**

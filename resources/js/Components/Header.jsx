@@ -7,7 +7,7 @@ import NavLink from "@/Components/NavLink";
 
 const Header = ({ auth }) => {
     return (
-        <header className="sticky top-0 flex items-center w-screen px-4 py-2 transition-all duration-500 sm:px-10 bg-secundary h-14">
+        <header className="sticky top-0 flex items-center w-screen px-4 py-2 transition-all duration-500 sm:px-10 bg-primary h-14">
             <nav
                 id="header"
                 className="flex flex-wrap items-center justify-between w-full mx-auto mt-0 "
