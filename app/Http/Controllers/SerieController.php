@@ -14,6 +14,28 @@ use Illuminate\Http\RedirectResponse;
 
 class SerieController extends Controller
 {
+    private $language;
+    private $tmdbToken;
+    private $tmdbUrl;
+
+    public function __construct()
+    {
+        $this->language = 'es-mx';
+        $this->tmdbToken = config('services.tmdb.token');
+        $this->tmdbUrl = config('services.tmdb.url');
+    }
+
+    public function genresFilter(string $ids)
+    {
+
+        $filteredTv = Http::withToken($this->tmdbToken)
+            ->get("{$this->tmdbUrl}/discover/tv", ['language' => $this->language, 'with_genres' => $ids])
+            ->json()['results'];
+
+        return SerieViewModel::formatTv($filteredTv);
+    }
+
+
     /**
      * Display a listing of the resource.
      */

@@ -16,8 +16,8 @@ const Carousel = ({ data }) => {
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
             }}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
+            // onSlideChange={() => console.log("slide change")}
+            // onSwiper={(swiper) => console.log(swiper)}
             breakpoints={{
                 // when window width is >= 400px
                 350: {
