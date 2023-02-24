@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const Carousel = ({ data }) => {
+    const { results } = data;
     return (
         <Swiper
             modules={[A11y, Autoplay]}
@@ -41,7 +42,7 @@ const Carousel = ({ data }) => {
                 },
             }}
         >
-            {data.map((slide) => (
+            {results.map((slide) => (
                 <SwiperSlide key={slide.id}>
                     <SerieCard serie={slide} />
                 </SwiperSlide>

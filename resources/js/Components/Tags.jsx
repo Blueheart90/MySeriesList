@@ -6,21 +6,32 @@ import CardList from "./CardList";
 const Tags = ({ tags }) => {
     const [filterGenres, setFilterGenres] = useState([]);
     const [filterData, setFilterData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         // convierte array a string separado por comas (,)
         const stringGenre = filterGenres.join();
+
+        // si tiene algo el string hace la peticion
         if (stringGenre) {
-            axios.get(route("series.genres", stringGenre)).then((res) => {
-                console.log(res);
-                setFilterData(res.data);
-            });
+            axios
+                .get(
+                    route("series.genres", {
+                        ids: stringGenre,
+                        page: currentPage,
+                    })
+                )
+                .then((res) => {
+                    setFilterData(res.data);
+                });
         } else {
             setFilterData([]);
         }
-    }, [filterGenres]);
+    }, [filterGenres, currentPage]);
 
     const handlerFilter = (genreId) => {
+        setCurrentPage(1);
+        // Si existe el genre se elimina del array, del lo contrario se agrega
         if (filterGenres.includes(genreId)) {
             const updatedGenres = filterGenres.filter(
                 (genre) => genre != genreId
@@ -47,7 +58,14 @@ const Tags = ({ tags }) => {
                     </span>
                 ))}
             </div>
-            {filterData && <CardList data={filterData} />}
+            {filterData && (
+                <CardList
+                    data={filterData}
+                    pagination={true}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            )}
         </>
     );
 };

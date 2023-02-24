@@ -8,7 +8,6 @@ import Tags from "@/Components/Tags";
 const Index = ({ auth }) => {
     const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
         usePage().props.data;
-    console.log(usePage().props.data);
     const tabs = [
         {
             id: 1,

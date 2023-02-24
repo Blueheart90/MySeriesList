@@ -50,13 +50,14 @@ class SerieViewModel extends ViewModel
         return collect($this->genres);
     }
 
-
     public static function formatTv($tv)
     {
-        return collect($tv)->map(function ($tvshow) {
+
+
+        $tv['results'] = collect($tv['results'])->map(function ($tvshow) {
             return collect($tvshow)->merge([
                 'poster_path' => 'https://www.themoviedb.org/t/p/w440_and_h660_face' . $tvshow['poster_path'],
-                'poster_thumbnail' => 'https://www.themoviedb.org/t/p/w185' . $tvshow['poster_path'],
+                'poster_thumbnail' => 'https://www.themoviedb.org/t/p/w220_and_h330_face' . $tvshow['poster_path'],
                 'vote_average' => $tvshow['vote_average'] * 10 . '%',
                 'first_air_date' => array_key_exists('first_air_date', $tvshow) ? Carbon::parse($tvshow['first_air_date'])->format('M d, Y') : 'n/a',
                 'year' => array_key_exists('first_air_date', $tvshow) ? Carbon::parse($tvshow['first_air_date'])->format('Y') : "n/a",
@@ -65,5 +66,8 @@ class SerieViewModel extends ViewModel
                 'poster_path', 'poster_thumbnail', 'id', 'genre_ids', 'name', 'vote_average', 'overview', 'first_air_date', 'year', 'slug',
             ]);
         });
+
+        Log::debug($tv);
+        return $tv;
     }
 }

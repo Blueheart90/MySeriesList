@@ -25,12 +25,12 @@ class SerieController extends Controller
         $this->tmdbUrl = config('services.tmdb.url');
     }
 
-    public function genresFilter(string $ids)
+    public function genresFilter(string $ids, $page = null)
     {
 
         $filteredTv = Http::withToken($this->tmdbToken)
-            ->get("{$this->tmdbUrl}/discover/tv", ['language' => $this->language, 'with_genres' => $ids])
-            ->json()['results'];
+            ->get("{$this->tmdbUrl}/discover/tv", ['language' => $this->language, 'with_genres' => $ids, 'page' => $page])
+            ->json();
 
         return SerieViewModel::formatTv($filteredTv);
     }
@@ -63,7 +63,7 @@ class SerieController extends Controller
         ]);
 
         $mapped = Arr::map($responses, function ($value, $key) {
-            return $key === "genres" ? $value->json()['genres'] : $value->json()['results'];
+            return $key === "genres" ? $value->json()['genres'] : $value->json();
         });
 
         $viewModel = new SerieViewModel($mapped);
