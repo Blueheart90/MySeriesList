@@ -7,10 +7,12 @@ const SearchFilter = () => {
     const [searchValue, setSearchValue] = useState("");
     const [filterData, setFilterData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // si tiene algo el string hace la peticion
         if (searchValue) {
+            setIsLoading(true);
             axios
                 .get(
                     route("series.search", {
@@ -20,6 +22,7 @@ const SearchFilter = () => {
                 )
                 .then((res) => {
                     setFilterData(res.data);
+                    setIsLoading(false);
                 });
         } else {
             setFilterData([]);
@@ -29,6 +32,7 @@ const SearchFilter = () => {
     const debouncedRequest = useDebounce(() => {
         // send request to the backend
         if (searchValue) {
+            setIsLoading(true);
             axios
                 .get(
                     route("series.search", {
@@ -38,6 +42,7 @@ const SearchFilter = () => {
                 )
                 .then((res) => {
                     setFilterData(res.data);
+                    setIsLoading(false);
                 });
         } else {
             setFilterData([]);
@@ -68,17 +73,13 @@ const SearchFilter = () => {
                 </div>
             </div>
             {filterData && (
-                <>
-                    <h2 className="mb-10 text-2xl text-center text-light">
-                        Resultados
-                    </h2>
-                    <CardList
-                        data={filterData}
-                        pagination={true}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                    />
-                </>
+                <CardList
+                    data={filterData}
+                    pagination={true}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    isLoading={isLoading}
+                />
             )}
         </>
     );

@@ -7,6 +7,7 @@ const Tags = ({ tags }) => {
     const [filterGenres, setFilterGenres] = useState([]);
     const [filterData, setFilterData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // convierte array a string separado por comas (,)
@@ -14,6 +15,7 @@ const Tags = ({ tags }) => {
 
         // si tiene algo el string hace la peticion
         if (stringGenre) {
+            setIsLoading(true);
             axios
                 .get(
                     route("series.genres", {
@@ -23,6 +25,8 @@ const Tags = ({ tags }) => {
                 )
                 .then((res) => {
                     setFilterData(res.data);
+                    setIsLoading(false);
+                    console.log(filterData);
                 });
         } else {
             setFilterData([]);
@@ -64,6 +68,7 @@ const Tags = ({ tags }) => {
                     pagination={true}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
+                    isLoading={isLoading}
                 />
             )}
         </>
