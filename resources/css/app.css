@@ -4,3 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
+/* input[type="search"]:focus ~ .icon-lupa {
+    @apply right-0;
+} */

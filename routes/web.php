@@ -39,6 +39,12 @@ Route::middleware('auth')->group(function () {
 // Series
 Route::resource('series', SerieController::class);
 Route::get('/series/filter/genres/{ids}/{page}', [SerieController::class, 'genresFilter'])->name('series.genres');
+Route::get('/series/filter/search', [SerieController::class, 'searchFilter'])->name('series.search');
+
+
+
+Route::get('/test', [SerieController::class, 'test'])->name('series.test');
+
 
 
 require __DIR__ . '/auth.php';

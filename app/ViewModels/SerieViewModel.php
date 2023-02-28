@@ -52,12 +52,10 @@ class SerieViewModel extends ViewModel
 
     public static function formatTv($tv)
     {
-
-
         $tv['results'] = collect($tv['results'])->map(function ($tvshow) {
             return collect($tvshow)->merge([
-                'poster_path' => 'https://www.themoviedb.org/t/p/w440_and_h660_face' . $tvshow['poster_path'],
-                'poster_thumbnail' => 'https://www.themoviedb.org/t/p/w220_and_h330_face' . $tvshow['poster_path'],
+                'poster_path' => $tvshow['poster_path'] ? 'https://www.themoviedb.org/t/p/w440_and_h660_face' . $tvshow['poster_path'] : 'https://dummyimage.com/440x660/20234f/7cdb29&text=No+Image',
+                'poster_thumbnail' => $tvshow['poster_path'] ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' . $tvshow['poster_path'] : 'https://dummyimage.com/220x330/20234f/7cdb29&text=No+Image',
                 'vote_average' => $tvshow['vote_average'] * 10 . '%',
                 'first_air_date' => array_key_exists('first_air_date', $tvshow) ? Carbon::parse($tvshow['first_air_date'])->format('M d, Y') : 'n/a',
                 'year' => array_key_exists('first_air_date', $tvshow) ? Carbon::parse($tvshow['first_air_date'])->format('Y') : "n/a",

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\Client\Pool;
 use App\ViewModels\SerieViewModel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 
 
 class SerieController extends Controller
@@ -25,6 +27,18 @@ class SerieController extends Controller
         $this->tmdbUrl = config('services.tmdb.url');
     }
 
+
+    public function test()
+    {
+        $params = Arr::add(Request::only('query', 'page'), 'language', $this->language);
+        $res = Http::withToken($this->tmdbToken)
+            ->get("{$this->tmdbUrl}/search/tv", $params)
+            ->json();
+
+        $format = SerieViewModel::formatTv($res);
+        Log::debug($format);
+    }
+
     public function genresFilter(string $ids, $page = null)
     {
 
@@ -33,6 +47,17 @@ class SerieController extends Controller
             ->json();
 
         return SerieViewModel::formatTv($filteredTv);
+    }
+
+    public function searchFilter()
+    {
+        $params = Arr::add(Request::only('query', 'page'), 'language', $this->language);
+        $res = Http::withToken($this->tmdbToken)
+            ->get("{$this->tmdbUrl}/search/tv", $params)
+            ->json();
+
+
+        return SerieViewModel::formatTv($res);
     }
 
 

@@ -4,6 +4,7 @@ import MyTabs from "@/Components/MyTabs";
 import Carousel from "@/Components/Carousel";
 import CardList from "@/Components/CardList";
 import Tags from "@/Components/Tags";
+import SearchFilter from "@/Components/SearchFilter";
 
 const Index = ({ auth }) => {
     const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
@@ -23,6 +24,11 @@ const Index = ({ auth }) => {
             id: 3,
             label: "Categorias",
             Component: <Tags tags={genres} />,
+        },
+        {
+            id: 4,
+            label: "Busqueda",
+            Component: <SearchFilter />,
         },
     ];
     return (
