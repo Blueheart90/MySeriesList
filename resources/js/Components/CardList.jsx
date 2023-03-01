@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Pagination from "./Pagination";
 import SerieCard from "./serieCard";
 import { TailSpin } from "react-loader-spinner";
@@ -34,20 +33,19 @@ const CardList = ({
                             ))}
                         </div>
                     ) : (
-                        <p className="text-2xl text-center text-light">
+                        <p className="text-2xl font-semibold text-center text-light">
                             No hay coincidencias
                         </p>
                     )}
-
-                    {pagination && results?.length ? (
-                        <Pagination
-                            totalPages={total_pages}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    ) : null}
                 </>
             )}
+            {pagination && results?.length ? (
+                <Pagination
+                    totalPages={total_pages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            ) : null}
         </>
     );
 };

@@ -26,7 +26,6 @@ const Tags = ({ tags }) => {
                 .then((res) => {
                     setFilterData(res.data);
                     setIsLoading(false);
-                    console.log(filterData);
                 });
         } else {
             setFilterData([]);

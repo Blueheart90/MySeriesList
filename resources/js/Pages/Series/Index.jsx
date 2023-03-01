@@ -5,6 +5,7 @@ import Carousel from "@/Components/Carousel";
 import CardList from "@/Components/CardList";
 import Tags from "@/Components/Tags";
 import SearchFilter from "@/Components/SearchFilter";
+import CardListAside from "@/Components/CardListAside";
 
 const Index = ({ auth }) => {
     const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
@@ -45,7 +46,10 @@ const Index = ({ auth }) => {
                     <section className="col-span-3 ">
                         <MyTabs tabs={tabs} />
                     </section>
-                    <aside className="bg-red-500 ">dfdfdfg</aside>
+                    <CardListAside
+                        title={"Mejor calificadas"}
+                        data={topRatedTv}
+                    />
                 </div>
             </div>
         </AppLayout>
