@@ -37,9 +37,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // Series
-Route::resource('series', SerieController::class);
-Route::get('/series/filter/genres/{ids}/{page}', [SerieController::class, 'genresFilter'])->name('series.genres');
-Route::get('/series/filter/search', [SerieController::class, 'searchFilter'])->name('series.search');
+// Route::resource('series', SerieController::class);
+Route::get('/series', [SerieController::class, 'index'])->name('series.index');
+Route::get('/series/{id}/{slug?}', [SerieController::class, 'show'])->name('serie.show');
+Route::get('/filter/series/genres', [SerieController::class, 'genresFilter'])->name('series.genres');
+Route::get('/filter/series/search', [SerieController::class, 'searchFilter'])->name('series.search');
 
 
 

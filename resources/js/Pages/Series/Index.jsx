@@ -1,5 +1,6 @@
 import AppLayout from "@/Layouts/AppLayout";
 import { usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import MyTabs from "@/Components/MyTabs";
 import Carousel from "@/Components/Carousel";
 import CardList from "@/Components/CardList";
@@ -34,6 +35,13 @@ const Index = ({ auth }) => {
     ];
     return (
         <AppLayout auth={auth}>
+            <Head>
+                <title>Series</title>
+                <meta
+                    name="description"
+                    content="Pagina principal con las series mas poulares de la semana, ultimos lanzamientos, filtradas por categorias"
+                />
+            </Head>
             <div className="container py-20 mx-auto ">
                 <section>
                     <h1 className="text-4xl font-bold text-white">Series</h1>

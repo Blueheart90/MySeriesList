@@ -65,7 +65,6 @@ class SerieViewModel extends ViewModel
             ]);
         });
 
-        Log::debug($tv);
         return $tv;
     }
 }

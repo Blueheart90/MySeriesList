@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use Illuminate\Support\Arr;
+use App\Models\Score;
 // use Illuminate\Http\Request;
+use App\Models\TvList;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Response;
 use Illuminate\Http\Client\Pool;
 use App\ViewModels\SerieViewModel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
+use App\ViewModels\SerieShowViewModel;
 use Illuminate\Support\Facades\Request;
 use App\Exceptions\ApiResourceNotFoundException;
-
 
 class SerieController extends Controller
 {
@@ -37,14 +40,14 @@ class SerieController extends Controller
             ->json();
 
         $format = SerieViewModel::formatTv($res);
-        Log::debug($format);
+        // Log::debug($format);
     }
 
-    public function genresFilter(string $ids, $page = null)
+    public function genresFilter()
     {
-
+        $params = Arr::add(Request::only('with_genres', 'page'), 'language', $this->language);
         $filteredTv = Http::withToken($this->tmdbToken)
-            ->get("{$this->tmdbUrl}/discover/tv", ['language' => $this->language, 'with_genres' => $ids, 'page' => $page])
+            ->get("{$this->tmdbUrl}/discover/tv", $params)
             ->json();
 
         return SerieViewModel::formatTv($filteredTv);
@@ -53,6 +56,7 @@ class SerieController extends Controller
     public function searchFilter()
     {
         $params = Arr::add(Request::only('query', 'page'), 'language', $this->language);
+        Log::debug($params);
         $res = Http::withToken($this->tmdbToken)
             ->get("{$this->tmdbUrl}/search/tv", $params)
             ->json();
@@ -115,48 +119,46 @@ class SerieController extends Controller
      */
     public function show(string $id)
     {
-        // // Params
-        // $imageLanguage = 'en,es,null';
-        // $appendResponse = 'credits,videos,images';
+        // Params
+        $imageLanguage = 'en,es,null';
+        $appendResponse = 'credits,videos,images';
 
-        // try {
-        //     // Detalles de la Serie
-        //     $tvShowDetails = Http::withToken(config('services.tmdb.token'))
-        //         ->get("{$this->tmdbUrl}/trending/tv/{$id}", ['language' => $this->language, 'append_to_response' => $appendResponse, 'include_image_language' => $imageLanguage])
-        //         ->json();
+        try {
+            // Detalles de la Serie
+            $tvShowDetails = Http::withToken($this->tmdbToken)
+                ->get("{$this->tmdbUrl}/tv/{$id}", ['language' => $this->language, 'append_to_response' => $appendResponse, 'include_image_language' => $imageLanguage])
+                ->json();
 
-        //     if (array_key_exists('success', $tvShowDetails)) {
+            if (array_key_exists('success', $tvShowDetails)) {
 
-        //         throw new ApiResourceNotFoundException('El recurso no esta disponible en la api');
-        //     }
-        // } catch (ApiResourceNotFoundException $e) {
-        //     session()->flash('message', $e->getMessage());
-        //     return view('users.notfound');
-        // }
+                throw new ApiResourceNotFoundException('El recurso no esta disponible en la api', 404);
+            }
+        } catch (ApiResourceNotFoundException $e) {
+            session()->flash('message', $e->getMessage());
+            return view('users.notfound');
+        }
 
-        // // ** Se comprueba si el user ya agregó la serie
-        // // $tvCheck = TvList::where([['api_id', $serie],['user_id', Auth::id()]])->exists();
+        // ** Se comprueba si el user ya agregó la serie
+        // $tvCheck = TvList::where([['api_id', $serie],['user_id', Auth::id()]])->exists();
 
-        // // ** Se obtiene el registro de la serie agregada por el User
-        // $tvCheck = TvList::where([['api_id', $serie], ['user_id', Auth::id()]])->first();
+        // ** Se obtiene el registro de la serie agregada por el User
+        $tvCheck = TvList::where([['api_id', $id], ['user_id', Auth::id()]])->first();
 
-        // // ** Se obtiene los estados. ej viendo, en plan para ver , etc..
-        // // $stateWatchingList = WatchingState::all(['id','name']);
+        // ** Se obtiene los estados. ej viendo, en plan para ver , etc..
+        // $stateWatchingList = WatchingState::all(['id','name']);
 
-        // // ** Se obtiene la escala de puntaje 1 a 10
-        // $scoreList = Score::all(['id', 'name']);
+        // ** Se obtiene la escala de puntaje 1 a 10
+        $scoreList = Score::all(['id', 'name']);
 
-        // $viewModel = new TvShowViewModel(
-        //     $tvShowDetails,
-        //     $tvCheck,
-        //     // $stateWatchingList,
-        //     $scoreList
-        // );
+        $viewModel = new SerieShowViewModel(
+            $tvShowDetails,
+            $tvCheck,
+            $scoreList
+        );
 
+        return Inertia::render('Series/Show', ['data' => $viewModel]);
 
-        // return view('series.show', $viewModel);
-
-        throw new ApiResourceNotFoundException('El recurso no esta disponible en la api', 600);
+        // Log::debug($tvShowDetails);
     }
 
     /**

@@ -19,7 +19,7 @@ const Tags = ({ tags }) => {
             axios
                 .get(
                     route("series.genres", {
-                        ids: stringGenre,
+                        with_genres: stringGenre,
                         page: currentPage,
                     })
                 )

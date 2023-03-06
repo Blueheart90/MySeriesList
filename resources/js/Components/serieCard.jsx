@@ -1,11 +1,12 @@
 import React from "react";
 
 const SerieCard = ({ serie }) => {
+    console.log(serie);
     return (
         <figure
             className={` relative rounded-md overflow-hidden border-2 border-kiwi group  `}
         >
-            <a href="#">
+            <a href={route("serie.show", { id: serie.id, slug: serie.slug })}>
                 <img
                     src={serie.poster_thumbnail}
                     alt="poster"

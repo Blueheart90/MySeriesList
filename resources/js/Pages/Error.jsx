@@ -1,6 +1,7 @@
 import GlitchText from "@/Components/GlitchText";
 import TvFrame from "@/Components/TvFrame";
 import AppLayout from "@/Layouts/AppLayout";
+import { Head } from "@inertiajs/react";
 
 // import { usePage } from '@inertiajs/inertia-react';
 
@@ -23,6 +24,13 @@ export default ({ status, auth }) => {
 
     return (
         <AppLayout className="my-auto " auth={auth}>
+            <Head>
+                <title>Pagina de error</title>
+                <meta
+                    name="description"
+                    content="Pagina con información sobre un error"
+                />
+            </Head>
             <div className="flex items-center justify-center bg-primary">
                 <div className="flex flex-col items-center text-light">
                     <TvFrame>
