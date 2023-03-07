@@ -7,6 +7,7 @@ use App\Models\Score;
 // use Illuminate\Http\Request;
 use App\Models\TvList;
 use Illuminate\Support\Arr;
+use App\Models\WatchingState;
 use Illuminate\Http\Response;
 use Illuminate\Http\Client\Pool;
 use App\ViewModels\SerieViewModel;
@@ -31,17 +32,6 @@ class SerieController extends Controller
         $this->tmdbUrl = config('services.tmdb.url');
     }
 
-
-    public function test()
-    {
-        $params = Arr::add(Request::only('query', 'page'), 'language', $this->language);
-        $res = Http::withToken($this->tmdbToken)
-            ->get("{$this->tmdbUrl}/search/tv", $params)
-            ->json();
-
-        $format = SerieViewModel::formatTv($res);
-        // Log::debug($format);
-    }
 
     public function genresFilter()
     {
@@ -98,21 +88,6 @@ class SerieController extends Controller
         return Inertia::render('Series/Index', ['data' => $viewModel]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -145,7 +120,7 @@ class SerieController extends Controller
         $tvCheck = TvList::where([['api_id', $id], ['user_id', Auth::id()]])->first();
 
         // ** Se obtiene los estados. ej viendo, en plan para ver , etc..
-        // $stateWatchingList = WatchingState::all(['id','name']);
+        $stateWatchingList = WatchingState::all(['id', 'name']);
 
         // ** Se obtiene la escala de puntaje 1 a 10
         $scoreList = Score::all(['id', 'name']);
@@ -153,35 +128,12 @@ class SerieController extends Controller
         $viewModel = new SerieShowViewModel(
             $tvShowDetails,
             $tvCheck,
-            $scoreList
+            $scoreList,
+            $stateWatchingList
         );
 
         return Inertia::render('Series/Show', ['data' => $viewModel]);
 
         // Log::debug($tvShowDetails);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): Response
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): RedirectResponse
-    {
-        //
     }
 }

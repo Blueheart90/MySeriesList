@@ -11,16 +11,17 @@ class SerieShowViewModel extends ViewModel
 {
     public $tvshow;
     public $tvCheck;
-    // public $stateWatchingList;
+    public $stateWatchingList;
     public $scoreList;
     public $editMode;
 
     // Se retiró $stateWatchingList del contructor, ya que se obtiene en el componente del dropDownform o el de livewire
-    public function __construct($tvshow, $tvCheck, $scoreList)
+    public function __construct($tvshow, $tvCheck, $scoreList, $stateWatchingList)
     {
         $this->tvshow = $tvshow;
         $this->tvCheck = $tvCheck;
         $this->scoreList = $scoreList;
+        $this->stateWatchingList = $stateWatchingList;
         $this->editMode = isset($this->tvCheck) ? true : false;
     }
 
@@ -40,18 +41,18 @@ class SerieShowViewModel extends ViewModel
         // return Http::get('https://flagcdn.com/en/codes.json')
         // ->json()[$nameCode];
 
-        $response = Http::get('https://restcountries.com/v2/alpha/' . $codeNameCountry)
-            ->json();
+        // $response = Http::get('https://restcountries.com/v2/alpha/' . $codeNameCountry)
+        //     ->json();
 
-        return collect($response)->merge([
-            'language' => $response['languages'][0]['name'],
-            // 'flag' => $response['flags'][0],
-        ])->only(['name', 'language', 'flag']);
+        // return collect($response)->merge([
+        //     'language' => $response['languages'][0]['name'],
+        //     // 'flag' => $response['flags'][0],
+        // ])->only(['name', 'language', 'flag']);
     }
 
     public function info()
     {
-        if ($this->tvshow['origin_country']) {
+        if ($this->tvshow['origin_country'] && false) {
             $countryInfo = $this->api_flags(Str::lower($this->tvshow['origin_country'][0]));
         } else {
             $countryInfo = [
