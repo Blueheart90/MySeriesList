@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SerieController;
+use App\Http\Controllers\TvListController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,9 +44,12 @@ Route::get('/series/{id}/{slug?}', [SerieController::class, 'show'])->name('seri
 Route::get('/filter/series/genres', [SerieController::class, 'genresFilter'])->name('series.genres');
 Route::get('/filter/series/search', [SerieController::class, 'searchFilter'])->name('series.search');
 
+//TvList
+Route::post('/tvlist', [TvListController::class, 'store'])->name('tvlist.store');
 
 
-Route::get('/test', [SerieController::class, 'test'])->name('series.test');
+
+// Route::get('/test', [SerieController::class, 'test'])->name('series.test');
 
 
 

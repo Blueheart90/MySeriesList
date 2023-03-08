@@ -10,25 +10,25 @@ use Illuminate\Support\Facades\Http;
 class SerieShowViewModel extends ViewModel
 {
     public $tvshow;
-    public $tvCheck;
+    public $tvListOldData;
     public $stateWatchingList;
     public $scoreList;
     public $editMode;
 
     // Se retiró $stateWatchingList del contructor, ya que se obtiene en el componente del dropDownform o el de livewire
-    public function __construct($tvshow, $tvCheck, $scoreList, $stateWatchingList)
+    public function __construct($tvshow, $tvListOldData, $scoreList, $stateWatchingList)
     {
         $this->tvshow = $tvshow;
-        $this->tvCheck = $tvCheck;
+        $this->tvListOldData = $tvListOldData;
         $this->scoreList = $scoreList;
         $this->stateWatchingList = $stateWatchingList;
-        $this->editMode = isset($this->tvCheck) ? true : false;
+        $this->editMode = isset($this->tvListOldData) ? true : false;
     }
 
     // Si devuelve la serie creada por el User actual, si está en la DB
-    public function tvCheck()
+    public function tvListOldData()
     {
-        return $this->tvCheck;
+        return $this->tvListOldData;
     }
 
     public function editMode()

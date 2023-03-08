@@ -5,17 +5,22 @@ import AppLayout from "@/Layouts/AppLayout";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ProgressProvider from "@/Components/circular-progress/ProgressProvider";
-import DropdownAddList from "@/Components/DropdownAddList";
-import Dropdown from "@/Components/Dropdown";
 import AccordionAddList from "@/Components/AccordionAddList";
 
 export const ShowTvContext = createContext();
-const Show = ({ auth }) => {
-    const { editMode, info, scoreList, tvCheck, tvshow, stateWatchingList } =
-        usePage().props.data;
+const Show = ({ auth, flash }) => {
+    const {
+        editMode,
+        info,
+        scoreList,
+        tvListOldData,
+        tvshow,
+        stateWatchingList,
+    } = usePage().props.data;
 
     const valueEnd = tvshow["vote_average"].toFixed(1);
     console.log(usePage().props.data);
+    console.log(tvListOldData);
     return (
         <AppLayout auth={auth}>
             <Head>

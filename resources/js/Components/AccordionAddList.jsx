@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import AddListForm from "./AddListForm";
 import { ShowTvContext } from "@/Pages/Series/Show";
@@ -6,15 +6,16 @@ import { ShowTvContext } from "@/Pages/Series/Show";
 const AccordionAddList = () => {
     const { editMode, info, scoreList, tvCheck, tvshow, stateWatchingList } =
         useContext(ShowTvContext);
+    const [isEditable, setIsEditable] = useState(editMode);
     return (
         <div className="w-full ">
             <Disclosure>
-                {({ open }) => (
+                {({ open, close }) => (
                     <>
                         <Disclosure.Button className="w-full ">
                             <div className="flex justify-between px-4 py-2 bg-primary ">
                                 <div className="flex ">
-                                    {editMode && (
+                                    {isEditable && (
                                         <svg
                                             className="w-6 mr-2 text-green-500 bg-white rounded-full"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +23,9 @@ const AccordionAddList = () => {
                                             fill="currentColor"
                                         >
                                             <path
-                                                fill-rule="evenodd"
+                                                fillRule="evenodd"
                                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd"
+                                                clipRule="evenodd"
                                             />
                                         </svg>
                                     )}
@@ -54,8 +55,12 @@ const AccordionAddList = () => {
                                 </svg>
                             </div>
                         </Disclosure.Button>
-                        <Disclosure.Panel>
-                            <AddListForm />
+                        <Disclosure.Panel unmount={false}>
+                            <AddListForm
+                                close={close}
+                                setIsEditable={setIsEditable}
+                                isEditable={isEditable}
+                            />
                         </Disclosure.Panel>
                     </>
                 )}

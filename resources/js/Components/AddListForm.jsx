@@ -5,22 +5,50 @@ import { ShowTvContext } from "@/Pages/Series/Show";
 import AddListSelect from "./AddListSelect";
 import AddListInput from "./AddListInput";
 import AddIcon from "./svg/AddIcon";
+import { router } from "@inertiajs/react";
+import UpdateIcon from "./svg/UpdateIcon";
 
-const AddListForm = () => {
-    const { editMode, info, scoreList, tvCheck, tvshow, stateWatchingList } =
+const AddListForm = ({ close, isEditable, setIsEditable }) => {
+    const { info, scoreList, tvshow, stateWatchingList, tvListOldData } =
         useContext(ShowTvContext);
     const [seasonEpisodes, setseasonEpisodes] = useState(tvshow.seasons[1]);
+    const [oldData, setOldData] = useState(tvListOldData || {});
 
     const handleSubmit = (values, resetForm) => {
-        console.log(values);
+        const data = {
+            name: tvshow.name,
+            api_id: tvshow.id,
+            poster: tvshow["poster_path"],
+            ...values,
+        };
+        // router.post("/tvlist", values);
+        axios.post(route("tvlist.store", data));
+
+        console.log({
+            name: tvshow.name,
+            api_id: tvshow.id,
+            poster: tvshow["poster_path"],
+            ...values,
+        });
+        setOldData(data);
+        setIsEditable(true);
+        close();
     };
+
+    const handleUpdate = (values) => {
+        console.log("updatting..", values);
+    };
+
+    // comprobamos que cuando no halla un lista agregada devuelva un obj vacio antes del destructuring
+    const { watching_state_id, season, episode, score_id } = oldData;
+    console.log(oldData);
     return (
         <Formik
             initialValues={{
-                watching_state: "0",
-                season: "1",
-                episode: "0",
-                score_id: "0",
+                watching_state_id: watching_state_id || "0",
+                season: season || "1",
+                episode: episode || "0",
+                score_id: score_id || "0",
             }}
             validationSchema={addListFormSchema}
             onSubmit={(values, { resetForm }) =>
@@ -35,10 +63,10 @@ const AddListForm = () => {
                     <AddListSelect
                         className="w-full py-1 pl-4 text-sm rounded-sm focus:ring-kiwi focus:border-kiwi bg-secundary"
                         label={"Estado"}
-                        name={"watching_state"}
+                        name={"watching_state_id"}
                         onChange={(e) => {
                             const value = e.target.value;
-                            setFieldValue("watching_state", value);
+                            setFieldValue("watching_state_id", value);
                             if (value === "2") {
                                 const objKeys = Object.keys(tvshow.seasons);
                                 const lastSeason = objKeys[objKeys.length - 1];
@@ -109,7 +137,7 @@ const AddListForm = () => {
 
                     <div>
                         <ErrorMessage
-                            name="watching_state"
+                            name="watching_state_id"
                             render={(msg) => (
                                 <div className="text-red-600 ">*{msg}</div>
                             )}
@@ -121,41 +149,25 @@ const AddListForm = () => {
                             )}
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="flex items-center justify-center w-full gap-2 py-2 font-bold rounded-sm bg-kiwi text-secundary hover:bg-kiwi/75 active:bg-kiwi/50"
-                    >
-                        {/* SVG add */}
-                        <AddIcon className="w-6 " />
-                        Añadir Serie
-                    </button>
 
-                    {editMode && (
-                        <>
-                            <button
-                                type="button"
-                                wire:click="updateTvList({{ $oldData->id }})"
-                                className="min-w-full mb-2"
-                                color="gray"
-                            >
-                                {/* SVG Update  */}
-                                <svg
-                                    className="w-4 mr-2 "
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                                    />
-                                </svg>
-                                Actualizar
-                            </button>
-                        </>
+                    {isEditable ? (
+                        <button
+                            type="button"
+                            // wire:click="updateTvList({{ $oldData->id }})"
+                            onClick={() => handleUpdate(values)}
+                            className="flex items-center justify-center w-full gap-2 py-1 font-bold rounded-sm bg-kiwi text-secundary hover:bg-kiwi/75 active:bg-kiwi/50"
+                        >
+                            <UpdateIcon className="w-6 " />
+                            Actualizar
+                        </button>
+                    ) : (
+                        <button
+                            type="submit"
+                            className="flex items-center justify-center w-full gap-2 py-1 font-bold rounded-sm bg-kiwi text-secundary hover:bg-kiwi/75 active:bg-kiwi/50"
+                        >
+                            <AddIcon className="w-6 " />
+                            Añadir Serie
+                        </button>
                     )}
                     {/* @if ($errors->any())
             <div class="text-red-600">

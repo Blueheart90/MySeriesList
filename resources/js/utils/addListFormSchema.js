@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 const addListFormSchema = Yup.object({
-    watching_state: Yup.number().moreThan(0, "Debes elegir un estado"),
+    watching_state_id: Yup.number().moreThan(0, "Debes elegir un estado"),
     // season: Yup.string()
     //     .email("Debe ser un correo valido")
     //     .required("El email es requerido"),

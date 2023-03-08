@@ -89,6 +89,8 @@ class SerieController extends Controller
     }
 
 
+
+
     /**
      * Display the specified resource.
      */
@@ -117,7 +119,7 @@ class SerieController extends Controller
         // $tvCheck = TvList::where([['api_id', $serie],['user_id', Auth::id()]])->exists();
 
         // ** Se obtiene el registro de la serie agregada por el User
-        $tvCheck = TvList::where([['api_id', $id], ['user_id', Auth::id()]])->first();
+        $tvListOldData = TvList::where([['api_id', $id], ['user_id', Auth::id()]])->first();
 
         // ** Se obtiene los estados. ej viendo, en plan para ver , etc..
         $stateWatchingList = WatchingState::all(['id', 'name']);
@@ -127,10 +129,11 @@ class SerieController extends Controller
 
         $viewModel = new SerieShowViewModel(
             $tvShowDetails,
-            $tvCheck,
+            $tvListOldData,
             $scoreList,
             $stateWatchingList
         );
+
 
         return Inertia::render('Series/Show', ['data' => $viewModel]);
 
