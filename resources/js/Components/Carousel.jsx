@@ -5,8 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const Carousel = ({ data }) => {
-    const { results } = data;
+const Carousel = ({ data, card: Card }) => {
     return (
         <Swiper
             modules={[A11y, Autoplay]}
@@ -42,9 +41,11 @@ const Carousel = ({ data }) => {
                 },
             }}
         >
-            {results.map((slide) => (
-                <SwiperSlide key={slide.id}>
-                    <SerieCard serie={slide} />
+            {data.map((item) => (
+                <SwiperSlide key={item.id}>
+                    {/* <SerieCard item={item} /> */}
+                    {/* <Card item={{ name: "juan" }} /> */}
+                    <Card item={item} />
                 </SwiperSlide>
             ))}
         </Swiper>

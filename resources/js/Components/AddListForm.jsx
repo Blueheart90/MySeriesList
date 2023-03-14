@@ -5,7 +5,7 @@ import { ShowTvContext } from "@/Pages/Series/Show";
 import AddListSelect from "./AddListSelect";
 import AddListInput from "./AddListInput";
 import AddIcon from "./svg/AddIcon";
-import { router } from "@inertiajs/react";
+import toast from "react-hot-toast";
 import UpdateIcon from "./svg/UpdateIcon";
 
 const AddListForm = ({ close, isEditable, setIsEditable }) => {
@@ -21,22 +21,70 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
             poster: tvshow["poster_path"],
             ...values,
         };
-        // router.post("/tvlist", values);
-        axios.post(route("tvlist.store", data));
 
-        console.log({
+        axios
+            .post(route("tvlist.store", data))
+            .then((res) => {
+                if (res.data.hasOwnProperty("success")) {
+                    setOldData(data);
+                    setIsEditable(true);
+                    close();
+                    toast.success("Se agregó a tu lista con exito.", {
+                        position: "bottom-left",
+                        duration: 4000,
+                    });
+                } else {
+                    toast.error("Debes iniciar sesion antes.", {
+                        position: "bottom-left",
+                        duration: 4000,
+                    });
+                }
+            })
+            .catch((error) => {
+                toast.error("Se produjo un error", {
+                    position: "bottom-left",
+                });
+                console.log(error);
+            });
+    };
+
+    const handleUpdate = (values) => {
+        console.log("updatting..", tvListOldData);
+        const data = {
             name: tvshow.name,
             api_id: tvshow.id,
             poster: tvshow["poster_path"],
             ...values,
-        });
-        setOldData(data);
-        setIsEditable(true);
-        close();
-    };
+        };
+        axios
+            .put(route("tvlist.update", { id: tvListOldData.id }), data)
+            .then((res) => {
+                if (res.data.hasOwnProperty("success")) {
+                    setOldData(data);
+                    // setIsEditable(true);
+                    // close();
+                    toast.success("Se actualizó tu lista con exito.", {
+                        position: "bottom-left",
+                        duration: 4000,
+                    });
+                } else {
+                    toast.error("Debes iniciar sesion antes.", {
+                        position: "bottom-left",
+                        duration: 4000,
+                    });
+                }
+            })
+            .catch((error) => {
+                toast.error("Se produjo un error", {
+                    position: "bottom-left",
+                });
+                console.log(error);
+            });
 
-    const handleUpdate = (values) => {
-        console.log("updatting..", values);
+        // toast.success("Se actualizó el estado con exito.", {
+        //     position: "bottom-left",
+        //     duration: 4000,
+        // });
     };
 
     // comprobamos que cuando no halla un lista agregada devuelva un obj vacio antes del destructuring
@@ -169,16 +217,6 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
                             Añadir Serie
                         </button>
                     )}
-                    {/* @if ($errors->any())
-            <div class="text-red-600">
-                <h2>Error, hay campos sin llenar</h2>
-                <ul class="pl-4 list-disc">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif */}
                 </form>
             )}
         </Formik>

@@ -29,7 +29,7 @@ const CardList = ({
                     {results?.length ? (
                         <div className="flex flex-wrap justify-center gap-4">
                             {results?.map((card) => (
-                                <SerieCard serie={card} key={card.id} />
+                                <SerieCard item={card} key={card.id} />
                             ))}
                         </div>
                     ) : (

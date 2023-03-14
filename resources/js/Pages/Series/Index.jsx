@@ -7,6 +7,7 @@ import CardList from "@/Components/CardList";
 import Tags from "@/Components/Tags";
 import SearchFilter from "@/Components/SearchFilter";
 import CardListAside from "@/Components/CardListAside";
+import SerieCard from "@/Components/serieCard";
 
 const Index = ({ auth }) => {
     const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
@@ -48,7 +49,7 @@ const Index = ({ auth }) => {
                     <h2 className="mb-4 text-xl font-bold text-kiwi">
                         Tendencia esta semana
                     </h2>
-                    <Carousel data={trendingTv} />
+                    <Carousel data={trendingTv.results} card={SerieCard} />
                 </section>
                 <div className="grid grid-cols-4 gap-4 mt-10 ">
                     <section className="col-span-3 ">

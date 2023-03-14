@@ -46,6 +46,7 @@ Route::get('/filter/series/search', [SerieController::class, 'searchFilter'])->n
 
 //TvList
 Route::post('/tvlist', [TvListController::class, 'store'])->name('tvlist.store');
+Route::put('/tvlist/{tvList}', [TvListController::class, 'update'])->name('tvlist.update');
 
 
 

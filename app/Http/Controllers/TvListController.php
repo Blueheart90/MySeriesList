@@ -43,26 +43,22 @@ class TvListController extends Controller
             'watching_state_id' => 'required|numeric|min:1',
         ]);
 
+        $response = null;
+        try {
+            if (Auth::check()) {
+                auth()->user()->tvlists()->create($validatedData);
+                $response = ['success' => 'Agregada exitosamente'];
+            } else {
 
-        // 
-
-        // Log::debug($validatedData);
-
-        if (Auth::check()) {
-            auth()->user()->tvlists()->create($validatedData);
-            // session()->flash('success', 'Agregada exitosamente');
-        } else {
-            session()->flash('error', 'Debes iniciar sesion');
+                $response = ['error' => 'Debes iniciar sesion'];
+            }
+        } catch (\Throwable $e) {
+            return back()->withErrors(['msg' => 'Hubo un problema al guardar el registro. Por favor, intenta de nuevo.']);
         }
+
+        return $response;
     }
 
-
-    public function checkUser($api_id)
-    {
-        // Se revisa si ya el usuario tiene agregada la serie en una lista
-        $oldData = TvList::where('api_id', $api_id)->where('user_id', auth()->id())->first();
-        return $oldData;
-    }
 
     /**
      * Display the specified resource.
@@ -83,9 +79,29 @@ class TvListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TvList $tvList): RedirectResponse
+    public function update(Request $request, TvList $tvList)
     {
-        //
+        $response = null;
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'api_id' => 'required',
+            'poster' => 'required',
+            'season' => 'required',
+            'episode' => 'required',
+            'score_id' => 'required|numeric|min:1',
+            'watching_state_id' => 'required|numeric|min:1',
+        ]);
+
+        try {
+
+            $tvList->update($validatedData);
+            $response = ['success' => 'Agregada exitosamente'];
+        } catch (\Throwable $e) {
+            $response = ['error' => $e->message];
+        }
+
+        // return response()->json(['success' => true]);
+        return $response;
     }
 
     /**

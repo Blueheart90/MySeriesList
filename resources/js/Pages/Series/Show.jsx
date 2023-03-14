@@ -6,6 +6,11 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ProgressProvider from "@/Components/circular-progress/ProgressProvider";
 import AccordionAddList from "@/Components/AccordionAddList";
+import LogoSvg from "@/Components/svg/LogoSvg";
+import Flag from "@/Components/Flag";
+import Carousel from "@/Components/Carousel";
+import CastCard from "@/Components/CastCard";
+import MyTabs from "@/Components/MyTabs";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth, flash }) => {
@@ -19,8 +24,20 @@ const Show = ({ auth, flash }) => {
     } = usePage().props.data;
 
     const valueEnd = tvshow["vote_average"].toFixed(1);
-    console.log(usePage().props.data);
-    console.log(tvListOldData);
+    const { flags, language, name } = info.originalCountry;
+    const tabs = [
+        {
+            id: 1,
+            label: "Videos",
+            Component: "mis videos",
+        },
+        {
+            id: 2,
+            label: "Imágenes",
+            Component: "mis imagenes",
+        },
+    ];
+    console.log(tvshow);
     return (
         <AppLayout auth={auth}>
             <Head>
@@ -47,17 +64,6 @@ const Show = ({ auth, flash }) => {
                                             alt="poster"
                                             className="w-full mx-auto transition duration-150 ease-in-out lazyload hover:opacity-75"
                                         />
-                                        {/* Desplegable con formulario */}
-                                        {/* <div className="relative">
-                                        <DropdownAddList>
-                                            <DropdownAddList.Trigger />
-
-                                            <DropdownAddList.Content>
-                                                holamundo
-                                            </DropdownAddList.Content>
-                                        </DropdownAddList>
-                                    </div> */}
-
                                         <AccordionAddList />
                                     </figure>
                                 </div>
@@ -150,6 +156,67 @@ const Show = ({ auth, flash }) => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div className="p-10 md:grid md:gap-4 md:grid-flow-col md:grid-cols-4">
+                    <div className=" text-light">
+                        <div className="flex items-center mb-4">
+                            <LogoSvg className="mr-2 w-7 fill-white" />
+                            <h2 className="text-lg ">Información Adicional</h2>
+                        </div>
+                        <div className="space-y-4 ">
+                            {Object.entries(info.basic).map(
+                                ([label, value], index) => (
+                                    <div key={index + label}>
+                                        <span className="block font-bold">
+                                            {label}
+                                        </span>
+                                        <span className="capitalize">
+                                            {value}
+                                        </span>
+                                    </div>
+                                )
+                            )}
+
+                            <div>
+                                <span className="block font-bold">
+                                    Pais de origen
+                                </span>
+                                <img
+                                    className="w-12 "
+                                    src={flags.svg}
+                                    alt={flags.alt}
+                                />
+                            </div>
+                            <div>
+                                <a
+                                    className="font-bold transition-all duration-300 hover:text-secundary hover:font-bold"
+                                    href={info.homepage}
+                                >
+                                    Sitio Oficial
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="md:col-span-3 text-light">
+                        <section className="mb-10 ">
+                            <h2 className="mb-4 text-lg font-bold ">Actores</h2>
+                            <Carousel data={tvshow.cast} card={CastCard} />
+                        </section>
+                        <MyTabs tabs={tabs} />
+                        {/* <x-swiper>
+                                @foreach ($tvshow['cast'] as $actor)
+                                    <div class="swiper-slide">
+                                        <a  href="">
+                                            <img  data-src="{{ $actor['profile_path'] }}" alt="poster" class="transition duration-150 ease-in-out lazyload hover:opacity-75">
+                                        </a>
+                                        <div class="mt-2">
+                                            <a href="" class="block mt-2 text-lg hover:text-gray-300">{{ $actor['name'] }}</a>
+                                            <a href="" class="mt-2 text-base text-gray-600">{{ $actor['character'] }}</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </x-swiper> */}
                     </div>
                 </div>
             </ShowTvContext.Provider>

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "@/Components/Header";
 import { Head } from "@inertiajs/react";
+import { Toaster } from "react-hot-toast";
 
 const AppLayout = ({ auth, children, className: styles }) => {
     return (
@@ -8,7 +9,10 @@ const AppLayout = ({ auth, children, className: styles }) => {
             <Head title="Welcome" />
             <Header auth={auth} />
 
-            <main className={` ${styles} `}>{children}</main>
+            <main className={` ${styles} `}>
+                <Toaster />
+                {children}
+            </main>
         </div>
     );
 };

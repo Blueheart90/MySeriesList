@@ -41,18 +41,19 @@ class SerieShowViewModel extends ViewModel
         // return Http::get('https://flagcdn.com/en/codes.json')
         // ->json()[$nameCode];
 
-        // $response = Http::get('https://restcountries.com/v2/alpha/' . $codeNameCountry)
-        //     ->json();
+        $response = Http::get('https://restcountries.com/v3.1/alpha/' . $codeNameCountry)
+            ->json()[0];
 
-        // return collect($response)->merge([
-        //     'language' => $response['languages'][0]['name'],
-        //     // 'flag' => $response['flags'][0],
-        // ])->only(['name', 'language', 'flag']);
+        return collect($response)->merge([
+            'name' => $response['translations']['spa'],
+            'language' => collect($response['languages'])->flatten()[0]
+        ])->only(['name', 'language', 'flags']);
     }
+
 
     public function info()
     {
-        if ($this->tvshow['origin_country'] && false) {
+        if ($this->tvshow['origin_country']) {
             $countryInfo = $this->api_flags(Str::lower($this->tvshow['origin_country'][0]));
         } else {
             $countryInfo = [
@@ -62,9 +63,9 @@ class SerieShowViewModel extends ViewModel
             ];
         }
 
-        return collect([
+        return collect(['basic' => [
             'Primera Emision' => Carbon::parse($this->tvshow['first_air_date'])->isoFormat('MMMM D, YYYY'),
-            'Pagina Web' => '<a class=" hover:text-blue-800 hover:font-bold" href="' . $this->tvshow['homepage'] . '">Sitio Oficial</a>',
+            // 'Pagina Web' => '<a class="transition-all duration-300 hover:text-secundary hover:text-3xl" href="' . $this->tvshow['homepage'] . '">Sitio Oficial</a>',
             'Estado' => $this->tvshow['status'],
             'Ultimo Capitulo' => $this->tvshow['last_episode_to_air']
                 ? Carbon::parse($this->tvshow['last_episode_to_air']['air_date'])->isoFormat('MMMM D, YYYY')
@@ -75,9 +76,8 @@ class SerieShowViewModel extends ViewModel
             'Temporadas' => $this->tvshow['number_of_seasons'],
             'Capitulos' => $this->tvshow['number_of_episodes'],
             'Compañia' => collect($this->tvshow['networks'])->pluck('name')->implode(', '),
-            'Pais De Origen' => '<img class="inline w-10 cursor-pointer " src="' . $countryInfo['flag'] . '" title="' . $countryInfo['name'] . '">',
             'Lenguaje Original' => $countryInfo['language'],
-        ]);
+        ], 'originalCountry' => $countryInfo, 'homepage' => $this->tvshow['homepage']]);
     }
 
     public function tvshow()

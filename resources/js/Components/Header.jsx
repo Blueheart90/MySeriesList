@@ -1,5 +1,5 @@
 import React from "react";
-import LogoSvg from "./LogoSvg";
+import LogoSvg from "./svg/LogoSvg";
 import { Link } from "@inertiajs/react";
 import LinkCustom from "./LinkCustom";
 import Dropdown from "@/Components/Dropdown";
