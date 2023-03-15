@@ -11,6 +11,8 @@ import Flag from "@/Components/Flag";
 import Carousel from "@/Components/Carousel";
 import CastCard from "@/Components/CastCard";
 import MyTabs from "@/Components/MyTabs";
+import MyGallery from "@/Components/MyGallery";
+// import GalleryImg from "@/Components/GalleryImg";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth, flash }) => {
@@ -37,6 +39,7 @@ const Show = ({ auth, flash }) => {
             Component: "mis imagenes",
         },
     ];
+
     console.log(tvshow);
     return (
         <AppLayout auth={auth}>
@@ -204,6 +207,7 @@ const Show = ({ auth, flash }) => {
                             <Carousel data={tvshow.cast} card={CastCard} />
                         </section>
                         <MyTabs tabs={tabs} />
+                        <MyGallery data={tvshow.images.gallery} />
                         {/* <x-swiper>
                                 @foreach ($tvshow['cast'] as $actor)
                                     <div class="swiper-slide">

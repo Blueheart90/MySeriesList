@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "formik": "^2.2.9",
+        "fslightbox-react": "^1.7.2",
         "lodash.debounce": "^4.0.8",
         "react-circular-progressbar": "^2.1.0",
         "react-hot-toast": "^2.4.0",
