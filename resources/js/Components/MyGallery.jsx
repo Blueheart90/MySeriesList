@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FsLightbox from "fslightbox-react";
 
-const MyGallery = ({ data }) => {
+const MyGallery = ({ data, type = "image" }) => {
     // data example
     // [
     //     {
@@ -17,27 +17,53 @@ const MyGallery = ({ data }) => {
         setToggler(!toggler);
     };
 
+    const getSource = (type, data) => {
+        return data.map((item) =>
+            type === "image" ? (
+                item.source
+            ) : (
+                <iframe
+                    width="1920px"
+                    height="1080px"
+                    src={`https://www.youtube.com/embed/${item.source}?autoplay=1`}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
+            )
+        );
+    };
+
     return (
         <>
-            <div className="flex flex-wrap gap-4 ">
-                {data.map((item, index) => (
-                    <figure
-                        key={index}
-                        className="overflow-hidden border-2 rounded-md border-kiwi"
-                    >
-                        <img
-                            className="transition duration-500 ease-in-out hover:opacity-50"
-                            src={item.thumbnail}
-                            onClick={() => handleToggle(index)}
-                        />
-                    </figure>
-                ))}
-            </div>
-            <FsLightbox
-                sourceIndex={currentIndex}
-                toggler={toggler}
-                sources={data.map((item) => item.source)}
-            />
+            {data.length > 0 ? (
+                <>
+                    <div className="flex flex-wrap gap-4 ">
+                        {data.map((item, index) => (
+                            <figure
+                                key={index}
+                                className="overflow-hidden border-2 rounded-md border-kiwi"
+                            >
+                                <img
+                                    className="transition duration-500 ease-in-out hover:opacity-50 w-80 h-44"
+                                    src={item.thumbnail}
+                                    onClick={() => handleToggle(index)}
+                                />
+                            </figure>
+                        ))}
+                    </div>
+                    <FsLightbox
+                        sourceIndex={currentIndex}
+                        toggler={toggler}
+                        sources={getSource(type, data)}
+                    />
+                </>
+            ) : (
+                <h2 className="mt-20 text-2xl text-center ">
+                    No hay recursos para mostrar
+                </h2>
+            )}
         </>
     );
 };

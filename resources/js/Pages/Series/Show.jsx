@@ -31,12 +31,12 @@ const Show = ({ auth, flash }) => {
         {
             id: 1,
             label: "Videos",
-            Component: "mis videos",
+            Component: <MyGallery data={tvshow.gallery.videos} type="video" />,
         },
         {
             id: 2,
             label: "Imágenes",
-            Component: "mis imagenes",
+            Component: <MyGallery data={tvshow.gallery.images} type="image" />,
         },
     ];
 
@@ -207,7 +207,7 @@ const Show = ({ auth, flash }) => {
                             <Carousel data={tvshow.cast} card={CastCard} />
                         </section>
                         <MyTabs tabs={tabs} />
-                        <MyGallery data={tvshow.images.gallery} />
+
                         {/* <x-swiper>
                                 @foreach ($tvshow['cast'] as $actor)
                                     <div class="swiper-slide">

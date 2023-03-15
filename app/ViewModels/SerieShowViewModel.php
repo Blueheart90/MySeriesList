@@ -83,16 +83,6 @@ class SerieShowViewModel extends ViewModel
 
     public function tvshow()
     {
-
-        $arrImg = collect($this->tvshow['images']['backdrops'])->take(10)->map(function ($image) {
-
-            return [
-                'thumbnail' => 'https://image.tmdb.org/t/p/w300/' . $image['file_path'], 'source' => 'https://image.tmdb.org/t/p/original/' . $image['file_path']
-            ];
-        });
-
-        Log::debug($arrImg);
-
         return collect($this->tvshow)->merge([
             'poster_url' => $this->tvshow['poster_path']
                 ? 'https://www.themoviedb.org/t/p/w342' . $this->tvshow['poster_path']
@@ -108,12 +98,7 @@ class SerieShowViewModel extends ViewModel
                 ]);
             }),
             'cast_str_list' => collect($this->tvshow['credits']['cast'])->pluck('name')->flatten()->join(', ', ' y '),
-            'images' => collect(['data' => collect($this->tvshow['images']['backdrops'])->take(10)])->merge(['gallery' => collect($this->tvshow['images']['backdrops'])->take(10)->map(function ($image) {
-                return [
-                    'thumbnail' => 'https://image.tmdb.org/t/p/w300/' . $image['file_path'],
-                    'source' => 'https://image.tmdb.org/t/p/original/' . $image['file_path']
-                ];
-            })]),
+            'images' => collect($this->tvshow['images']['backdrops'])->take(10),
             'backdrops' => collect($this->tvshow['images']['backdrops'])->take(10)->map(function ($bd) {
                 return collect($bd)->merge([
                     'thumbnail' => 'https://image.tmdb.org/t/p/w300/' . $bd['file_path'],
@@ -130,6 +115,19 @@ class SerieShowViewModel extends ViewModel
                         : $video['key'],
                 ]);
             }),
+            'gallery' => [
+                'images' => collect($this->tvshow['images']['backdrops'])->take(10)->map(function ($image) {
+                    return [
+                        'thumbnail' => 'https://image.tmdb.org/t/p/w300/' . $image['file_path'],
+                        'source' => 'https://image.tmdb.org/t/p/original/' . $image['file_path']
+                    ];
+                }), 'videos' => collect($this->tvshow['videos']['results'])->take(10)->map(function ($video) {
+                    return [
+                        'thumbnail' => 'https://img.youtube.com/vi/' . $video['key'] . '/mqdefault.jpg',
+                        'source' => $video['key']
+                    ];
+                })
+            ],
             'random_bg' => $this->tvshow['images']['backdrops']
                 ? 'https://image.tmdb.org/t/p/w1280' . collect($this->tvshow['images']['backdrops'])->random()['file_path']
                 : '',
@@ -147,7 +145,7 @@ class SerieShowViewModel extends ViewModel
 
         ])->only([
             'poster_path', 'poster_url', 'id', 'genres', 'name', 'vote_average', 'overview', 'first_air_date', 'credits',
-            'videos', 'images', 'backdrops', 'crew', 'cast', 'cast_str_list', 'images', 'random_bg', 'created_by', 'tagline', 'year', 'seasons', 'stringEpCount'
+            'videos', 'gallery', 'images', 'backdrops', 'crew', 'cast', 'cast_str_list', 'images', 'random_bg', 'created_by', 'tagline', 'year', 'seasons', 'stringEpCount'
         ]);
     }
 }
