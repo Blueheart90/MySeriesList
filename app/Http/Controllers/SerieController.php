@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Score;
 // use Illuminate\Http\Request;
+use App\Models\Review;
 use App\Models\TvList;
 use Illuminate\Support\Arr;
 use App\Models\WatchingState;
@@ -121,11 +122,15 @@ class SerieController extends Controller
         // ** Se obtiene el registro de la serie agregada por el User
         $tvListOldData = TvList::where([['api_id', $id], ['user_id', Auth::id()]])->first();
 
-        // ** Se obtiene los estados. ej viendo, en plan para ver , etc..
-        $stateWatchingList = WatchingState::all(['id', 'name']);
+        // Se obtiene todos los reviews de la serie
+        // $allReviews = Review::where('api_id', $id)->with(['user', 'tvlist'])->get();
 
         // ** Se obtiene la escala de puntaje 1 a 10
         $scoreList = Score::all(['id', 'name']);
+
+        // ** Se obtiene los estados. ej viendo, en plan para ver , etc..
+        $stateWatchingList = WatchingState::all(['id', 'name']);
+
 
         $viewModel = new SerieShowViewModel(
             $tvShowDetails,

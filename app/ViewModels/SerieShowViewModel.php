@@ -12,6 +12,7 @@ class SerieShowViewModel extends ViewModel
 {
     public $tvshow;
     public $tvListOldData;
+
     public $stateWatchingList;
     public $scoreList;
     public $editMode;

@@ -8,6 +8,7 @@ import MyTabs from "@/Components/MyTabs";
 import MyGallery from "@/Components/MyGallery";
 import TvAdditionalInfo from "@/Components/TvAdditionalInfo";
 import TvHero from "@/Components/TvHero";
+import Review from "@/Components/Review";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
@@ -52,6 +53,7 @@ const Show = ({ auth }) => {
                             </section>
                         )}
                         <MyTabs tabs={tabs} />
+                        <Review apiId={tvshow.id} />
                     </div>
                 </div>
             </ShowTvContext.Provider>

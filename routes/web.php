@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\TvListController;
 use Illuminate\Foundation\Application;
@@ -48,6 +49,8 @@ Route::get('/filter/series/search', [SerieController::class, 'searchFilter'])->n
 Route::post('/tvlist', [TvListController::class, 'store'])->name('tvlist.store');
 Route::put('/tvlist/{tvList}', [TvListController::class, 'update'])->name('tvlist.update');
 
+//Review
+Route::get('/review/{apiId}', [ReviewController::class, 'allReviews'])->name('reviews.all');
 
 
 // Route::get('/test', [SerieController::class, 'test'])->name('series.test');

@@ -1,7 +1,6 @@
 import React from "react";
 
 const SerieCard = ({ item }) => {
-    console.log(item);
     return (
         <figure
             className={` relative rounded-md overflow-hidden border-2 border-kiwi group  `}
