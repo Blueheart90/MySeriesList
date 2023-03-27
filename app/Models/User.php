@@ -42,6 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    // protected $attributes = [
+    //     'profile_photo_path' => 'notProfileImage.jpg',
+    // ];
+
     // Un usuario tiene muchas series agregadas a TvList
     public function tvlists()
     {
