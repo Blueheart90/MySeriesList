@@ -4,10 +4,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
-import { useRef, useState } from "react";
-import CameraIcon from "@/Components/svg/CameraIcon";
-import CloseIcon from "@/Components/svg/CloseIcon";
-import Avatar from "@/Components/Avatar";
+import { useState } from "react";
+import InputAvatar from "@/Components/InputAvatar";
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -15,14 +13,11 @@ export default function UpdateProfileInformation({
     className,
 }) {
     const user = usePage().props.auth.user;
-    const [previewImage, setPreviewImage] = useState(null);
     const [showRemovePreview, setShowRemovePreview] = useState(false);
-    const inputPhotoRef = useRef(null);
 
     const {
         data,
         setData,
-        patch,
         post,
         errors,
         processing,
@@ -34,24 +29,6 @@ export default function UpdateProfileInformation({
         email: user.email,
         profile_photo_path: user.profile_photo_path,
     });
-
-    console.log("ref", inputPhotoRef);
-    console.log("data", data);
-
-    const handleImageChange = (event) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setData("profile_photo_path", event.target.files[0]);
-            setPreviewImage(URL.createObjectURL(event.target.files[0]));
-            setShowRemovePreview(true);
-        }
-    };
-    const handleImageRemove = (event) => {
-        event.stopPropagation();
-        inputPhotoRef.current.value = null;
-        // setData("profile_photo_path", user.profile_photo_path);
-        reset("profile_photo_path");
-        setPreviewImage();
-    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -81,38 +58,14 @@ export default function UpdateProfileInformation({
                         for="profile_photo_path"
                         value="Profile Image"
                     />
-                    <div
-                        onClick={() => {
-                            inputPhotoRef.current.click();
-                        }}
-                        className="relative inline-flex cursor-pointer group"
-                    >
-                        {previewImage ? (
-                            <Avatar src={previewImage} alt="avatar" />
-                        ) : (
-                            <Avatar
-                                src={`../storage/${data.profile_photo_path}`}
-                                alt="avatar"
-                            />
-                        )}
-                        <input
-                            id="profile_photo_path"
-                            ref={inputPhotoRef}
-                            className="hidden "
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                        />
 
-                        <CameraIcon className="absolute w-10 p-1 -mt-5 -ml-5 transition-all duration-500 rounded-full opacity-0 stroke-primary left-1/2 top-1/2 group-hover:opacity-100" />
-                        {previewImage && showRemovePreview ? (
-                            <CloseIcon
-                                onClick={handleImageRemove}
-                                className="absolute top-0 right-0 text-xs bg-red-500 rounded-full w-7 text-light"
-                            />
-                        ) : null}
-                    </div>
-
+                    <InputAvatar
+                        setShowRemovePreview={setShowRemovePreview}
+                        showRemovePreview={showRemovePreview}
+                        currentAvatar={`../storage/${data.profile_photo_path}`}
+                        setData={setData}
+                        reset={reset}
+                    />
                     {progress && (
                         <progress value={progress.percentage} max="100">
                             {progress.percentage}%
