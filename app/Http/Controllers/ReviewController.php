@@ -10,6 +10,7 @@ class ReviewController extends Controller
     public function allReviews($apiId)
     {
         $allReviews = Review::where('api_id', $apiId)->with(['user', 'tvlist'])->get();
+
         return response()->json($allReviews);
     }
 }

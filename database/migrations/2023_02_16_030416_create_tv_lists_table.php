@@ -11,16 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
-            $table->text('content');
-            $table->string('api_id');
-            $table->boolean('recommended');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            // $table->foreignId('tvlist_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-            $table->unique(['user_id', 'api_id']);
-        });
+
 
         Schema::create('watching_states', function (Blueprint $table) {
             $table->id();
@@ -41,12 +32,25 @@ return new class extends Migration
             $table->string('poster');
             $table->integer('season');
             $table->integer('episode');
-            $table->foreignId('review_id')->nullable()->constrained()->onDelete('cascade');
+            // $table->foreignId('review_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('watching_state_id')->constrained()->onDelete('cascade');
             $table->foreignId('score_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             // Indica que user_id o api_id deben ser distintos a otros registros (un user puede crear solo un registro por api_id)
+            $table->unique(['user_id', 'api_id']);
+        });
+
+        Schema::create('reviews', function (Blueprint $table) {
+            $table->id();
+            $table->text('content');
+            $table->string('api_id');
+            $table->boolean('recommended');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('tvlist_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('tvlist_id')->references('id')->on('tv_lists')->onDelete('cascade');
+            $table->timestamps();
             $table->unique(['user_id', 'api_id']);
         });
     }
@@ -56,8 +60,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tv_lists');
         Schema::dropIfExists('reviews');
+        Schema::dropIfExists('tv_lists');
         Schema::dropIfExists('watching_states');
         Schema::dropIfExists('scores');
     }

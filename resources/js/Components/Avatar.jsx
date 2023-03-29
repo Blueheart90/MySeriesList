@@ -4,7 +4,7 @@ const Avatar = ({
     className,
     src,
     alt,
-    fallBackSrc = "../storage/img/notProfileImage.jpg",
+    fallBackSrc = "/storage/img/notProfileImage.jpg",
 }) => {
     return (
         <img

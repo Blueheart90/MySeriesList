@@ -8,7 +8,7 @@ import MyTabs from "@/Components/MyTabs";
 import MyGallery from "@/Components/MyGallery";
 import TvAdditionalInfo from "@/Components/TvAdditionalInfo";
 import TvHero from "@/Components/TvHero";
-import Review from "@/Components/Review";
+import Reviews from "@/Components/Reviews";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
@@ -39,7 +39,7 @@ const Show = ({ auth }) => {
             </Head>
             <ShowTvContext.Provider value={usePage().props.data}>
                 <TvHero tvshow={tvshow} />
-                <div className="p-10 md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
+                <div className="container py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
                     <div className="col-span-1 ">
                         <TvAdditionalInfo info={info} />
                     </div>
@@ -53,7 +53,7 @@ const Show = ({ auth }) => {
                             </section>
                         )}
                         <MyTabs tabs={tabs} />
-                        <Review apiId={tvshow.id} />
+                        <Reviews apiId={tvshow.id} />
                     </div>
                 </div>
             </ShowTvContext.Provider>
