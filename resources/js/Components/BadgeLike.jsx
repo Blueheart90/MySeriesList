@@ -3,8 +3,8 @@ import LikeIcon from "./svg/LikeIcon";
 
 const BadgeLike = ({ like = true }) => {
     return (
-        <div class="flex bg-secundary rounded-xl overflow-hidden">
-            <div class="px-2 py-1">
+        <div className="flex overflow-hidden bg-secundary rounded-xl">
+            <div className="px-2 py-1">
                 <LikeIcon
                     className={`w-6  ${
                         !like ? "rotate-180 stroke-red-600" : "stroke-kiwi"
@@ -12,7 +12,7 @@ const BadgeLike = ({ like = true }) => {
                 />
             </div>
             <span
-                class={`px-2 py-1 text-primary ${
+                className={`px-2 py-1 text-primary ${
                     like ? "bg-kiwi" : "bg-red-600"
                 }  w-full text-center`}
             >

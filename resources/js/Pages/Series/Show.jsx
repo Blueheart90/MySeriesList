@@ -9,6 +9,7 @@ import MyGallery from "@/Components/MyGallery";
 import TvAdditionalInfo from "@/Components/TvAdditionalInfo";
 import TvHero from "@/Components/TvHero";
 import Reviews from "@/Components/Reviews";
+import InputRichText from "@/Components/InputRichText";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
@@ -54,6 +55,7 @@ const Show = ({ auth }) => {
                         )}
                         <MyTabs tabs={tabs} />
                         <Reviews apiId={tvshow.id} />
+                        <InputRichText />
                     </div>
                 </div>
             </ShowTvContext.Provider>

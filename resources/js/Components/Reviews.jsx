@@ -21,7 +21,7 @@ const Reviews = ({ apiId }) => {
             <h2 className="my-4 text-xl font-bold text-light">Reviews</h2>
             <div className="divide-y divide-secundary">
                 {reviews.map((review) => (
-                    <Review review={review} />
+                    <Review review={review} key={review.id} />
                 ))}
             </div>
         </div>
