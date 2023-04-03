@@ -1,0 +1,47 @@
+.custom-jodit-style .jodit-container:not(.jodit_inline) {
+  border-radius: 0;
+  border: 1px solid #7ddb29;
+  --tw-shadow: 5px 5px 0px 0px #7ddb29;
+    --tw-shadow-colored: 5px 5px 0px 0px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.custom-jodit-style .jodit-container:not(.jodit_inline) .jodit-workplace {
+background-color: #12062e;
+}
+
+.custom-jodit-style .jodit-toolbar__box:not(:empty) .jodit-toolbar-editor-collection:after {
+  background-color: #7ddb29;
+}
+
+.custom-jodit-style .jodit-toolbar-editor-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
+  /* background-image: -o-repeating-linear-gradient(transparent 0,transparent 43px,#255fff 44px); */
+  background-image: repeating-linear-gradient(transparent 0,transparent 43px,#7ddb29 44px);
+}
+
+
+ .custom-jodit-style .jodit-toolbar__box:not(:empty):not(:empty), .custom-jodit-style .jodit-status-bar, .custom-jodit-style .jodit-xpath a, .custom-jodit-style .jodit-status-bar a.jodit-status-bar-link:visited  {
+   background-color: #20234f;
+   border: none;
+   color: #7ddb29;
+   border-radius: 0;
+   /* padding: 2px; */
+
+
+  }
+
+  .custom-jodit-style .jodit-ui-separator {
+
+    border-left: 0;
+    border-right: 1px solid #7ddb29;
+    cursor: default;
+    margin: 10px 5px;
+    padding: 0;
+  }
+
+  .custom-jodit-style .jodit-icon, .custom-jodit-style .jodit-toolbar-button__trigger, .custom-jodit-style
+  .jodit-container:not(.jodit_inline) .jodit-editor__resize svg {
+    fill: #7ddb29;
+  }
+  .custom-jodit-style .jodit-toolbar-button__button:hover:not([disabled]), .custom-jodit-style .jodit-toolbar-button__trigger:hover:not([disabled]), .custom-jodit-style .jodit-status-bar .jodit-status-bar__item a:hover {
+    background-color: #12062e;
+  }

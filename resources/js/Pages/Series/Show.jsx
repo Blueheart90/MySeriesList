@@ -55,7 +55,8 @@ const Show = ({ auth }) => {
                         )}
                         <MyTabs tabs={tabs} />
                         <Reviews apiId={tvshow.id} />
-                        <InputRichText />
+
+                        <InputRichText height={300} />
                     </div>
                 </div>
             </ShowTvContext.Provider>
