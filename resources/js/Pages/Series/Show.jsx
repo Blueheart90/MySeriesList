@@ -10,6 +10,7 @@ import TvAdditionalInfo from "@/Components/TvAdditionalInfo";
 import TvHero from "@/Components/TvHero";
 import Reviews from "@/Components/Reviews";
 import InputRichText from "@/Components/InputRichText";
+import ReviewForm from "@/Components/ReviewForm";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
@@ -47,16 +48,21 @@ const Show = ({ auth }) => {
                     <div className="md:col-span-3 ">
                         {tvshow.cast.length > 0 && (
                             <section className="mb-10 ">
-                                <h2 className="mb-4 text-lg font-bold ">
+                                <h2 className="mb-4 text-2xl font-bold">
                                     Actores
                                 </h2>
                                 <Carousel data={tvshow.cast} card={CastCard} />
                             </section>
                         )}
-                        <MyTabs tabs={tabs} />
-                        <Reviews apiId={tvshow.id} />
-
-                        <InputRichText height={300} />
+                        <section className="mb-10 ">
+                            <MyTabs tabs={tabs} />
+                        </section>
+                        <section className="mb-10 ">
+                            <Reviews apiId={tvshow.id} />
+                        </section>
+                        <section className="mb-10 ">
+                            <ReviewForm />
+                        </section>
                     </div>
                 </div>
             </ShowTvContext.Provider>

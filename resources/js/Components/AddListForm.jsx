@@ -89,7 +89,6 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
 
     // comprobamos que cuando no halla un lista agregada devuelva un obj vacio antes del destructuring
     const { watching_state_id, season, episode, score_id } = oldData;
-    console.log(oldData);
     return (
         <Formik
             initialValues={{

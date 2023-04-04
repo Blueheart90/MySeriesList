@@ -1,14 +1,15 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useMemo } from "react";
 import JoditEditor from "jodit-react";
+import { useField, ErrorMessage } from "formik";
 import DOMPurify from "dompurify";
 import "../../css/customJoditStyle.css";
 
 const InputRichText = ({
     placeholder = "Escribe lo que quieras aquí",
     height = 400,
+    ...props
 }) => {
-    const editor = useRef(null);
-    const [content, setContent] = useState(null);
+    const [field, meta, helpers] = useField(props.name);
 
     const config = useMemo(
         () => ({
@@ -51,12 +52,6 @@ const InputRichText = ({
         []
     );
 
-    // const handleUpdate = (content) => {
-    //     const editorContent = content;
-    //     console.log(editorContent);
-    //     setContent(editorContent);
-    // };
-
     const createMarkup = (html) => {
         return {
             __html: DOMPurify.sanitize(html),
@@ -66,19 +61,18 @@ const InputRichText = ({
     return (
         <div className=" no-tailwindcss-base custom-jodit-style">
             <JoditEditor
-                ref={editor}
-                value={content}
+                value={meta.value}
                 config={config}
-                // onBlur={handleUpdate}
+                onBlur={field.onBlur}
                 onChange={(value) => {
                     console.log(value);
-                    setContent(value);
+                    helpers.setValue(value);
                 }}
             />
-            <div
+            {/* <div
                 className="p-5 mt-10 text-current bg-red-300 no-tailwindcss-base"
                 dangerouslySetInnerHTML={createMarkup(content)}
-            ></div>
+            ></div> */}
         </div>
     );
 };

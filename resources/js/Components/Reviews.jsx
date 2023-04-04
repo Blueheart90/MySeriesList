@@ -18,7 +18,7 @@ const Reviews = ({ apiId }) => {
     }, []);
     return (
         <div>
-            <h2 className="my-4 text-xl font-bold text-light">Reviews</h2>
+            <h2 className="text-2xl font-bold">Reseñas</h2>
             <div className="divide-y divide-secundary">
                 {reviews.map((review) => (
                     <Review review={review} key={review.id} />
