@@ -1,39 +1,49 @@
 import React, { useContext, useState } from "react";
+import { router } from "@inertiajs/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { ShowTvContext } from "@/Pages/Series/Show";
 import reviewFormSchema from "@/utils/reviewFormSchema";
 import toast from "react-hot-toast";
 import InputRichText from "./InputRichText";
 import MyRadioGroup from "./MyRadioGroup";
 import LikeIcon from "./svg/LikeIcon";
+import MyButton from "./MyButton";
 
 const ReviewForm = () => {
-    const handleSubmit = (values, resetForm) => {
-        console.log(values);
+    const { info, scoreList, tvshow, stateWatchingList, tvListOldData } =
+        useContext(ShowTvContext);
 
-        // axios
-        //     .post(route("tvlist.store", data))
-        //     .then((res) => {
-        //         if (res.data.hasOwnProperty("success")) {
-        //             setOldData(data);
-        //             setIsEditable(true);
-        //             close();
-        //             toast.success("Se agregó a tu lista con exito.", {
-        //                 position: "bottom-left",
-        //                 duration: 4000,
-        //             });
-        //         } else {
-        //             toast.error("Debes iniciar sesion antes.", {
-        //                 position: "bottom-left",
-        //                 duration: 4000,
-        //             });
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         toast.error("Se produjo un error", {
-        //             position: "bottom-left",
-        //         });
-        //         console.log(error);
-        //     });
+    const handleSubmitReview = (values, resetForm) => {
+        console.log(values);
+        const data = {
+            api_id: tvshow.id,
+            tvlist_id: tvListOldData?.id,
+            ...values,
+        };
+        console.log("enviando form", data);
+        axios
+            .post(route("review.store", data))
+            .then((res) => {
+                console.log(res);
+                toast.success(res.data.message, {
+                    position: "bottom-left",
+                    duration: 4000,
+                });
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message, {
+                    position: "bottom-left",
+                });
+            });
+
+        // router.post(route("review.store"), data, {
+        //     onSuccess: (page) => {
+        //         console.log(page.props.toast);
+        //     },
+        //     onError: (errors) => {
+        //         console.log("errors", errors);
+        //     },
+        // });
     };
     return (
         <div>
@@ -43,14 +53,21 @@ const ReviewForm = () => {
             <Formik
                 initialValues={{
                     content: "",
-                    recommended: true,
+                    recommended: null,
                 }}
                 validationSchema={reviewFormSchema}
                 onSubmit={(values, { resetForm }) =>
-                    handleSubmit(values, resetForm)
+                    handleSubmitReview(values, resetForm)
                 }
             >
-                {({ handleSubmit, values, isValid, setFieldValue, errors }) => (
+                {({
+                    handleSubmit,
+                    values,
+                    isValid,
+                    setFieldValue,
+                    errors,
+                    dirty,
+                }) => (
                     <form onSubmit={handleSubmit}>
                         <div className="flex items-center justify-between ">
                             <MyRadioGroup
@@ -71,15 +88,30 @@ const ReviewForm = () => {
                                     },
                                 ]}
                                 label="¿Lo recomiendas?"
+                                name="recommended"
                             />
-                            <button
+
+                            <MyButton
                                 type="submit"
-                                className="flex items-center justify-center gap-2 px-4 py-2 text-lg font-bold rounded-sm h-fit bg-kiwi text-secundary hover:bg-kiwi/75 active:bg-kiwi/50"
-                            >
-                                Publicar
-                            </button>
+                                disable={!(dirty && isValid)}
+                                label="Publicar"
+                            />
                         </div>
                         <InputRichText height={300} name="content" />
+                        <div className="mt-4 ">
+                            <ErrorMessage
+                                name="content"
+                                render={(msg) => (
+                                    <div className="text-red-600 ">*{msg}</div>
+                                )}
+                            />
+                            <ErrorMessage
+                                name="recommended"
+                                render={(msg) => (
+                                    <div className="text-red-600 ">*{msg}</div>
+                                )}
+                            />
+                        </div>
                     </form>
                 )}
             </Formik>

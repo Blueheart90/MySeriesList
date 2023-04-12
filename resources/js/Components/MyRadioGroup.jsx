@@ -1,15 +1,17 @@
-import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
+import { useField, ErrorMessage } from "formik";
 
-const MyRadioGroup = ({ radioOptions, label }) => {
-    const [plan, setPlan] = useState("startup");
+const MyRadioGroup = ({ radioOptions, label, ...props }) => {
+    const [field, meta, helpers] = useField(props.name);
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
     return (
         <RadioGroup
-            value={plan}
-            onChange={setPlan}
+            value={meta.value}
+            onChange={(value) => {
+                helpers.setValue(value);
+            }}
             className="flex items-center gap-4 "
         >
             <RadioGroup.Label>{label}</RadioGroup.Label>
@@ -21,6 +23,7 @@ const MyRadioGroup = ({ radioOptions, label }) => {
                     >
                         {({ checked }) => (
                             <button
+                                type="button"
                                 className={classNames(
                                     "  py-2 px-4 font-bold outline-none flex gap-2  ",
                                     checked

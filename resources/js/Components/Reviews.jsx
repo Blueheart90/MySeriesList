@@ -12,7 +12,6 @@ const Reviews = ({ apiId }) => {
                 })
             )
             .then((res) => {
-                console.log(res.data);
                 setReviews(res.data);
             });
     }, []);

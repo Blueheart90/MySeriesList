@@ -46,17 +46,17 @@ class TvListController extends Controller
         $response = null;
         try {
             if (Auth::check()) {
-                auth()->user()->tvlists()->create($validatedData);
-                $response = ['success' => 'Agregada exitosamente'];
+                $list = auth()->user()->tvlists()->create($validatedData);
+                Log::debug($list);
+                return response()->json(['code' => 200, 'message' => 'Se agregó a tu lista con exito', 'tvlist_id' => $list->id], 200);
             } else {
 
-                $response = ['error' => 'Debes iniciar sesion'];
+                return response()->json(['code' => 401, 'message' => 'Debes iniciar sesion antes'], 401);
             }
         } catch (\Throwable $e) {
-            return back()->withErrors(['msg' => 'Hubo un problema al guardar el registro. Por favor, intenta de nuevo.']);
-        }
 
-        return $response;
+            return response()->json(['code' => 404, 'message' => 'Error desconocido. Intentalo mas tarde'], 404);
+        }
     }
 
 

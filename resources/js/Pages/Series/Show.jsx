@@ -11,6 +11,8 @@ import TvHero from "@/Components/TvHero";
 import Reviews from "@/Components/Reviews";
 import InputRichText from "@/Components/InputRichText";
 import ReviewForm from "@/Components/ReviewForm";
+import FaceSad from "@/Components/svg/FaceSadIcon";
+import NoLoggingReview from "@/Components/NoLoggingReview";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
@@ -29,7 +31,6 @@ const Show = ({ auth }) => {
         },
     ];
 
-    console.log(tvshow);
     return (
         <AppLayout auth={auth}>
             <Head>
@@ -61,7 +62,7 @@ const Show = ({ auth }) => {
                             <Reviews apiId={tvshow.id} />
                         </section>
                         <section className="mb-10 ">
-                            <ReviewForm />
+                            {auth?.user ? <ReviewForm /> : <NoLoggingReview />}
                         </section>
                     </div>
                 </div>

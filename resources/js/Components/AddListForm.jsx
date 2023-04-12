@@ -25,23 +25,17 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
         axios
             .post(route("tvlist.store", data))
             .then((res) => {
-                if (res.data.hasOwnProperty("success")) {
-                    setOldData(data);
-                    setIsEditable(true);
-                    close();
-                    toast.success("Se agregó a tu lista con exito.", {
-                        position: "bottom-left",
-                        duration: 4000,
-                    });
-                } else {
-                    toast.error("Debes iniciar sesion antes.", {
-                        position: "bottom-left",
-                        duration: 4000,
-                    });
-                }
+                setOldData(data);
+                setIsEditable(true);
+                close();
+                console.log(res);
+                toast.success(res.data.message, {
+                    position: "bottom-left",
+                    duration: 4000,
+                });
             })
             .catch((error) => {
-                toast.error("Se produjo un error", {
+                toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
                 console.log(error);

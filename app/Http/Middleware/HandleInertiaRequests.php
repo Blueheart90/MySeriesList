@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -39,10 +40,9 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
-            'flash' => [
-                'success' => 'success',
-                'error' => 'error',
-            ],
+            'toast' => function () {
+                return Session::get('toast');
+            },
         ]);
     }
 }

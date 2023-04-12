@@ -10,7 +10,7 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'content', 'api_id', 'recommended', 'user_id'
+        'content', 'api_id', 'recommended', 'user_id', 'tvlist_id'
     ];
 
     // Una review pertenece a un User
