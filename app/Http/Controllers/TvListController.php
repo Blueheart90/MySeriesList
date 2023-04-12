@@ -48,7 +48,7 @@ class TvListController extends Controller
             if (Auth::check()) {
                 $list = auth()->user()->tvlists()->create($validatedData);
                 Log::debug($list);
-                return response()->json(['code' => 200, 'message' => 'Se agregó a tu lista con exito', 'tvlist_id' => $list->id], 200);
+                return response()->json(['code' => 200, 'message' => 'Se agregó a tu lista con exito', 'tvlist' => $list], 200);
             } else {
 
                 return response()->json(['code' => 401, 'message' => 'Debes iniciar sesion antes'], 401);

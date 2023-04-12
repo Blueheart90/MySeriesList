@@ -9,8 +9,9 @@ import toast from "react-hot-toast";
 import UpdateIcon from "./svg/UpdateIcon";
 
 const AddListForm = ({ close, isEditable, setIsEditable }) => {
+    const { dataShow, updateDataShow } = useContext(ShowTvContext);
     const { info, scoreList, tvshow, stateWatchingList, tvListOldData } =
-        useContext(ShowTvContext);
+        dataShow;
     const [seasonEpisodes, setseasonEpisodes] = useState(tvshow.seasons[1]);
     const [oldData, setOldData] = useState(tvListOldData || {});
 
@@ -25,6 +26,7 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
         axios
             .post(route("tvlist.store", data))
             .then((res) => {
+                updateDataShow({ ...dataShow, tvListOldData: res.data.tvlist });
                 setOldData(data);
                 setIsEditable(true);
                 close();

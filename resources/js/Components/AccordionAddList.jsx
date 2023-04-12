@@ -4,8 +4,9 @@ import AddListForm from "./AddListForm";
 import { ShowTvContext } from "@/Pages/Series/Show";
 
 const AccordionAddList = () => {
+    const { dataShow, updateDataShow } = useContext(ShowTvContext);
     const { editMode, info, scoreList, tvCheck, tvshow, stateWatchingList } =
-        useContext(ShowTvContext);
+        dataShow;
     const [isEditable, setIsEditable] = useState(editMode);
     return (
         <div className="w-full ">

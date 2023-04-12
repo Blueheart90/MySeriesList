@@ -10,9 +10,9 @@ import LikeIcon from "./svg/LikeIcon";
 import MyButton from "./MyButton";
 
 const ReviewForm = () => {
+    const { dataShow, updateDataShow } = useContext(ShowTvContext);
     const { info, scoreList, tvshow, stateWatchingList, tvListOldData } =
-        useContext(ShowTvContext);
-
+        dataShow;
     const handleSubmitReview = (values, resetForm) => {
         console.log(values);
         const data = {
