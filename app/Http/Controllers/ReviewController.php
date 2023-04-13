@@ -30,22 +30,20 @@ class ReviewController extends Controller
         ]);
 
         try {
+            $tvlist = TvList::where([
+                ['api_id', $validatedData['api_id']],
+                ['user_id', auth()->id()]
+            ])->firstOrFail();
 
-            DB::transaction(function () use ($validatedData) {
-                TvList::where([
-                    ['api_id', $validatedData['api_id']],
-                    ['user_id', auth()->id()]
-                ])->firstOrFail();
+            $review = auth()->user()->reviews()->create([
+                'content' => $validatedData['content'],
+                'api_id' => $validatedData['api_id'],
+                'recommended' => $validatedData['recommended'],
+                'tvlist_id' => $validatedData['tvlist_id'],
+            ]);
 
-                $query = auth()->user()->reviews()->create([
-                    'content' => $validatedData['content'],
-                    'api_id' => $validatedData['api_id'],
-                    'recommended' => $validatedData['recommended'],
-                    'tvlist_id' => $validatedData['tvlist_id'],
-                ]);
-            }, $deadlockRetries = 5);
-
-            return response()->json(['code' => 200, 'message' => 'Se agregó correctamente tu reseña'], 200);
+            $newRecord = collect($review)->merge(['tvlist' => $tvlist, 'user' => auth()->user()]);
+            return response()->json(['code' => 200, 'message' => 'Se agregó correctamente tu reseña', 'newRecord' => $newRecord], 200);
         } catch (ModelNotFoundException $th) {
             Log::debug($th->getMessage());
             Log::debug($th->getCode());

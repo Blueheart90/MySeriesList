@@ -1,11 +1,12 @@
 import React from "react";
 
-const MyButton = ({ disable, type, label }) => {
+const MyButton = ({ disable, type, label, ...props }) => {
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
     return (
         <button
+            {...props}
             type={type}
             disabled={disable}
             className={classNames(

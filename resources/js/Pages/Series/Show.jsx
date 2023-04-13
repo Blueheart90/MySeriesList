@@ -16,6 +16,7 @@ export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
     const [dataShow, setDataShow] = useState(usePage().props.data);
     const { info, tvshow } = usePage().props.data;
+    const [reviews, setReviews] = useState([]);
     console.log(usePage().props.data);
     const updateDataShow = (data) => {
         setDataShow(data);
@@ -62,10 +63,22 @@ const Show = ({ auth }) => {
                             <MyTabs tabs={tabs} />
                         </section>
                         <section className="mb-10 ">
-                            <Reviews apiId={tvshow.id} />
+                            <Reviews
+                                apiId={tvshow.id}
+                                reviews={reviews}
+                                setReviews={setReviews}
+                            />
                         </section>
                         <section className="mb-10 ">
-                            {auth?.user ? <ReviewForm /> : <NoLoggingReview />}
+                            {auth?.user ? (
+                                <ReviewForm
+                                    reviews={reviews}
+                                    setReviews={setReviews}
+                                    user={auth.user}
+                                />
+                            ) : (
+                                <NoLoggingReview />
+                            )}
                         </section>
                     </div>
                 </div>
