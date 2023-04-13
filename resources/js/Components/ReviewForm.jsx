@@ -97,7 +97,7 @@ const ReviewForm = ({ reviews, setReviews, user }) => {
                                 setFieldValue("content", myReview.content);
                                 setFieldValue(
                                     "recommended",
-                                    myReview.recommended
+                                    myReview.recommended * 1
                                 );
                                 setEditMode(true);
                                 console.log("mi review", myReview);

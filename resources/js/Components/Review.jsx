@@ -18,7 +18,8 @@ const Review = ({ review }) => {
                         <p className="font-bold text-kiwi">
                             {review.user.name}
                         </p>
-                        <BadgeLike like={review.recommended} />
+                        {/* se parse el dato de str a number, ya que formik entrga el input radio value como string */}
+                        <BadgeLike like={review.recommended * 1} />
                         <BadgeScore score={review.tvlist.score_id} />
                     </div>
                     <div className="text-sm text-right text-gray-600 ">
