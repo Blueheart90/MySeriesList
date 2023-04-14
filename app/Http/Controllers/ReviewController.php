@@ -51,4 +51,24 @@ class ReviewController extends Controller
             return response()->json(['code' => 404, 'message' => 'Debes primero agregar una lista'], 404);
         }
     }
+    public function update(Review $review, Request $request)
+    {
+        $validatedData = $request->validate([
+            'recommended' => 'required',
+            'content' => 'required',
+        ]);
+        try {
+            $review->update([
+                'content' => $validatedData['content'],
+                'recommended' => $validatedData['recommended']
+            ]);
+            $reviewUpdated = $review->fresh();
+            return response()->json(['code' => 200, 'message' => 'Se Actualizo correctamente tu reseña', 'newRecord' => $reviewUpdated], 200);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            Log::debug($th->getCode());
+            Log::debug(get_class($th));
+            return response()->json(['code' => $th->getCode(), 'message' => $th->getMessage()], $th->getCode());
+        }
+    }
 }

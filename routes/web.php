@@ -52,6 +52,7 @@ Route::put('/tvlist/{tvList}', [TvListController::class, 'update'])->name('tvlis
 //Review
 Route::get('/review/{apiId}', [ReviewController::class, 'allReviews'])->name('reviews.all');
 Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+Route::put('/review{review}', [ReviewController::class, 'update'])->name('review.update');
 
 
 // Route::get('/test', [SerieController::class, 'test'])->name('series.test');

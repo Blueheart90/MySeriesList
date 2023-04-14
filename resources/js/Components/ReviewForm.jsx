@@ -13,30 +13,22 @@ const ReviewForm = ({ reviews, setReviews, user }) => {
     const { dataShow, updateDataShow } = useContext(ShowTvContext);
     const { info, scoreList, tvshow, stateWatchingList, tvListOldData } =
         dataShow;
-    const [editMode, setEditMode] = useState(false);
+    const [oldReview, setOldReview] = useState({});
 
     // useEffect(() => {
-    //     if (reviews.length > 0) {
-    //         const myReview = reviews.find(
-    //             (review) => review.user_id == user.id
-    //         );
-    //         // setOldDataMyReview()
-    //         console.log("mi review", myReview);
-    //     }
-    // }, [reviews, editMode]);
 
+    // }, [oldReview]);
     const handleSubmitReview = (values, resetForm) => {
-        console.log(values);
         const data = {
             api_id: tvshow.id,
             tvlist_id: tvListOldData?.id,
             ...values,
         };
-        console.log("enviando form", data);
         axios
             .post(route("review.store", data))
             .then((res) => {
-                console.log("rspuesta fomr review", res.data.newRecord);
+                console.log("respuesta submit", res.data.newRecord);
+                // se agrega el nuevo review al array de reviews
                 setReviews([...reviews, res.data.newRecord]);
                 toast.success(res.data.message, {
                     position: "bottom-left",
@@ -57,6 +49,32 @@ const ReviewForm = ({ reviews, setReviews, user }) => {
         //         console.log("errors", errors);
         //     },
         // });
+    };
+
+    const handleUpdateReview = (values, review) => {
+        axios
+            .put(route("review.update", { review: review.id }), values)
+            .then((res) => {
+                // se actualiza el review en el array de reviews
+                const updatedReviews = reviews.map((review) => {
+                    if (review.id === res.data.newRecord.id) {
+                        review.content = res.data.newRecord.content;
+                        review.recommended = res.data.newRecord.recommended;
+                    }
+                    return review;
+                });
+                console.log("updatedReviews", updatedReviews);
+                setReviews(updatedReviews);
+                toast.success(res.data.message, {
+                    position: "bottom-left",
+                    duration: 4000,
+                });
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message, {
+                    position: "bottom-left",
+                });
+            });
     };
     return (
         <div>
@@ -89,22 +107,23 @@ const ReviewForm = ({ reviews, setReviews, user }) => {
                     dirty,
                 }) => {
                     useEffect(() => {
+                        //llenar formulario con los datos anteriores
                         if (reviews.length > 0) {
                             const myReview = reviews.find(
                                 (review) => review.user_id == user.id
                             );
                             if (myReview) {
+                                setOldReview(myReview);
                                 setFieldValue("content", myReview.content);
                                 setFieldValue(
                                     "recommended",
                                     myReview.recommended * 1
                                 );
-                                setEditMode(true);
                                 console.log("mi review", myReview);
                                 console.log("form values", values);
                             }
                         }
-                    }, [reviews, editMode]);
+                    }, [reviews]);
 
                     return (
                         <form onSubmit={handleSubmit}>
@@ -129,11 +148,14 @@ const ReviewForm = ({ reviews, setReviews, user }) => {
                                     label="¿Lo recomiendas?"
                                     name="recommended"
                                 />
-                                {editMode ? (
+                                {Object.keys(oldReview).length ? (
                                     <MyButton
                                         type="button"
                                         onClick={() => {
-                                            console.log("actualizando");
+                                            handleUpdateReview(
+                                                values,
+                                                oldReview
+                                            );
                                         }}
                                         disable={!(dirty && isValid)}
                                         label="Actualizar"
