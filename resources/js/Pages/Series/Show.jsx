@@ -46,7 +46,7 @@ const Show = ({ auth }) => {
             </Head>
             <ShowTvContext.Provider value={{ dataShow, updateDataShow }}>
                 <TvHero tvshow={tvshow} />
-                <div className="container py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
+                <div className="container px-2 py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
                     <div className="col-span-1 ">
                         <TvAdditionalInfo info={info} />
                     </div>
@@ -60,6 +60,9 @@ const Show = ({ auth }) => {
                             </section>
                         )}
                         <section className="mb-10 ">
+                            <h2 className="mb-4 text-2xl font-bold">
+                                Multimedia
+                            </h2>
                             <MyTabs tabs={tabs} />
                         </section>
                         <section className="mb-10 ">

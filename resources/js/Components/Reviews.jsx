@@ -24,7 +24,7 @@ const Reviews = ({ apiId, reviews, setReviews }) => {
                     ))}
                 </div>
             ) : (
-                <div className="py-10 bg-secundary">
+                <div className="p-10 bg-secundary">
                     <div className="flex items-center justify-center gap-4 mb-4">
                         <p className="text-xl text-kiwi">
                             Aún no hay reseñas disponibles, sé el primero en dar

@@ -3,7 +3,7 @@ import LikeIcon from "./svg/LikeIcon";
 
 const BadgeLike = ({ like = true }) => {
     return (
-        <div className="flex overflow-hidden bg-secundary rounded-xl">
+        <div className="inline-flex items-center overflow-hidden  bg-secundary rounded-xl">
             <div className="px-2 py-1">
                 <LikeIcon
                     className={`w-6  ${

@@ -13,12 +13,12 @@ const Review = ({ review }) => {
                     src={`/storage/${review.user.profile_photo_path}`}
                     alt={`Foto de perfil de ${review.user.name}`}
                 />
-                <div className="flex justify-between w-full">
+                <div className="flex flex-col justify-between w-full gap-4 sm:flex-row">
                     <div className="space-y-2 ">
                         <p className="font-bold text-kiwi">
                             {review.user.name}
                         </p>
-                        {/* se parse el dato de str a number, ya que formik entrga el input radio value como string */}
+                        {/* se parsea el dato de str a number, ya que formik entrega el input radio value como string */}
                         <BadgeLike like={review.recommended * 1} />
                         <BadgeScore score={review.tvlist.score_id} />
                     </div>

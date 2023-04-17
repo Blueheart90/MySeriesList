@@ -11,8 +11,7 @@ import LoadingScreen from "./LoadingScreen";
 
 const ReviewForm = ({ reviews, setReviews, user }) => {
     const { dataShow, updateDataShow } = useContext(ShowTvContext);
-    const { info, scoreList, tvshow, stateWatchingList, tvListOldData } =
-        dataShow;
+    const { tvshow, tvListOldData } = dataShow;
     const [oldReview, setOldReview] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
