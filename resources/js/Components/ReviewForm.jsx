@@ -39,6 +39,7 @@ const ReviewForm = ({ reviews, setReviews, user }) => {
                 toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
+                setIsLoading(false);
             });
 
         // router.post(route("review.store"), data, {

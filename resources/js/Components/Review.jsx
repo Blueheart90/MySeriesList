@@ -3,8 +3,14 @@ import Avatar from "./Avatar";
 import BadgeLike from "./BadgeLike";
 import BadgeScore from "./BadgeScore";
 import { dateforHumans } from "@/utils/helpers";
+import DOMPurify from "dompurify";
 
 const Review = ({ review }) => {
+    const createMarkup = (html) => {
+        return {
+            __html: DOMPurify.sanitize(html),
+        };
+    };
     return (
         <div className="py-10 ">
             <div className="flex w-full gap-4">
@@ -30,7 +36,10 @@ const Review = ({ review }) => {
                 </div>
             </div>
             <div className="relative px-10 py-10 mt-4  bg-secundary shadow-[5px_5px_0px_0px_#7ddb29]">
-                <p>{review.content}</p>
+                <p
+                    className="no-tailwindcss-base"
+                    dangerouslySetInnerHTML={createMarkup(review.content)}
+                ></p>
                 {review.updated_at != review.created_at ? (
                     <p className="text-sm italic text-right text-gray-600  absolute  bottom-2.5 right-10 ">
                         Editada: {dateforHumans(review.updated_at)}

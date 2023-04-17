@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import { usePage } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
@@ -15,12 +15,17 @@ import NoLoggingReview from "@/Components/NoLoggingReview";
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
     const [dataShow, setDataShow] = useState(usePage().props.data);
-    const { info, tvshow } = usePage().props.data;
+    const {
+        data: { info, tvshow },
+    } = usePage().props;
     const [reviews, setReviews] = useState([]);
     console.log(usePage().props.data);
-    const updateDataShow = (data) => {
-        setDataShow(data);
-    };
+    const updateDataShow = useCallback(
+        (data) => {
+            setDataShow(data);
+        },
+        [setDataShow]
+    );
 
     const tabs = [
         {

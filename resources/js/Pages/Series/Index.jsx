@@ -51,14 +51,16 @@ const Index = ({ auth }) => {
                     </h2>
                     <Carousel data={trendingTv.results} card={SerieCard} />
                 </section>
-                <div className="grid grid-cols-4 gap-4 mt-10 ">
+                <div className="grid gap-4 mt-10 lg:grid-cols-4 ">
                     <section className="col-span-3 ">
                         <MyTabs tabs={tabs} />
                     </section>
-                    <CardListAside
-                        title={"Mejor calificadas"}
-                        data={topRatedTv}
-                    />
+                    <section className="hidden lg:block">
+                        <CardListAside
+                            title={"Mejor calificadas"}
+                            data={topRatedTv}
+                        />
+                    </section>
                 </div>
             </div>
         </AppLayout>

@@ -7,7 +7,7 @@ const MyTabs = ({ tabs }) => {
 
     return (
         <Tab.Group>
-            <Tab.List className="flex gap-4 mb-10">
+            <Tab.List className="flex flex-wrap justify-center gap-4 mb-10">
                 {tabs.map((tab) => (
                     <Tab
                         key={tab.id}

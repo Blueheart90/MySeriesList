@@ -2,7 +2,6 @@ import React, { useMemo, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 import { useDebounce } from "@/Hooks/useDebounce";
 import { useField, ErrorMessage } from "formik";
-import DOMPurify from "dompurify";
 import "../../css/customJoditStyle.css";
 
 const InputRichText = ({
@@ -55,12 +54,6 @@ const InputRichText = ({
         []
     );
 
-    const createMarkup = (html) => {
-        return {
-            __html: DOMPurify.sanitize(html),
-        };
-    };
-
     const debouncedRequest = useDebounce(() => {
         // send request to the backend
         helpers.setValue(richContent);
@@ -78,16 +71,8 @@ const InputRichText = ({
                 value={meta.value}
                 config={config}
                 onBlur={field.onBlur}
-                // onChange={(value) => {
-                //     console.log(value);
-                //     helpers.setValue(value);
-                // }}
                 onChange={handleChange}
             />
-            {/* <div
-                className="p-5 mt-10 text-current bg-red-300 no-tailwindcss-base"
-                dangerouslySetInnerHTML={createMarkup(content)}
-            ></div> */}
         </div>
     );
 };
