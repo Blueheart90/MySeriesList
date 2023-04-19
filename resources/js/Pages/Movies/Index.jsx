@@ -10,46 +10,54 @@ import CardListAside from "@/Components/CardListAside";
 import SerieCard from "@/Components/serieCard";
 
 const Index = ({ auth }) => {
-    const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
-        usePage().props.data;
+    const {
+        genres,
+        nowPlayingMovie,
+        popularMovie,
+        topRatedMovie,
+        trendingMovie,
+    } = usePage().props.data;
+
+    console.log(usePage().props.data);
+
     const tabs = [
         {
             id: 1,
             label: "Populares",
-            Component: <CardList data={popularTv} />,
+            Component: <CardList data={popularMovie} />,
         },
         {
             id: 2,
             label: "Al Aire",
-            Component: <CardList data={onAirTv} />,
+            Component: <CardList data={nowPlayingMovie} />,
         },
         {
             id: 3,
             label: "Categorias",
-            Component: <Tags tags={genres} type="tv" />,
+            Component: <Tags tags={genres} type="movie" />,
         },
         {
             id: 4,
             label: "Busqueda",
-            Component: <SearchFilter type="tv" />,
+            Component: <SearchFilter type="movie" />,
         },
     ];
     return (
         <AppLayout auth={auth}>
             <Head>
-                <title>Series</title>
+                <title>Peliculas</title>
                 <meta
                     name="description"
-                    content="Pagina principal con las series mas poulares de la semana, ultimos lanzamientos, filtradas por categorias"
+                    content="Pagina principal con las peliculas mas poulares de la semana, ultimos lanzamientos, filtradas por categorias"
                 />
             </Head>
             <div className="container py-20 mx-auto ">
                 <section>
-                    <h1 className="text-4xl font-bold text-white">Series</h1>
+                    <h1 className="text-4xl font-bold text-white">Peliculas</h1>
                     <h2 className="mb-4 text-xl font-bold text-kiwi">
                         Tendencia esta semana
                     </h2>
-                    <Carousel data={trendingTv.results} card={SerieCard} />
+                    <Carousel data={trendingMovie.results} card={SerieCard} />
                 </section>
                 <div className="grid gap-4 mt-10 lg:grid-cols-4 ">
                     <section className="col-span-3 ">
@@ -58,7 +66,7 @@ const Index = ({ auth }) => {
                     <section className="hidden lg:block">
                         <CardListAside
                             title={"Mejor calificadas"}
-                            data={topRatedTv}
+                            data={topRatedMovie}
                         />
                     </section>
                 </div>

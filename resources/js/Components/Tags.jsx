@@ -3,11 +3,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import CardList from "./CardList";
 
-const Tags = ({ tags }) => {
+const Tags = ({ tags, type }) => {
+    // type mean movies or series
     const [filterGenres, setFilterGenres] = useState([]);
     const [filterData, setFilterData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+
+    const tvShowRoute = "series.genres";
+    const movieRoute = "movies.genres";
 
     useEffect(() => {
         // convierte array a string separado por comas (,)
@@ -18,7 +22,7 @@ const Tags = ({ tags }) => {
             setIsLoading(true);
             axios
                 .get(
-                    route("series.genres", {
+                    route(type === "movie" ? movieRoute : tvShowRoute, {
                         with_genres: stringGenre,
                         page: currentPage,
                     })

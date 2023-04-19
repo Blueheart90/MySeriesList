@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SerieController;
@@ -44,6 +45,13 @@ Route::get('/series', [SerieController::class, 'index'])->name('series.index');
 Route::get('/series/{id}/{slug?}', [SerieController::class, 'show'])->name('serie.show');
 Route::get('/filter/series/genres', [SerieController::class, 'genresFilter'])->name('series.genres');
 Route::get('/filter/series/search', [SerieController::class, 'searchFilter'])->name('series.search');
+
+// Peliculas
+// Route::resource('series', SerieController::class);
+Route::get('/peliculas', [MovieController::class, 'index'])->name('movies.index');
+// Route::get('/series/{id}/{slug?}', [SerieController::class, 'show'])->name('serie.show');
+Route::get('/filter/peliculas/genres', [MovieController::class, 'genresFilter'])->name('movies.genres');
+Route::get('/filter/peliculas/search', [MovieController::class, 'searchFilter'])->name('movies.search');
 
 //TvList
 Route::post('/tvlist', [TvListController::class, 'store'])->name('tvlist.store');

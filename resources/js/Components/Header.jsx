@@ -40,8 +40,8 @@ const Header = ({ auth }) => {
 
                             <li>
                                 <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("movies.index")}
+                                    active={route().current("movies.index")}
                                 >
                                     Peliculas
                                 </NavLink>

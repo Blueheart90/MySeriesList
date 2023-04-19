@@ -3,19 +3,21 @@ import { useDebounce } from "@/Hooks/useDebounce";
 import SearchIcon from "./svg/SearchIcon";
 import CardList from "./CardList";
 
-const SearchFilter = () => {
+const SearchFilter = ({ type }) => {
     const [searchValue, setSearchValue] = useState("");
     const [filterData, setFilterData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
+    const tvShowRoute = "series.search";
+    const movieRoute = "movies.search";
     useEffect(() => {
         // si tiene algo el string hace la peticion
         if (searchValue) {
             setIsLoading(true);
             axios
                 .get(
-                    route("series.search", {
+                    route(type === "movie" ? movieRoute : tvShowRoute, {
                         query: searchValue,
                         page: currentPage,
                     })
@@ -35,7 +37,7 @@ const SearchFilter = () => {
             setIsLoading(true);
             axios
                 .get(
-                    route("series.search", {
+                    route(type === "movie" ? movieRoute : tvShowRoute, {
                         query: searchValue,
                         page: currentPage,
                     })
