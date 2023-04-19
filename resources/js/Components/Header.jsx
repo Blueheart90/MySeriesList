@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import LogoSvg from "./svg/LogoSvg";
 import { Link } from "@inertiajs/react";
+import { Turn as Hamburger } from "hamburger-react";
 import LinkCustom from "./LinkCustom";
+import BurgerMenu from "./BurgerMenu";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
+import UserIcon from "./svg/UserIcon";
 
 const Header = ({ auth }) => {
+    const [isOpen, setOpen] = useState(false);
+
     return (
-        <header className="sticky top-0 z-10 flex items-center w-full px-4 py-2 transition-all duration-500 sm:px-10 bg-primary h-14">
+        <header className="sticky top-0 z-10 flex items-center w-full h-16 px-4 py-2 transition-all duration-500 border-b-2 bg-secundary border-kiwi">
             <nav
                 id="header"
-                className="flex flex-wrap items-center justify-between w-full mx-auto mt-0 "
+                className="flex items-center justify-between w-full "
             >
                 {/* logo */}
                 <div className="flex items-center">
@@ -25,55 +30,112 @@ const Header = ({ auth }) => {
                     <nav className="ml-10 ">
                         <ul className="flex gap-4 ">
                             <li>
-                                <LinkCustom
+                                <NavLink
                                     href={route("series.index")}
-                                    styles={"  hover:text-kiwi text-light "}
+                                    active={route().current("series.index")}
                                 >
                                     Series
-                                </LinkCustom>
+                                </NavLink>
                             </li>
+
                             <li>
-                                <LinkCustom
+                                <NavLink
                                     href={route("dashboard")}
-                                    styles={" hover:text-kiwi text-light "}
+                                    active={route().current("dashboard")}
                                 >
                                     Peliculas
-                                </LinkCustom>
+                                </NavLink>
                             </li>
                         </ul>
                     </nav>
                 </div>
 
                 {/* Hamburger */}
-                <div className="block pr-4 sm:hidden">
-                    <button className="inline-flex items-center justify-center p-2 text-white transition duration-150 ease-in-out rounded-md toggleColour ">
-                        <svg
-                            className="w-6 h-6"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                className="inline-flex"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
+                <div className=" md:hidden">
+                    <Hamburger
+                        color="#7ddb29"
+                        toggled={isOpen}
+                        toggle={setOpen}
+                        size="20"
+                    />
+                </div>
+                <div
+                    className={`absolute md:hidden duration-300 transition-all  h-screen px-10 py-10 top-0 bg-secundary shadow-[1px_0px_0px_0px_#7ddb29] ${
+                        isOpen ? "left-0" : "-left-full"
+                    }`}
+                >
+                    <nav className="flex flex-col gap-10 ">
+                        <ul className="flex flex-col items-center">
+                            <li>
+                                <NavLink
+                                    href={route("series.index")}
+                                    active={route().current("series.index")}
+                                >
+                                    Series
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
+                                >
+                                    Peliculas
+                                </NavLink>
+                            </li>
+                        </ul>
+
+                        <div className="flex flex-col items-center text-light">
+                            {auth?.user ? (
+                                <div className="flex sm:items-center sm:ml-6">
+                                    <div className="">
+                                        <div className="flex items-center ">
+                                            <UserIcon />
+                                            <p
+                                                type="button"
+                                                className="px-3 py-2 text-base font-bold leading-4 bg-secundary hover:text-light"
+                                            >
+                                                {auth.user.name}
+                                            </p>
+                                        </div>
+                                        <div className="flex flex-col items-center ">
+                                            <a href={route("profile.edit")}>
+                                                Profile
+                                            </a>
+                                            <a
+                                                href={route("logout")}
+                                                method="post"
+                                                as="button"
+                                            >
+                                                Log Out
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <LinkCustom
+                                        href={route("login")}
+                                        styles={
+                                            " hover:bg-kiwi hover:text-secundary text-light px-6 py-2 mb-2"
+                                        }
+                                    >
+                                        Iniciar sesion
+                                    </LinkCustom>
+                                    <LinkCustom
+                                        href={route("register")}
+                                        styles={
+                                            " hover:bg-light hover:text-secundary text-light px-6 py-2"
+                                        }
+                                    >
+                                        Registro
+                                    </LinkCustom>
+                                </>
+                            )}
+                        </div>
+                    </nav>
                 </div>
                 {/* link right */}
-                <div
-                    className="z-20 hidden w-full p-0 mt-2 text-black sm:flex sm:items-center sm:w-auto sm:mt-0 sm:bg-transparent "
-                    id="nav-content"
-                >
+                <div className="hidden text-black md:flex" id="nav-content">
                     <ul>
                         <li className="flex gap-2">
                             {auth?.user ? (
