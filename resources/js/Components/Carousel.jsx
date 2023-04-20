@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay } from "swiper";
-import SerieCard from "./serieCard";
+import SerieCard from "./SerieCard";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

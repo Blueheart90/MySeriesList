@@ -7,7 +7,7 @@ import CardList from "@/Components/CardList";
 import Tags from "@/Components/Tags";
 import SearchFilter from "@/Components/SearchFilter";
 import CardListAside from "@/Components/CardListAside";
-import SerieCard from "@/Components/serieCard";
+import MovieCard from "@/Components/MovieCard";
 
 const Index = ({ auth }) => {
     const {
@@ -24,22 +24,22 @@ const Index = ({ auth }) => {
         {
             id: 1,
             label: "Populares",
-            Component: <CardList data={popularMovie} />,
+            Component: <CardList data={popularMovie} card={MovieCard} />,
         },
         {
             id: 2,
             label: "Al Aire",
-            Component: <CardList data={nowPlayingMovie} />,
+            Component: <CardList data={nowPlayingMovie} card={MovieCard} />,
         },
         {
             id: 3,
             label: "Categorias",
-            Component: <Tags tags={genres} type="movie" />,
+            Component: <Tags tags={genres} type="movie" card={MovieCard} />,
         },
         {
             id: 4,
             label: "Busqueda",
-            Component: <SearchFilter type="movie" />,
+            Component: <SearchFilter type="movie" card={MovieCard} />,
         },
     ];
     return (
@@ -57,7 +57,7 @@ const Index = ({ auth }) => {
                     <h2 className="mb-4 text-xl font-bold text-kiwi">
                         Tendencia esta semana
                     </h2>
-                    <Carousel data={trendingMovie.results} card={SerieCard} />
+                    <Carousel data={trendingMovie.results} card={MovieCard} />
                 </section>
                 <div className="grid gap-4 mt-10 lg:grid-cols-4 ">
                     <section className="col-span-3 ">

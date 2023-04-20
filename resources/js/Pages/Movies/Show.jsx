@@ -14,42 +14,43 @@ import NoLoggingReview from "@/Components/NoLoggingReview";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
-    const [dataShow, setDataShow] = useState(usePage().props.data);
-    const {
-        data: { info, tvshow },
-    } = usePage().props;
+    // const [dataShow, setDataShow] = useState(usePage().props.data);
+    // const {
+    //     data: { info, tvshow },
+    // } = usePage().props;
+
     const [reviews, setReviews] = useState([]);
     console.log(usePage().props.data);
-    const updateDataShow = useCallback(
-        (data) => {
-            setDataShow(data);
-        },
-        [setDataShow]
-    );
+    // const updateDataShow = useCallback(
+    //     (data) => {
+    //         setDataShow(data);
+    //     },
+    //     [setDataShow]
+    // );
 
-    const tabs = [
-        {
-            id: 1,
-            label: "Videos",
-            Component: <MyGallery data={tvshow.gallery.videos} type="video" />,
-        },
-        {
-            id: 2,
-            label: "Imágenes",
-            Component: <MyGallery data={tvshow.gallery.images} type="image" />,
-        },
-    ];
+    // const tabs = [
+    //     {
+    //         id: 1,
+    //         label: "Videos",
+    //         Component: <MyGallery data={tvshow.gallery.videos} type="video" />,
+    //     },
+    //     {
+    //         id: 2,
+    //         label: "Imágenes",
+    //         Component: <MyGallery data={tvshow.gallery.images} type="image" />,
+    //     },
+    // ];
 
     return (
         <AppLayout auth={auth}>
-            <Head>
+            {/* <Head>
                 <title>{tvshow.name}</title>
                 <meta
                     name="description"
-                    content={`Pagina con información detallada sobre la serie de television ${tvshow.name}`}
+                    content={`Pagina con información detallada sobre la pelicula ${tvshow.name}`}
                 />
-            </Head>
-            <ShowTvContext.Provider value={{ dataShow, updateDataShow }}>
+            </Head> */}
+            {/* <ShowTvContext.Provider value={{ dataShow, updateDataShow }}>
                 <TvHero tvshow={tvshow} />
                 <div className="container px-2 py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
                     <div className="col-span-1 ">
@@ -90,7 +91,7 @@ const Show = ({ auth }) => {
                         </section>
                     </div>
                 </div>
-            </ShowTvContext.Provider>
+            </ShowTvContext.Provider> */}
         </AppLayout>
     );
 };

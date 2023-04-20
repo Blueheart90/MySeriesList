@@ -3,7 +3,7 @@ import { useDebounce } from "@/Hooks/useDebounce";
 import SearchIcon from "./svg/SearchIcon";
 import CardList from "./CardList";
 
-const SearchFilter = ({ type }) => {
+const SearchFilter = ({ type, card: Card }) => {
     const [searchValue, setSearchValue] = useState("");
     const [filterData, setFilterData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -81,6 +81,7 @@ const SearchFilter = ({ type }) => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     isLoading={isLoading}
+                    card={Card}
                 />
             )}
         </>

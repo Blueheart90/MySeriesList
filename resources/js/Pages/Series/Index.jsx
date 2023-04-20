@@ -7,7 +7,7 @@ import CardList from "@/Components/CardList";
 import Tags from "@/Components/Tags";
 import SearchFilter from "@/Components/SearchFilter";
 import CardListAside from "@/Components/CardListAside";
-import SerieCard from "@/Components/serieCard";
+import SerieCard from "@/Components/SerieCard";
 
 const Index = ({ auth }) => {
     const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
@@ -16,22 +16,22 @@ const Index = ({ auth }) => {
         {
             id: 1,
             label: "Populares",
-            Component: <CardList data={popularTv} />,
+            Component: <CardList data={popularTv} card={SerieCard} />,
         },
         {
             id: 2,
             label: "Al Aire",
-            Component: <CardList data={onAirTv} />,
+            Component: <CardList data={onAirTv} card={SerieCard} />,
         },
         {
             id: 3,
             label: "Categorias",
-            Component: <Tags tags={genres} type="tv" />,
+            Component: <Tags tags={genres} type="tv" card={SerieCard} />,
         },
         {
             id: 4,
             label: "Busqueda",
-            Component: <SearchFilter type="tv" />,
+            Component: <SearchFilter type="tv" card={SerieCard} />,
         },
     ];
     return (

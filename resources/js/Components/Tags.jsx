@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import CardList from "./CardList";
 
-const Tags = ({ tags, type }) => {
+const Tags = ({ tags, type, card: Card }) => {
     // type mean movies or series
     const [filterGenres, setFilterGenres] = useState([]);
     const [filterData, setFilterData] = useState([]);
@@ -72,6 +72,7 @@ const Tags = ({ tags, type }) => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     isLoading={isLoading}
+                    card={Card}
                 />
             )}
         </>

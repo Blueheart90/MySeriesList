@@ -49,7 +49,7 @@ Route::get('/filter/series/search', [SerieController::class, 'searchFilter'])->n
 // Peliculas
 // Route::resource('series', SerieController::class);
 Route::get('/peliculas', [MovieController::class, 'index'])->name('movies.index');
-// Route::get('/series/{id}/{slug?}', [SerieController::class, 'show'])->name('serie.show');
+Route::get('/peliculas/{id}/{slug?}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('/filter/peliculas/genres', [MovieController::class, 'genresFilter'])->name('movies.genres');
 Route::get('/filter/peliculas/search', [MovieController::class, 'searchFilter'])->name('movies.search');
 

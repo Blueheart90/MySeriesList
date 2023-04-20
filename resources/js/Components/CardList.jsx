@@ -1,5 +1,5 @@
 import Pagination from "./Pagination";
-import SerieCard from "./serieCard";
+import SerieCard from "./SerieCard";
 import { TailSpin } from "react-loader-spinner";
 
 const CardList = ({
@@ -8,6 +8,7 @@ const CardList = ({
     currentPage,
     setCurrentPage,
     isLoading,
+    card: Card,
 }) => {
     const { results, total_pages } = data;
 
@@ -29,7 +30,7 @@ const CardList = ({
                     {results?.length ? (
                         <div className="flex flex-wrap justify-center gap-4">
                             {results?.map((card) => (
-                                <SerieCard item={card} key={card.id} />
+                                <Card item={card} key={card.id} />
                             ))}
                         </div>
                     ) : (
