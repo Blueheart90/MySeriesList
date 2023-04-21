@@ -9,17 +9,15 @@ import LikeIcon from "./svg/LikeIcon";
 import MyButton from "./MyButton";
 import LoadingScreen from "./LoadingScreen";
 
-const ReviewForm = ({ reviews, setReviews, user }) => {
-    const { dataShow, updateDataShow } = useContext(ShowTvContext);
-    const { tvshow, tvListOldData } = dataShow;
+const ReviewForm = ({ reviews, setReviews, user, media, oldListData }) => {
     const [oldReview, setOldReview] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmitReview = (values, resetForm) => {
         setIsLoading(true);
         const data = {
-            api_id: tvshow.id,
-            tvlist_id: tvListOldData?.id,
+            api_id: media.id,
+            tvlist_id: oldListData?.id,
             ...values,
         };
         axios

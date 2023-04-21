@@ -6,7 +6,6 @@ import Carousel from "@/Components/Carousel";
 import CastCard from "@/Components/CastCard";
 import MyTabs from "@/Components/MyTabs";
 import MyGallery from "@/Components/MyGallery";
-import TvAdditionalInfo from "@/Components/TvAdditionalInfo";
 import Hero from "@/Components/Hero";
 import Reviews from "@/Components/Reviews";
 import ReviewForm from "@/Components/ReviewForm";
@@ -19,7 +18,7 @@ export const MovieContext = createContext();
 const Show = ({ auth }) => {
     const [dataShow, setDataShow] = useState(usePage().props.data);
     const {
-        data: { info, movie },
+        data: { info, movie, movieListOldData },
     } = usePage().props;
 
     const [reviews, setReviews] = useState([]);
@@ -89,6 +88,8 @@ const Show = ({ auth }) => {
                                     reviews={reviews}
                                     setReviews={setReviews}
                                     user={auth.user}
+                                    media={movie}
+                                    oldListData={movieListOldData}
                                 />
                             ) : (
                                 <NoLoggingReview />

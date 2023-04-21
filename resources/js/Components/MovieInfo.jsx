@@ -7,7 +7,7 @@ const MovieInfo = ({ info }) => {
     const valueEnd = info["vote_average"].toFixed(1);
     return (
         <>
-            <div className="flex items-center gap-4 ">
+            <div className="flex flex-wrap items-center gap-4 mb-2 md:mb-0 ">
                 <h1 className="text-4xl font-bold ">{`${info.name} (${info.year})`}</h1>
                 <a
                     href={info.imdb_link}
