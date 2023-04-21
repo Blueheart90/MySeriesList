@@ -3,10 +3,10 @@ import { Disclosure } from "@headlessui/react";
 import AddListForm from "./AddListForm";
 import { ShowTvContext } from "@/Pages/Series/Show";
 
-const AccordionAddList = () => {
-    const { dataShow, updateDataShow } = useContext(ShowTvContext);
-    const { editMode, info, scoreList, tvCheck, tvshow, stateWatchingList } =
-        dataShow;
+const AccordionAddList = ({ editMode, form: Form }) => {
+    // const { dataShow, updateDataShow } = useContext(ShowTvContext);
+    // const { editMode, info, scoreList, tvCheck, tvshow, stateWatchingList } =
+    //     dataShow;
     const [isEditable, setIsEditable] = useState(editMode);
     return (
         <div className="w-full ">
@@ -57,7 +57,12 @@ const AccordionAddList = () => {
                             </div>
                         </Disclosure.Button>
                         <Disclosure.Panel unmount={false}>
-                            <AddListForm
+                            {/* <AddListForm
+                                close={close}
+                                setIsEditable={setIsEditable}
+                                isEditable={isEditable}
+                            /> */}
+                            <Form
                                 close={close}
                                 setIsEditable={setIsEditable}
                                 isEditable={isEditable}

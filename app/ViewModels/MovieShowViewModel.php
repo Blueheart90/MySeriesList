@@ -23,7 +23,7 @@ class MovieShowViewModel extends ViewModel
         $this->editMode = isset($this->movieListOldData) ? true : false;
     }
 
-    public function timeToHoursMinutes($time, $format = '%02dh %02dmin')
+    protected function timeToHoursMinutes($time, $format = '%02dh %02dmin')
     {
         if ($time < 1) {
             return;
@@ -56,15 +56,17 @@ class MovieShowViewModel extends ViewModel
 
     public function info()
     {
-        return collect([
+        return collect(['basic' => [
             'Titulo original' => $this->movie['original_title'],
             'Estreno' => Carbon::parse($this->movie['release_date'])->isoFormat('MMMM D, YYYY'),
-            'Pagina Web' => '<a class=" hover:text-blue-800 hover:font-bold" href="' . $this->movie['homepage'] . '">Sitio Oficial</a>',
+            // 'Pagina Web' => '<a class=" hover:text-blue-800 hover:font-bold" href="' . $this->movie['homepage'] . '">Sitio Oficial</a>',
             'Estado' => $this->movie['status'],
+            'Duración' => $this->timeToHoursMinutes($this->movie['runtime']),
             'Presupuesto' => $this->movie['budget'] == 0 ? 'No disponible' : '$' . number_format($this->movie['budget']),
             'Ingresos' => $this->movie['revenue'] == 0 ? 'No disponible' : '$' . number_format($this->movie['revenue']),
-            'Lenguaje Original' => $this->movie['original_language']
-        ]);
+            'Lenguaje Original' => $this->movie['original_language'],
+
+        ], 'homepage' => $this->movie['homepage']]);
     }
 
     public function movie()
@@ -86,6 +88,7 @@ class MovieShowViewModel extends ViewModel
                         : 'https://via.placeholder.com/300x450',
                 ]);
             }),
+            'cast_str_list' => collect($this->movie['credits']['cast'])->pluck('name')->flatten()->join(', ', ' y '),
             'crew' => collect($this->movie['credits']['crew'])->where('job', 'Director'),
             'director' => collect($this->movie['credits']['crew'])->where('job', 'Director'),
             'screenplay' => collect($this->movie['credits']['crew'])->where('job', 'Screenplay'),
@@ -106,6 +109,19 @@ class MovieShowViewModel extends ViewModel
                         : $video['key'],
                 ]);
             }),
+            'gallery' => [
+                'images' => collect($this->movie['images']['backdrops'])->take(10)->map(function ($image) {
+                    return [
+                        'thumbnail' => 'https://image.tmdb.org/t/p/w300/' . $image['file_path'],
+                        'source' => 'https://image.tmdb.org/t/p/original/' . $image['file_path']
+                    ];
+                }), 'videos' => collect($this->movie['videos']['results'])->take(10)->map(function ($video) {
+                    return [
+                        'thumbnail' => 'https://img.youtube.com/vi/' . $video['key'] . '/mqdefault.jpg',
+                        'source' => $video['key']
+                    ];
+                })
+            ],
             'random_bg' => $this->movie['images']['backdrops']
                 ? 'http://image.tmdb.org/t/p/w1280' . collect($this->movie['images']['backdrops'])->random()['file_path']
                 : '',
@@ -114,7 +130,7 @@ class MovieShowViewModel extends ViewModel
 
         ])->only([
             'poster_path', 'poster_url', 'id', 'genres', 'name', 'vote_average', 'imdb_link', 'overview', 'release_date', 'runtime', 'credits',
-            'videos', 'images', 'backdrops', 'crew', 'director', 'screenplay', 'cast', 'images', 'random_bg', 'tagline', 'year'
+            'videos', 'gallery', 'images', 'backdrops', 'crew', 'director', 'screenplay', 'cast', 'cast_str_list', 'images', 'random_bg', 'created_by', 'tagline', 'year'
         ]);
     }
 }

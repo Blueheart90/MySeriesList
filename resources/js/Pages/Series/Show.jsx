@@ -1,4 +1,5 @@
 import { createContext, useCallback, useState } from "react";
+import TvInfo from "../../Components/TvInfo";
 import { usePage } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
@@ -7,16 +8,17 @@ import CastCard from "@/Components/CastCard";
 import MyTabs from "@/Components/MyTabs";
 import MyGallery from "@/Components/MyGallery";
 import TvAdditionalInfo from "@/Components/TvAdditionalInfo";
-import TvHero from "@/Components/TvHero";
+import Hero from "@/Components/Hero";
 import Reviews from "@/Components/Reviews";
 import ReviewForm from "@/Components/ReviewForm";
 import NoLoggingReview from "@/Components/NoLoggingReview";
+import AddListForm from "@/Components/AddListForm";
 
 export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
     const [dataShow, setDataShow] = useState(usePage().props.data);
     const {
-        data: { info, tvshow },
+        data: { info, tvshow, editMode },
     } = usePage().props;
     const [reviews, setReviews] = useState([]);
     console.log(usePage().props.data);
@@ -50,7 +52,9 @@ const Show = ({ auth }) => {
                 />
             </Head>
             <ShowTvContext.Provider value={{ dataShow, updateDataShow }}>
-                <TvHero tvshow={tvshow} />
+                <Hero media={tvshow} editMode={editMode} form={AddListForm}>
+                    <TvInfo info={tvshow} />
+                </Hero>
                 <div className="container px-2 py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
                     <div className="col-span-1 ">
                         <TvAdditionalInfo info={info} />

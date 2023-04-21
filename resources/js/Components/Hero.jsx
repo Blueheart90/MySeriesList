@@ -1,12 +1,12 @@
 import React from "react";
 import AccordionAddList from "./AccordionAddList";
-import TvInfo from "./TvInfo";
+import MovieInfo from "./MovieInfo";
 
-const TvHero = ({ tvshow }) => {
+const Hero = ({ media, editMode, form, children }) => {
     return (
         <div
             style={{
-                backgroundImage: `linear-gradient(90deg, #20234fdc 1%, #12062ecf 95%), url(${tvshow["random_bg"]})`,
+                backgroundImage: `linear-gradient(90deg, #20234fdc 1%, #12062ecf 95%), url(${media["random_bg"]})`,
             }}
             className={`overflow-hidden shadow-xl bg-no-repeat bg-cover    `}
         >
@@ -15,15 +15,16 @@ const TvHero = ({ tvshow }) => {
                     <div className="lg:col-span-2 w-fit justify-self-center ">
                         <figure className="overflow-hidden border-2 rounded-lg border-primary ">
                             <img
-                                src={tvshow["poster_url"]}
+                                src={media["poster_url"]}
                                 alt="poster"
                                 className="mx-auto transition duration-150 ease-in-out lg:w-full lazyload hover:opacity-75"
                             />
-                            <AccordionAddList />
+                            <AccordionAddList editMode={editMode} form={form} />
                         </figure>
                     </div>
                     <div className="p-2 lg:col-span-6">
-                        <TvInfo info={tvshow} />
+                        {/* <MovieInfo info={media} /> */}
+                        {children}
                     </div>
                 </div>
             </div>
@@ -31,4 +32,4 @@ const TvHero = ({ tvshow }) => {
     );
 };
 
-export default TvHero;
+export default Hero;

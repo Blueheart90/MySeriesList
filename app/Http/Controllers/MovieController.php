@@ -112,7 +112,7 @@ class MovieController extends Controller
                 ->get("{$this->tmdbUrl}/movie/{$id}", ['language' => $this->language, 'append_to_response' => $appendResponse, 'include_image_language' => $imageLanguage])
                 ->json();
 
-            if (array_key_exists('success', $tvShowDetails)) {
+            if (array_key_exists('success', $movieShowDetails)) {
 
                 throw new ApiResourceNotFoundException('El recurso no esta disponible en la api', 404);
             }
