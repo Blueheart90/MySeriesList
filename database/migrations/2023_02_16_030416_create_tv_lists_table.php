@@ -46,10 +46,15 @@ return new class extends Migration
             $table->text('content');
             $table->string('api_id');
             $table->boolean('recommended');
+
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('tvlist_id');
+            // $table->unsignedBigInteger('tvlist_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('tvlist_id')->references('id')->on('tv_lists')->onDelete('cascade');
+            // $table->foreign('tvlist_id')->references('id')->on('tv_lists')->onDelete('cascade');
+
+            // Campos pofimorficos
+            $table->unsignedBigInteger('reviewable_id');
+            $table->string('reviewable_type');
             $table->timestamps();
             $table->unique(['user_id', 'api_id']);
         });

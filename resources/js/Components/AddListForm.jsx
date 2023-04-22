@@ -53,34 +53,20 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
             ...values,
         };
         axios
-            .put(route("tvlist.update", { id: tvListOldData.id }), data)
+            .put(route("tvlist.update", { tvList: tvListOldData.id }), data)
             .then((res) => {
-                if (res.data.hasOwnProperty("success")) {
-                    setOldData(data);
-                    // setIsEditable(true);
-                    // close();
-                    toast.success("Se actualizó tu lista con exito.", {
-                        position: "bottom-left",
-                        duration: 4000,
-                    });
-                } else {
-                    toast.error("Debes iniciar sesion antes.", {
-                        position: "bottom-left",
-                        duration: 4000,
-                    });
-                }
+                setOldData(data);
+                toast.success(res.data.message, {
+                    position: "bottom-left",
+                    duration: 4000,
+                });
             })
             .catch((error) => {
-                toast.error("Se produjo un error", {
+                toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
                 console.log(error);
             });
-
-        // toast.success("Se actualizó el estado con exito.", {
-        //     position: "bottom-left",
-        //     duration: 4000,
-        // });
     };
 
     // comprobamos que cuando no halla un lista agregada devuelva un obj vacio antes del destructuring

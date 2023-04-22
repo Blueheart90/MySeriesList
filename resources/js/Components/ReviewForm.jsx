@@ -9,10 +9,17 @@ import LikeIcon from "./svg/LikeIcon";
 import MyButton from "./MyButton";
 import LoadingScreen from "./LoadingScreen";
 
-const ReviewForm = ({ reviews, setReviews, user, media, oldListData }) => {
+const ReviewForm = ({
+    reviews,
+    setReviews,
+    user,
+    media,
+    oldListData,
+    model,
+}) => {
     const [oldReview, setOldReview] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-
+    console.log("media", media);
     const handleSubmitReview = (values, resetForm) => {
         setIsLoading(true);
         const data = {
@@ -20,11 +27,14 @@ const ReviewForm = ({ reviews, setReviews, user, media, oldListData }) => {
             tvlist_id: oldListData?.id,
             ...values,
         };
+
+        console.log("data", data);
         axios
-            .post(route("review.store", data))
+            .post(route("review.store", { model: model }), data)
             .then((res) => {
                 // se agrega el nuevo review al array de reviews
                 setTimeout(() => {
+                    console.log("newrecord", res.data.newRecord);
                     setReviews([...reviews, res.data.newRecord]);
                     toast.success(res.data.message, {
                         position: "bottom-left",

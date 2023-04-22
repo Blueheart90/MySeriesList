@@ -18,7 +18,7 @@ export const MovieContext = createContext();
 const Show = ({ auth }) => {
     const [dataShow, setDataShow] = useState(usePage().props.data);
     const {
-        data: { info, movie, movieListOldData },
+        data: { info, movie, editMode, movieListOldData },
     } = usePage().props;
 
     const [reviews, setReviews] = useState([]);
@@ -53,7 +53,7 @@ const Show = ({ auth }) => {
                 />
             </Head>
             <MovieContext.Provider value={{ dataShow, updateDataShow }}>
-                <Hero media={movie} form={AddMovieListForm}>
+                <Hero media={movie} editMode={editMode} form={AddMovieListForm}>
                     <MovieInfo info={movie} />
                 </Hero>
                 <div className="container px-2 py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
@@ -90,6 +90,7 @@ const Show = ({ auth }) => {
                                     user={auth.user}
                                     media={movie}
                                     oldListData={movieListOldData}
+                                    model="movie"
                                 />
                             ) : (
                                 <NoLoggingReview />

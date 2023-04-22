@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\MovieListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SerieController;
@@ -57,10 +58,14 @@ Route::get('/filter/peliculas/search', [MovieController::class, 'searchFilter'])
 Route::post('/tvlist', [TvListController::class, 'store'])->name('tvlist.store');
 Route::put('/tvlist/{tvList}', [TvListController::class, 'update'])->name('tvlist.update');
 
+//MovieList
+Route::post('/movielist', [MovieListController::class, 'store'])->name('movielist.store');
+Route::put('/movielist/{movielist}', [MovieListController::class, 'update'])->name('movielist.update');
+
 //Review
 Route::get('/review/{apiId}', [ReviewController::class, 'allReviews'])->name('reviews.all');
-Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
-Route::put('/review{review}', [ReviewController::class, 'update'])->name('review.update');
+Route::post('/review/{model}', [ReviewController::class, 'store'])->name('review.store');
+Route::put('/review/{review}', [ReviewController::class, 'update'])->name('review.update');
 
 
 // Route::get('/test', [SerieController::class, 'test'])->name('series.test');

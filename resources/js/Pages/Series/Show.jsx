@@ -18,7 +18,7 @@ export const ShowTvContext = createContext();
 const Show = ({ auth }) => {
     const [dataShow, setDataShow] = useState(usePage().props.data);
     const {
-        data: { info, tvshow, editMode },
+        data: { info, tvshow, editMode, tvListOldData },
     } = usePage().props;
     const [reviews, setReviews] = useState([]);
     console.log(usePage().props.data);
@@ -87,6 +87,9 @@ const Show = ({ auth }) => {
                                     reviews={reviews}
                                     setReviews={setReviews}
                                     user={auth.user}
+                                    media={tvshow}
+                                    oldListData={tvListOldData}
+                                    model="tv"
                                 />
                             ) : (
                                 <NoLoggingReview />

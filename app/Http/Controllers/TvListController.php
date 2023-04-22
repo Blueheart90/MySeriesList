@@ -79,9 +79,8 @@ class TvListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TvList $tvList)
+    public function update(TvList $tvList, Request $request)
     {
-        $response = null;
         $validatedData = $request->validate([
             'name' => 'required',
             'api_id' => 'required',
@@ -91,17 +90,15 @@ class TvListController extends Controller
             'score_id' => 'required|numeric|min:1',
             'watching_state_id' => 'required|numeric|min:1',
         ]);
-
+        // dd($tvList);
         try {
 
             $tvList->update($validatedData);
-            $response = ['success' => 'Agregada exitosamente'];
+            // $tvList->update(['poster' => 'prueba']);
+            return response()->json(['code' => 200, 'message' => 'Se Actualizó tu lista con exito'], 200);
         } catch (\Throwable $e) {
-            $response = ['error' => $e->message];
+            return response()->json(['code' => $th->getCode(), 'message' => $th->getMessage()], $th->getCode());
         }
-
-        // return response()->json(['success' => true]);
-        return $response;
     }
 
     /**

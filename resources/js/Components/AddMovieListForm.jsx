@@ -14,7 +14,7 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
         dataShow;
     // const [seasonEpisodes, setseasonEpisodes] = useState(tvshow.seasons[1]);
     const [oldData, setOldData] = useState(movieListOldData || {});
-
+    console.log("movieListOldData", movieListOldData);
     const handleSubmit = (values, resetForm) => {
         const data = {
             name: movie.name,
@@ -27,7 +27,7 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
             .post(route("movielist.store", data))
             .then((res) => {
                 updateDataShow({
-                    ...dataMedia,
+                    ...dataShow,
                     movieListOldData: res.data.movie,
                 });
                 setOldData(data);
@@ -48,7 +48,6 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
     };
 
     const handleUpdate = (values) => {
-        console.log("updatting..", movieListOldData);
         const data = {
             name: movie.name,
             api_id: movie.id,
@@ -56,25 +55,19 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
             ...values,
         };
         axios
-            .put(route("tvlist.update", { id: movieListOldData.id }), data)
+            .put(
+                route("movielist.update", { movielist: movieListOldData.id }),
+                data
+            )
             .then((res) => {
-                if (res.data.hasOwnProperty("success")) {
-                    setOldData(data);
-                    // setIsEditable(true);
-                    // close();
-                    toast.success("Se actualizó tu lista con exito.", {
-                        position: "bottom-left",
-                        duration: 4000,
-                    });
-                } else {
-                    toast.error("Debes iniciar sesion antes.", {
-                        position: "bottom-left",
-                        duration: 4000,
-                    });
-                }
+                setOldData(data);
+                toast.success(res.data.message, {
+                    position: "bottom-left",
+                    duration: 4000,
+                });
             })
             .catch((error) => {
-                toast.error("Se produjo un error", {
+                toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
                 console.log(error);

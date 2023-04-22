@@ -19,15 +19,21 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Una review pertenece a un User
-    public function tvlist()
+    // Relacion polimorfica
+    public function reviewable()
     {
-        return $this->belongsTo(TvList::class);
+        return $this->morphTo();
     }
 
     // Una review pertenece a un User
-    public function movielist()
-    {
-        return $this->hasOne(MovieList::class);
-    }
+    // public function tvlist()
+    // {
+    //     return $this->belongsTo(TvList::class);
+    // }
+
+    // // Una review pertenece a un User
+    // public function movielist()
+    // {
+    //     return $this->hasOne(MovieList::class);
+    // }
 }

@@ -25,8 +25,13 @@ class TvList extends Model
         return $this->belongsTo(WatchingState::class);
     }
 
+    // public function review()
+    // {
+    //     return $this->hasOne(Review::class);
+    // }
+
     public function review()
     {
-        return $this->hasOne(Review::class);
+        return $this->morphOne(Review::class, 'reviewable');
     }
 }

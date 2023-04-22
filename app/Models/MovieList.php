@@ -25,8 +25,13 @@ class MovieList extends Model
         return $this->belongsTo(WatchingState::class);
     }
 
+    // public function review()
+    // {
+    //     return $this->belongsTo(Review::class);
+    // }
+
     public function review()
     {
-        return $this->belongsTo(Review::class);
+        return $this->morphOne(Review::class, 'reviewable');
     }
 }

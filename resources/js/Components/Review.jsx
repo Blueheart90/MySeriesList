@@ -11,6 +11,7 @@ const Review = ({ review }) => {
             __html: DOMPurify.sanitize(html),
         };
     };
+    console.log("test review", review);
     return (
         <div className="py-10 ">
             <div className="flex w-full gap-4">
@@ -26,12 +27,12 @@ const Review = ({ review }) => {
                         </p>
                         {/* se parsea el dato de str a number, ya que formik entrega el input radio value como string */}
                         <BadgeLike like={review.recommended * 1} />
-                        <BadgeScore score={review.tvlist.score_id} />
+                        <BadgeScore score={review.reviewable.score_id} />
                     </div>
                     <div className="text-sm text-right text-gray-600 ">
                         <p>Publicado: {dateforHumans(review.created_at)}</p>
-                        <p>Temp vistas: {review.tvlist.season}</p>
-                        <p>Cap vistos: {review.tvlist.episode}</p>
+                        <p>Temp vistas: {review.reviewable.season}</p>
+                        <p>Cap vistos: {review.reviewable.episode}</p>
                     </div>
                 </div>
             </div>
