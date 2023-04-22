@@ -8,6 +8,7 @@ import Tags from "@/Components/Tags";
 import SearchFilter from "@/Components/SearchFilter";
 import CardListAside from "@/Components/CardListAside";
 import SerieCard from "@/Components/SerieCard";
+import CardTvAside from "@/Components/CardTvAside";
 
 const Index = ({ auth }) => {
     const { genres, onAirTv, popularTv, topRatedTv, trendingTv } =
@@ -59,6 +60,7 @@ const Index = ({ auth }) => {
                         <CardListAside
                             title={"Mejor calificadas"}
                             data={topRatedTv}
+                            card={CardTvAside}
                         />
                     </section>
                 </div>

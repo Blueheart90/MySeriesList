@@ -8,6 +8,7 @@ import Tags from "@/Components/Tags";
 import SearchFilter from "@/Components/SearchFilter";
 import CardListAside from "@/Components/CardListAside";
 import MovieCard from "@/Components/MovieCard";
+import CardMovieAside from "@/Components/CardMovieAside";
 
 const Index = ({ auth }) => {
     const {
@@ -67,6 +68,7 @@ const Index = ({ auth }) => {
                         <CardListAside
                             title={"Mejor calificadas"}
                             data={topRatedMovie}
+                            card={CardMovieAside}
                         />
                     </section>
                 </div>

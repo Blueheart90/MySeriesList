@@ -1,21 +1,23 @@
 import React from "react";
 
-const CardAside = ({ data }) => {
+const CardTvAside = ({ data }) => {
     const { item, index } = data;
     return (
         <div className="flex">
             <figure className="relative overflow-hidden border rounded-lg border-kiwi ">
-                <span className="absolute pl-3.5 pr-2  bg-kiwi rounded-br-md text-primary font-semibold  text-sm">
-                    #{index + 1}
-                </span>
-                <span className="absolute bottom-0 right-0 px-2 text-sm font-semibold text-primary bg-kiwi rounded-tl-md">
-                    {item.year}
-                </span>
-                <img
-                    src={item.poster_thumbnail}
-                    alt={`Poster de ${item.name}`}
-                    className="w-32 "
-                />
+                <a href={route("serie.show", { id: item.id, slug: item.slug })}>
+                    <span className="absolute pl-3.5 pr-2  bg-kiwi rounded-br-md text-primary font-semibold  text-sm">
+                        #{index + 1}
+                    </span>
+                    <span className="absolute bottom-0 right-0 px-2 text-sm font-semibold text-primary bg-kiwi rounded-tl-md">
+                        {item.year}
+                    </span>
+                    <img
+                        src={item.poster_thumbnail}
+                        alt={`Poster de ${item.name}`}
+                        className="w-32 "
+                    />
+                </a>
             </figure>
             <div className="flex flex-col justify-around w-40 px-4">
                 <div className="">
@@ -35,4 +37,4 @@ const CardAside = ({ data }) => {
     );
 };
 
-export default CardAside;
+export default CardTvAside;
