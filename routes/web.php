@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieListController;
+use App\Http\Controllers\MyListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SerieController;
@@ -67,6 +68,9 @@ Route::get('/review/{apiId}', [ReviewController::class, 'allReviews'])->name('re
 Route::post('/review/{model}', [ReviewController::class, 'store'])->name('review.store');
 Route::put('/review/{review}', [ReviewController::class, 'update'])->name('review.update');
 
+
+// Mis Listas
+Route::get('/list/{username}', [MyListController::class, 'show'])->name('mylist.show');
 
 // Route::get('/test', [SerieController::class, 'test'])->name('series.test');
 
