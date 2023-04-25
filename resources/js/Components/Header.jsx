@@ -137,17 +137,21 @@ const Header = ({ auth }) => {
                 </div>
                 <div className="flex items-center">
                     {/* Lists */}
-                    <NavLink
-                        className="flex items-center"
-                        href={route("series.index")}
-                        active={route().current("series.index")}
-                    >
-                        <ListIcon
-                            className="inline-block w-6 h-6 mr-2 "
-                            strokeWidth={2}
-                        />
-                        Mis Listas
-                    </NavLink>
+                    {auth.user ? (
+                        <NavLink
+                            className="flex items-center"
+                            href={route("mylist.show", {
+                                username: auth.user.username,
+                            })}
+                            active={route().current("mylist.show")}
+                        >
+                            <ListIcon
+                                className="inline-block w-6 h-6 mr-2 "
+                                strokeWidth={2}
+                            />
+                            Mis Listas
+                        </NavLink>
+                    ) : null}
 
                     {/* link right */}
                     <div className="hidden text-black md:flex" id="nav-content">
