@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from "react";
 import AddListSelect from "./AddListSelect";
 import SortIcon from "./svg/SortIcon";
+import { useSortTable } from "@/Hooks/useSortTable";
 const TableList = ({ headers, list, fields }) => {
-    const [data, setData] = useState(list);
     const [sortColumn, setSortColumn] = useState("name");
     const [sortOrder, setSortOrder] = useState("asc");
+    const [orderedData, handleSorting] = useSortTable(list);
 
     useEffect(() => {
         console.log("cambió", sortColumn);
-
-        const orderedData = [...data].sort((a, b) => {
-            if (sortOrder == "asc") {
-                return a[sortColumn]
-                    .toString()
-                    .localeCompare(b[sortColumn].toString(), "en", {
-                        numeric: true,
-                    });
-            } else if (sortOrder == "desc") {
-                return b[sortColumn]
-                    .toString()
-                    .localeCompare(a[sortColumn].toString(), "en", {
-                        numeric: true,
-                    });
-            }
-        });
-        setData(orderedData);
+        handleSorting(sortColumn, sortOrder);
     }, [sortColumn, sortOrder]);
 
     return (
@@ -105,7 +90,7 @@ const TableList = ({ headers, list, fields }) => {
                     </tr>
                 </thead>
                 <tbody className=" text-kiwi">
-                    {data.map((item, index) => (
+                    {orderedData.map((item, index) => (
                         <tr
                             key={index + item.name}
                             className="  bg-secundary  shadow-[2px_2px_0px_0px_#7ddb29] "
