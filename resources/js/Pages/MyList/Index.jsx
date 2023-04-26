@@ -11,6 +11,7 @@ const Index = ({ auth }) => {
         { value: "name", label: "Nombre" },
         { value: "score_id", label: "Puntuacion" },
         { value: "type", label: "Tipo" },
+        { value: "watching_state_id", label: "Estado" },
     ];
     return (
         <AppLayout auth={auth}>

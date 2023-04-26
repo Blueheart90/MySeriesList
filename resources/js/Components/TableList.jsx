@@ -29,9 +29,20 @@ const TableList = ({ headers, list, fields }) => {
 
     return (
         <div className="">
-            <div className="flex items-center justify-end gap-2 text-kiwi">
+            <div className="flex items-center justify-between gap-2 text-kiwi">
+                <input
+                    type="text"
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        console.log("search", value);
+                    }}
+                    className="max-w-xl pl-4 border-none rounded-sm grow focus:ring-kiwi focus:border-kiwi bg-secundary"
+                    placeholder="Busca una serie..."
+                />
                 <div className="flex items-center gap-2">
-                    <label htmlFor="sort">Ordernar por:</label>
+                    <label className=" whitespace-nowrap" htmlFor="sort">
+                        Ordernar por:
+                    </label>
                     <select
                         className="py-1 pl-4 text-sm rounded-sm focus:ring-kiwi focus:border-kiwi bg-secundary"
                         name={"sort"}
@@ -47,34 +58,34 @@ const TableList = ({ headers, list, fields }) => {
                             </option>
                         ))}
                     </select>
-                </div>
-                <div className="flex gap-2">
-                    <button
-                        type="button"
-                        className={`p-1 rounded-md bg-secundary  ${
-                            sortOrder == "asc"
-                                ? " border border-kiwi"
-                                : "border border-secundary"
-                        }`}
-                        onClick={() => {
-                            setSortOrder("asc");
-                        }}
-                    >
-                        <SortIcon className="w-6 rotate-180 stroke-kiwi" />
-                    </button>
-                    <button
-                        type="button"
-                        className={`p-1 rounded-md bg-secundary ${
-                            sortOrder == "desc"
-                                ? " border border-kiwi"
-                                : "border border-secundary"
-                        }`}
-                        onClick={() => {
-                            setSortOrder("desc");
-                        }}
-                    >
-                        <SortIcon className="w-6 stroke-kiwi" />
-                    </button>
+                    <div className="flex gap-2">
+                        <button
+                            type="button"
+                            className={`p-1 rounded-md bg-secundary  ${
+                                sortOrder == "asc"
+                                    ? " border border-kiwi"
+                                    : "border border-secundary"
+                            }`}
+                            onClick={() => {
+                                setSortOrder("asc");
+                            }}
+                        >
+                            <SortIcon className="w-6 rotate-180 stroke-kiwi" />
+                        </button>
+                        <button
+                            type="button"
+                            className={`p-1 rounded-md bg-secundary ${
+                                sortOrder == "desc"
+                                    ? " border border-kiwi"
+                                    : "border border-secundary"
+                            }`}
+                            onClick={() => {
+                                setSortOrder("desc");
+                            }}
+                        >
+                            <SortIcon className="w-6 stroke-kiwi" />
+                        </button>
+                    </div>
                 </div>
             </div>
             <table className="table w-full space-y-6 text-sm text-gray-400 border-separate border-spacing-y-4 ">
