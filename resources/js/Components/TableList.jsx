@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import AddListSelect from "./AddListSelect";
 import SortIcon from "./svg/SortIcon";
 import { useSortTable } from "@/Hooks/useSortTable";
 const TableList = ({ headers, list, fields }) => {
     const [sortColumn, setSortColumn] = useState("name");
     const [sortOrder, setSortOrder] = useState("asc");
-    const [orderedData, handleSorting] = useSortTable(list);
+    const [orderedData, handleSorting, handleSearch] = useSortTable(list);
 
     useEffect(() => {
         console.log("cambió", sortColumn);
@@ -18,8 +17,7 @@ const TableList = ({ headers, list, fields }) => {
                 <input
                     type="text"
                     onChange={(e) => {
-                        const value = e.target.value;
-                        console.log("search", value);
+                        handleSearch(e.target.value);
                     }}
                     className="max-w-xl pl-4 border-none rounded-sm grow focus:ring-kiwi focus:border-kiwi bg-secundary"
                     placeholder="Busca una serie..."

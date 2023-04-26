@@ -4,7 +4,7 @@ export function useSortTable(data) {
     const [orderedData, setOrderedData] = useState(data);
 
     const handleSorting = (sortColumn, sortOrder) => {
-        const sorted = [...data].sort((a, b) => {
+        const sorted = [...orderedData].sort((a, b) => {
             if (sortOrder == "asc") {
                 return a[sortColumn]
                     .toString()
@@ -22,5 +22,12 @@ export function useSortTable(data) {
 
         setOrderedData(sorted);
     };
-    return [orderedData, handleSorting];
+
+    const handleSearch = (searchText) => {
+        const filtered = data.filter((item) =>
+            item.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setOrderedData(filtered);
+    };
+    return [orderedData, handleSorting, handleSearch];
 }
