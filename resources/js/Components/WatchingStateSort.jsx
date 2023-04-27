@@ -17,7 +17,7 @@ const WatchingStateSort = ({ states, stateFilter, setStateFilter }) => {
                     className={`px-3 py-2 transition-all font-semibold duration-200  rounded-md cursor-pointer select-none ${
                         stateFilter === state.id
                             ? "bg-kiwi  text-secundary active:bg-kiwi/70 "
-                            : "bg-secundary text-light hover:bg-secundary/30 active:bg-secundary"
+                            : "bg-secundary text-light hover:bg-secundary/80 active:bg-secundary"
                     }`}
                 >
                     {state.name}

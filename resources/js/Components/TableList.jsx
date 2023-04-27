@@ -10,6 +10,14 @@ const TableList = ({ headers, fields, data }) => {
     const [searchText, setSearchText] = useState("");
     const [dataTable, setDataTable] = useState(lists);
 
+    const colorVariants = {
+        green: "bg-green-600",
+        blue: "bg-blue-600",
+        yellow: "bg-yellow-600",
+        red: "bg-red-600",
+        purple: "bg-purple-600",
+    };
+
     const [getDataFiltered] = useSortTable(
         lists,
         sortColumn,
@@ -88,6 +96,7 @@ const TableList = ({ headers, fields, data }) => {
             <table className="table w-full space-y-6 text-sm text-gray-400 border-separate border-spacing-y-4 ">
                 <thead className="bg-kiwi text-primary">
                     <tr>
+                        <th></th>
                         {headers.map((header, index) => (
                             <th
                                 key={index + header}
@@ -106,8 +115,17 @@ const TableList = ({ headers, fields, data }) => {
                     {dataTable.map((item, index) => (
                         <tr
                             key={index + item.name}
-                            className="  bg-secundary  shadow-[2px_2px_0px_0px_#7ddb29] "
+                            className="transition-all duration-300 bg-secundary hover:bg-secundary/80"
                         >
+                            <td
+                                className={`w-1 ${
+                                    colorVariants[
+                                        stateWatchingList[
+                                            item.watching_state_id
+                                        ].color
+                                    ]
+                                } `}
+                            ></td>
                             <td className="p-3">
                                 <div className="flex align-items-center">
                                     <img
@@ -115,11 +133,19 @@ const TableList = ({ headers, fields, data }) => {
                                         src={`https://www.themoviedb.org/t/p/w92${item.poster}`}
                                         alt=""
                                     />
-                                    <div className="ml-3">
-                                        <div className="">{item.name}</div>
-                                        <div className="text-gray-500">
-                                            mail@rgmail.com
-                                        </div>
+                                    <div className="my-auto ml-3">
+                                        <a
+                                            href={route(
+                                                item.type === "Movie"
+                                                    ? "movie.show"
+                                                    : "serie.show",
+                                                {
+                                                    id: item.api_id,
+                                                }
+                                            )}
+                                        >
+                                            {item.name}
+                                        </a>
                                     </div>
                                 </div>
                             </td>

@@ -20,7 +20,7 @@ class MyListController extends Controller
 
             $user_id = User::where('username', $username)->firstOrFail()->id;
 
-            $stateWatchingList = WatchingState::all(['id', 'name']);
+            $stateWatchingList = WatchingState::all(['id', 'name', 'color']);
 
             $tv = TvList::where('user_id', $user_id)
                 ->select(['id', 'name', 'api_id', 'poster', 'watching_state_id', 'score_id', 'season', 'episode'])
