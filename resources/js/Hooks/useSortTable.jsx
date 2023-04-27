@@ -1,17 +1,13 @@
-import { useState } from "react";
-
-export function useSortTable(data) {
-    const [orderedData, setOrderedData] = useState(data);
-
-    const handleSorting = (sortColumn, sortOrder) => {
-        const sorted = [...orderedData].sort((a, b) => {
-            if (sortOrder == "asc") {
+export function useSortTable(data, sortColumn, sortOrder, stateFilter) {
+    const handleSorting = () => {
+        const sorted = [...data].sort((a, b) => {
+            if (sortOrder === "asc") {
                 return a[sortColumn]
                     .toString()
                     .localeCompare(b[sortColumn].toString(), "en", {
                         numeric: true,
                     });
-            } else if (sortOrder == "desc") {
+            } else if (sortOrder === "desc") {
                 return b[sortColumn]
                     .toString()
                     .localeCompare(a[sortColumn].toString(), "en", {
@@ -19,15 +15,28 @@ export function useSortTable(data) {
                     });
             }
         });
-
-        setOrderedData(sorted);
+        return sorted;
     };
 
-    const handleSearch = (searchText) => {
-        const filtered = data.filter((item) =>
-            item.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setOrderedData(filtered);
+    const handleWatchingStateFilter = () => {
+        const sorted = handleSorting();
+        if (stateFilter) {
+            return sorted.filter(
+                (item) => item.watching_state_id == stateFilter
+            );
+        }
+        return sorted;
     };
-    return [orderedData, handleSorting, handleSearch];
+
+    const getDataFiltered = (searchText) => {
+        const filteredData = handleWatchingStateFilter();
+        if (searchText) {
+            return filteredData.filter((item) =>
+                item?.name?.toLowerCase().includes(searchText.toLowerCase())
+            );
+        }
+        return filteredData;
+    };
+
+    return [getDataFiltered];
 }

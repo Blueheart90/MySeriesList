@@ -7,7 +7,9 @@ use Inertia\Inertia;
 use App\Models\TvList;
 use App\Models\MovieList;
 use Illuminate\Http\Request;
+use App\Models\WatchingState;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class MyListController extends Controller
 {
@@ -17,6 +19,8 @@ class MyListController extends Controller
         try {
 
             $user_id = User::where('username', $username)->firstOrFail()->id;
+
+            $stateWatchingList = WatchingState::all(['id', 'name']);
 
             $tv = TvList::where('user_id', $user_id)
                 ->select(['id', 'name', 'api_id', 'poster', 'watching_state_id', 'score_id', 'season', 'episode'])
@@ -34,6 +38,9 @@ class MyListController extends Controller
             return view('users.notfound');
         }
 
-        return Inertia::render('MyList/Index', ['data' => $lists]);
+        $data = collect(['lists' => $lists])->merge(['stateWatchingList' => $stateWatchingList]);
+
+        Log::debug($data);
+        return Inertia::render('MyList/Index', ['data' => $data]);
     }
 }

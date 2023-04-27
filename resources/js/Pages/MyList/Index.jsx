@@ -25,7 +25,7 @@ const Index = ({ auth }) => {
             <div className="container py-20 mx-auto">
                 <TableList
                     headers={headers}
-                    list={usePage().props.data}
+                    data={usePage().props.data}
                     fields={fields}
                 />
             </div>

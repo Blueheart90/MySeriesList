@@ -1,26 +1,41 @@
 import React, { useEffect, useState } from "react";
 import SortIcon from "./svg/SortIcon";
 import { useSortTable } from "@/Hooks/useSortTable";
-const TableList = ({ headers, list, fields }) => {
+import WatchingStateSort from "./WatchingStateSort";
+const TableList = ({ headers, fields, data }) => {
+    const { lists, stateWatchingList } = data;
     const [sortColumn, setSortColumn] = useState("name");
     const [sortOrder, setSortOrder] = useState("asc");
-    const [orderedData, handleSorting, handleSearch] = useSortTable(list);
+    const [stateFilter, setStateFilter] = useState(0);
+    const [searchText, setSearchText] = useState("");
+    const [dataTable, setDataTable] = useState(lists);
+
+    const [getDataFiltered] = useSortTable(
+        lists,
+        sortColumn,
+        sortOrder,
+        stateFilter
+    );
 
     useEffect(() => {
-        console.log("cambió", sortColumn);
-        handleSorting(sortColumn, sortOrder);
-    }, [sortColumn, sortOrder]);
+        setDataTable(getDataFiltered(searchText));
+    }, [sortColumn, sortOrder, stateFilter, searchText]);
 
     return (
         <div className="">
-            <div className="flex items-center justify-between gap-2 text-kiwi">
+            <div className="flex flex-col gap-4 px-2 lg:items-center lg:flex-row lg:justify-between text-kiwi">
+                <WatchingStateSort
+                    states={stateWatchingList}
+                    stateFilter={stateFilter}
+                    setStateFilter={setStateFilter}
+                />
                 <input
                     type="text"
                     onChange={(e) => {
-                        handleSearch(e.target.value);
+                        setSearchText(e.target.value);
                     }}
-                    className="max-w-xl pl-4 border-none rounded-sm grow focus:ring-kiwi focus:border-kiwi bg-secundary"
-                    placeholder="Busca una serie..."
+                    className="pl-4 border-none rounded-md placeholder:text-light w-fulllg:max-w-xl grow focus:ring-kiwi focus:border-kiwi bg-secundary lg:order-first"
+                    placeholder="Busca una serie o pelicula..."
                 />
                 <div className="flex items-center gap-2">
                     <label className=" whitespace-nowrap" htmlFor="sort">
@@ -30,9 +45,7 @@ const TableList = ({ headers, list, fields }) => {
                         className="py-1 pl-4 text-sm rounded-sm focus:ring-kiwi focus:border-kiwi bg-secundary"
                         name={"sort"}
                         onChange={(e) => {
-                            const value = e.target.value;
-                            setSortColumn(value);
-                            console.log(value);
+                            setSortColumn(e.target.value);
                         }}
                     >
                         {fields.map((field, index) => (
@@ -71,6 +84,7 @@ const TableList = ({ headers, list, fields }) => {
                     </div>
                 </div>
             </div>
+
             <table className="table w-full space-y-6 text-sm text-gray-400 border-separate border-spacing-y-4 ">
                 <thead className="bg-kiwi text-primary">
                     <tr>
@@ -87,8 +101,9 @@ const TableList = ({ headers, list, fields }) => {
                         <th className="p-3 text-center">Acciones</th>
                     </tr>
                 </thead>
+
                 <tbody className=" text-kiwi">
-                    {orderedData.map((item, index) => (
+                    {dataTable.map((item, index) => (
                         <tr
                             key={index + item.name}
                             className="  bg-secundary  shadow-[2px_2px_0px_0px_#7ddb29] "
@@ -135,6 +150,15 @@ const TableList = ({ headers, list, fields }) => {
                     ))}
                 </tbody>
             </table>
+            {dataTable.length == 0 && (
+                <div className="p-10 bg-secundary">
+                    <div className="flex items-center justify-center gap-4 mb-4">
+                        <p className="text-xl text-kiwi">
+                            No hay listas disponibles.
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
