@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\MovieList;
+use App\Models\TvList;
+use App\Observers\MovieListObserver;
+use App\Observers\TvListObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,7 +29,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        TvList::observe(TvListObserver::class);
+        MovieList::observe(MovieListObserver::class);
     }
 
     /**
