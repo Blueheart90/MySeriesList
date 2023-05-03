@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import SortIcon from "./svg/SortIcon";
 import { useSortTable } from "@/Hooks/useSortTable";
 import WatchingStateSort from "./WatchingStateSort";
+import toast from "react-hot-toast";
+import MyModal from "./MyModal";
+import EditIcon from "./svg/EditIcon";
+import TrashIcon from "./svg/TrashIcon";
 const TableList = ({ headers, fields, data }) => {
     const { lists, stateWatchingList } = data;
     const [sortColumn, setSortColumn] = useState("name");
@@ -9,6 +13,8 @@ const TableList = ({ headers, fields, data }) => {
     const [stateFilter, setStateFilter] = useState(0);
     const [searchText, setSearchText] = useState("");
     const [dataTable, setDataTable] = useState(lists);
+    const [isOpen, setIsOpen] = useState(false);
+    const [itemSelected, setItemSelected] = useState({});
 
     const colorVariants = {
         green: "bg-green-600",
@@ -28,6 +34,40 @@ const TableList = ({ headers, fields, data }) => {
     useEffect(() => {
         setDataTable(getDataFiltered(searchText));
     }, [sortColumn, sortOrder, stateFilter, searchText]);
+
+    // const handleOpenModal = (item) => {
+    //     setIsOpen(true);
+    //     setItemSelected(item);
+    // };
+
+    const handleDelete = (itemId, type) => {
+        console.log(itemId);
+        const endPoint =
+            type === "TvShow" ? "tvlist.destroy" : "movielist.destroy";
+        axios
+            .delete(route(endPoint, { id: itemId }))
+            .then((res) => {
+                const ItemDeleted = res.data.list;
+                // se actualiza el review en el array de reviews
+                const filtered = dataTable.filter(
+                    (list) => list !== ItemDeleted
+                );
+                setTimeout(() => {
+                    setDataTable(filtered);
+                    toast.success(res.data.message, {
+                        position: "bottom-left",
+                        duration: 4000,
+                    });
+                    setIsLoading(false);
+                }, 500);
+            })
+            .catch((error) => {
+                // toast.error(error.response.data.message, {
+                //     position: "bottom-left",
+                // });
+                console.log(error);
+            });
+    };
 
     return (
         <div className="">
@@ -100,9 +140,7 @@ const TableList = ({ headers, fields, data }) => {
                         {headers.map((header, index) => (
                             <th
                                 key={index + header}
-                                className={`p-3 ${
-                                    index != 0 ? "text-left" : "text-center"
-                                }`}
+                                className="p-3 text-center"
                             >
                                 {header}
                             </th>
@@ -115,7 +153,7 @@ const TableList = ({ headers, fields, data }) => {
                     {dataTable.map((item, index) => (
                         <tr
                             key={index + item.name}
-                            className="transition-all duration-300 bg-secundary hover:bg-secundary/80"
+                            className="text-center transition-all duration-300 bg-secundary hover:bg-secundary/80"
                         >
                             <td
                                 className={`w-1 ${
@@ -152,25 +190,27 @@ const TableList = ({ headers, fields, data }) => {
                             <td className="p-3">{item.score_id}</td>
                             <td className="p-3 font-bold">{item.type}</td>
                             <td className="p-3">
-                                {item.season}/{item.episode}
+                                {item.type === "TvShow"
+                                    ? `${item.season}/${item.episode}`
+                                    : "---"}
                             </td>
-                            <td className="p-3">
-                                <a href="">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
-                                        className="w-6 h-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
-                                    </svg>
-                                </a>
+                            <td className="p-3 space-x-2">
+                                <button
+                                    className="p-2 rounded-full hover:bg-primary/80"
+                                    type="button"
+                                    onClick={() => handleOpenModal(item)}
+                                >
+                                    <EditIcon className="w-6 h-6" />
+                                </button>
+                                <button
+                                    className="p-2 rounded-full hover:bg-primary/80"
+                                    type="button"
+                                    onClick={() =>
+                                        handleDelete(item.id, item.type)
+                                    }
+                                >
+                                    <TrashIcon className="w-6 h-6 stroke-red-600" />
+                                </button>
                             </td>
                         </tr>
                     ))}
@@ -185,6 +225,9 @@ const TableList = ({ headers, fields, data }) => {
                     </div>
                 </div>
             )}
+            <MyModal item={itemSelected} isOpen={isOpen} setIsOpen={setIsOpen}>
+                hola mundo
+            </MyModal>
         </div>
     );
 };

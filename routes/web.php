@@ -58,10 +58,12 @@ Route::get('/filter/peliculas/search', [MovieController::class, 'searchFilter'])
 //TvList
 Route::post('/tvlist', [TvListController::class, 'store'])->name('tvlist.store');
 Route::put('/tvlist/{tvList}', [TvListController::class, 'update'])->name('tvlist.update');
+Route::delete('/tvlist/{list}', [TvListController::class, 'destroy'])->name('tvlist.destroy');
 
 //MovieList
 Route::post('/movielist', [MovieListController::class, 'store'])->name('movielist.store');
 Route::put('/movielist/{movielist}', [MovieListController::class, 'update'])->name('movielist.update');
+Route::delete('/movielist/{list}', [MovieListController::class, 'destroy'])->name('movielist.destroy');
 
 //Review
 Route::get('/review/{apiId}', [ReviewController::class, 'allReviews'])->name('reviews.all');

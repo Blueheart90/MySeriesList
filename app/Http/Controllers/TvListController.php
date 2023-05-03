@@ -12,21 +12,7 @@ use App\Http\Requests\StoreTvListRequest;
 
 class TvListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Response
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -61,22 +47,6 @@ class TvListController extends Controller
 
 
     /**
-     * Display the specified resource.
-     */
-    public function show(TvList $tvList): Response
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TvList $tvList): Response
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(TvList $tvList, Request $request)
@@ -96,7 +66,7 @@ class TvListController extends Controller
             $tvList->update($validatedData);
             // $tvList->update(['poster' => 'prueba']);
             return response()->json(['code' => 200, 'message' => 'Se Actualizó tu lista con exito'], 200);
-        } catch (\Throwable $e) {
+        } catch (\Throwable $th) {
             return response()->json(['code' => $th->getCode(), 'message' => $th->getMessage()], $th->getCode());
         }
     }
@@ -104,8 +74,9 @@ class TvListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TvList $tvList): RedirectResponse
+    public function destroy(TvList $list)
     {
-        //
+        $list->delete();
+        return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito', 'list' => $list], 200);
     }
 }

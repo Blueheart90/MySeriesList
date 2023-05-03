@@ -95,8 +95,9 @@ class MovieListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MovieList $movieList): RedirectResponse
+    public function destroy(MovieList $list)
     {
-        //
+        $list->delete();
+        return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito'], 200);
     }
 }
