@@ -27,7 +27,7 @@ return new class extends Migration
         });
 
         Schema::create('tv_lists', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->string('name');
             $table->string('api_id');
             $table->string('poster');
@@ -54,8 +54,11 @@ return new class extends Migration
             // $table->foreign('tvlist_id')->references('id')->on('tv_lists')->onDelete('cascade');
 
             // Campos pofimorficos
-            $table->unsignedBigInteger('reviewable_id');
-            $table->string('reviewable_type');
+            // $table->unsignedBigInteger('reviewable_id');
+            // $table->string('reviewable_type');
+
+            // Campos pofimorficos con uuid -- añade los 2 campos uuid y type
+            $table->uuidMorphs('reviewable');
             $table->timestamps();
             $table->unique(['user_id', 'api_id']);
         });

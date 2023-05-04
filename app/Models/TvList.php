@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TvList extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
+
+
 
     protected $fillable = [
         'name', 'api_id', 'poster', 'season', 'episode', 'review_id', 'score_id', 'watching_state_id', 'user_id'

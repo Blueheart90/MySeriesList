@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import MyModal from "./MyModal";
 import EditIcon from "./svg/EditIcon";
 import TrashIcon from "./svg/TrashIcon";
+import ConfirmModal from "./ConfirmModal";
 const TableList = ({ headers, fields, data }) => {
     const { lists, stateWatchingList } = data;
     const [sortColumn, setSortColumn] = useState("name");
@@ -35,22 +36,23 @@ const TableList = ({ headers, fields, data }) => {
         setDataTable(getDataFiltered(searchText));
     }, [sortColumn, sortOrder, stateFilter, searchText]);
 
-    // const handleOpenModal = (item) => {
-    //     setIsOpen(true);
-    //     setItemSelected(item);
-    // };
+    const handleOpenModal = (item) => {
+        setIsOpen(true);
+        setItemSelected(item);
+    };
 
-    const handleDelete = (itemId, type) => {
-        console.log(itemId);
+    const handleDelete = (item) => {
         const endPoint =
-            type === "TvShow" ? "tvlist.destroy" : "movielist.destroy";
+            item.type === "TvShow" ? "tvlist.destroy" : "movielist.destroy";
         axios
-            .delete(route(endPoint, { id: itemId }))
+            .delete(route(endPoint, { id: item.id }))
             .then((res) => {
-                const ItemDeleted = res.data.list;
+                const itemDeleted = res.data.list;
+                console.log("itemDelete", itemDeleted);
+                console.log("es igual", itemDeleted == item);
                 // se actualiza el review en el array de reviews
                 const filtered = dataTable.filter(
-                    (list) => list !== ItemDeleted
+                    (list) => list.id !== itemDeleted.id
                 );
                 setTimeout(() => {
                     setDataTable(filtered);
@@ -62,9 +64,9 @@ const TableList = ({ headers, fields, data }) => {
                 }, 500);
             })
             .catch((error) => {
-                // toast.error(error.response.data.message, {
-                //     position: "bottom-left",
-                // });
+                toast.error(error.response.data.message, {
+                    position: "bottom-left",
+                });
                 console.log(error);
             });
     };
@@ -205,9 +207,7 @@ const TableList = ({ headers, fields, data }) => {
                                 <button
                                     className="p-2 rounded-full hover:bg-primary/80"
                                     type="button"
-                                    onClick={() =>
-                                        handleDelete(item.id, item.type)
-                                    }
+                                    onClick={() => handleOpenModal(item)}
                                 >
                                     <TrashIcon className="w-6 h-6 stroke-red-600" />
                                 </button>
@@ -225,9 +225,14 @@ const TableList = ({ headers, fields, data }) => {
                     </div>
                 </div>
             )}
-            <MyModal item={itemSelected} isOpen={isOpen} setIsOpen={setIsOpen}>
-                hola mundo
-            </MyModal>
+
+            <ConfirmModal
+                item={itemSelected}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                handleDelete={handleDelete}
+                text="¿Esta seguro de eliminar esta lista?"
+            />
         </div>
     );
 };

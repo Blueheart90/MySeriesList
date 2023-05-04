@@ -98,6 +98,6 @@ class MovieListController extends Controller
     public function destroy(MovieList $list)
     {
         $list->delete();
-        return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito'], 200);
+        return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito', 'list' => $list], 200);
     }
 }
