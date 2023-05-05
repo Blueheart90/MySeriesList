@@ -36,8 +36,8 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
+        <GuestLayout className="my-auto bg-center bg-cover bg-family-tv ">
+            <Head title="Iniciar sesión" />
 
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
@@ -45,16 +45,23 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
-            <form onSubmit={submit}>
+            <form
+                onSubmit={submit}
+                className="px-6 h-fit py-8  sm:mx-auto sm:w-full sm:max-w-lg bg-secundary/90 backdrop-blur-sm shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi"
+            >
                 <div>
-                    <InputLabel forInput="login" value="Email / Username" />
+                    <InputLabel
+                        forInput="login"
+                        value="Email / Username"
+                        className="font-bold text-kiwi"
+                    />
 
                     <TextInput
                         id="login"
                         type="text"
                         name="login"
                         value={data.login}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm "
                         autoComplete="username"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -64,14 +71,18 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
+                    <InputLabel
+                        forInput="password"
+                        value="Password"
+                        className="font-bold text-kiwi"
+                    />
 
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="current-password"
                         handleChange={onHandleChange}
                     />
@@ -86,7 +97,7 @@ export default function Login({ status, canResetPassword }) {
                             value={data.remember}
                             handleChange={onHandleChange}
                         />
-                        <span className="ml-2 text-sm text-gray-600">
+                        <span className="ml-2 text-sm text-kiwi">
                             Remember me
                         </span>
                     </label>
@@ -96,7 +107,7 @@ export default function Login({ status, canResetPassword }) {
                     {canResetPassword && (
                         <Link
                             href={route("password.request")}
-                            className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="text-sm underline rounded-md text-kiwi focus:outline-none "
                         >
                             Forgot your password?
                         </Link>

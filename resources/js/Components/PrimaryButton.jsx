@@ -1,11 +1,17 @@
-export default function PrimaryButton({ type = 'submit', className = '', processing, children, onClick }) {
+export default function PrimaryButton({
+    type = "submit",
+    className = "",
+    processing,
+    children,
+    onClick,
+}) {
     return (
         <button
             type={type}
             onClick={onClick}
             className={
-                `inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
-                    processing && 'opacity-25'
+                `w-fit font-bold transition duration-300 ease-in-out transform   text-lg hover:bg-kiwi hover:text-secundary text-light px-6 py-2 mb-2 border border-kiwi  ${
+                    processing && "opacity-25"
                 } ` + className
             }
             disabled={processing}
