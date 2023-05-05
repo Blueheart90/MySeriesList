@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
-use App\Exceptions\ApiResourceNotFoundException;
 use App\ViewModels\MovieShowViewModel;
 
 class MovieController extends Controller
@@ -114,11 +113,10 @@ class MovieController extends Controller
 
             if (array_key_exists('success', $movieShowDetails)) {
 
-                throw new ApiResourceNotFoundException('El recurso no esta disponible en la api', 404);
+                throw new \Exception('Error found',  404);
             }
-        } catch (ApiResourceNotFoundException $e) {
-            session()->flash('message', $e->getMessage());
-            return view('users.notfound');
+        } catch (\Exception $e) {
+            return Inertia::render('Error', ['status' => $e->getCode()]);
         }
 
         // ** Se comprueba si el user ya agregó la serie

@@ -48,8 +48,6 @@ const TableList = ({ headers, fields, data }) => {
             .delete(route(endPoint, { id: item.id }))
             .then((res) => {
                 const itemDeleted = res.data.list;
-                console.log("itemDelete", itemDeleted);
-                console.log("es igual", itemDeleted == item);
                 // se actualiza el review en el array de reviews
                 const filtered = dataTable.filter(
                     (list) => list.id !== itemDeleted.id

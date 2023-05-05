@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use App\ViewModels\SerieShowViewModel;
 use Illuminate\Support\Facades\Request;
-use App\Exceptions\ApiResourceNotFoundException;
+use Exception;
 
 class SerieController extends Controller
 {
@@ -108,12 +108,10 @@ class SerieController extends Controller
                 ->json();
 
             if (array_key_exists('success', $tvShowDetails)) {
-
-                throw new ApiResourceNotFoundException('El recurso no esta disponible en la api', 404);
+                throw new \Exception('Error found',  404);
             }
-        } catch (ApiResourceNotFoundException $e) {
-            session()->flash('message', $e->getMessage());
-            return view('users.notfound');
+        } catch (\Exception $e) {
+            return Inertia::render('Error', ['status' => $e->getCode()]);
         }
 
         // ** Se comprueba si el user ya agregó la serie
@@ -141,7 +139,5 @@ class SerieController extends Controller
 
 
         return Inertia::render('Series/Show', ['data' => $viewModel]);
-
-        // Log::debug($tvShowDetails);
     }
 }
