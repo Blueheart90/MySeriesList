@@ -4,12 +4,12 @@ const CardTvAside = ({ data }) => {
     const { item, index } = data;
     return (
         <div className="flex">
-            <figure className="relative overflow-hidden border rounded-lg border-kiwi ">
+            <figure className="relative overflow-hidden border rounded-sm border-kiwi ">
                 <a href={route("serie.show", { id: item.id, slug: item.slug })}>
-                    <span className="absolute pl-3.5 pr-2  bg-kiwi rounded-br-md text-primary font-semibold  text-sm">
+                    <span className="absolute pl-3.5 pr-2  bg-kiwi  text-primary font-semibold  text-sm">
                         #{index + 1}
                     </span>
-                    <span className="absolute bottom-0 right-0 px-2 text-sm font-semibold text-primary bg-kiwi rounded-tl-md">
+                    <span className="absolute bottom-0 right-0 px-2 text-sm font-semibold text-primary bg-kiwi ">
                         {item.year}
                     </span>
                     <img

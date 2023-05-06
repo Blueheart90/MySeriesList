@@ -20,14 +20,8 @@ export default function ForgotPassword({ status }) {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout className="flex-col my-auto bg-center bg-cover bg-family-tv ">
             <Head title="Forgot Password" />
-
-            <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email or
-                username and we will email you a password reset link that will
-                allow you to choose a new one.
-            </div>
 
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
@@ -35,7 +29,16 @@ export default function ForgotPassword({ status }) {
                 </div>
             )}
 
-            <form onSubmit={submit}>
+            <form
+                onSubmit={submit}
+                className="px-6 h-fit py-8  sm:mx-auto sm:w-full sm:max-w-lg bg-secundary/90 backdrop-blur-sm shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi"
+            >
+                <div className="block mb-4 text-lg text-light ">
+                    ¿Olvidaste tu contraseña? No hay problema. Solo indícanos tu
+                    correo electrónico o nombre de usuario y te enviaremos un
+                    enlace para restablecer tu contraseña por correo electrónico
+                    que te permitirá elegir una nueva.
+                </div>
                 <TextInput
                     id="password"
                     type="text"
@@ -50,7 +53,7 @@ export default function ForgotPassword({ status }) {
 
                 <div className="flex items-center justify-end mt-4">
                     <PrimaryButton className="ml-4" processing={processing}>
-                        Email Password Reset Link
+                        Restablecer contraseña
                     </PrimaryButton>
                 </div>
             </form>

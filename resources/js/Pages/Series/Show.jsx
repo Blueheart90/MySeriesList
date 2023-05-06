@@ -55,11 +55,11 @@ const Show = ({ auth }) => {
                 <Hero media={tvshow} editMode={editMode} form={AddListForm}>
                     <TvInfo info={tvshow} />
                 </Hero>
-                <div className="container px-2 py-20 mx-auto md:grid md:gap-4 md:grid-flow-col md:grid-cols-4 text-light">
-                    <div className="col-span-1 ">
+                <div className="container grid grid-cols-1 gap-4 px-2 py-20 mx-auto lg:gap-6 lg:grid-flow-col lg:grid-cols-4 text-light">
+                    <div className="lg:col-span-1 ">
                         <TvAdditionalInfo info={info} />
                     </div>
-                    <div className="md:col-span-3 ">
+                    <div className="lg:col-span-3 ">
                         {tvshow.cast.length > 0 && (
                             <section className="mb-10 ">
                                 <h2 className="mb-4 text-2xl font-bold">

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import LogoSvg from "../../Components/svg/LogoSvg";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -37,18 +38,31 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout className="my-auto bg-center bg-cover bg-family-tv ">
             <Head title="Register" />
 
-            <form onSubmit={submit}>
+            <form
+                onSubmit={submit}
+                className="px-6 h-fit py-8  sm:mx-auto sm:w-full sm:max-w-lg bg-secundary/90 backdrop-blur-sm shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi"
+            >
                 <div>
-                    <InputLabel forInput="name" value="Name" />
+                    <LogoSvg className="w-auto h-20 mx-auto fill-kiwi" />
+                    <p className="my-4 text-lg text-center text-light ">
+                        Registrate para agregar tus películas y series favoritas
+                    </p>
+                </div>
+                <div>
+                    <InputLabel
+                        forInput="name"
+                        value="Nombre"
+                        className="font-bold text-kiwi"
+                    />
 
                     <TextInput
                         id="name"
                         name="name"
                         value={data.name}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="name"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -58,13 +72,17 @@ export default function Register() {
                     <InputError message={errors.name} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                    <InputLabel forInput="username" value="Username" />
+                    <InputLabel
+                        forInput="username"
+                        value="Username"
+                        className="font-bold text-kiwi"
+                    />
 
                     <TextInput
                         id="username"
                         name="username"
                         value={data.username}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="username"
                         handleChange={onHandleChange}
                         required
@@ -74,14 +92,18 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel forInput="email" value="Email" />
+                    <InputLabel
+                        forInput="email"
+                        value="Correo electrónico"
+                        className="font-bold text-kiwi"
+                    />
 
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="username"
                         handleChange={onHandleChange}
                         required
@@ -91,14 +113,18 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
+                    <InputLabel
+                        forInput="password"
+                        value="Contraseña"
+                        className="font-bold text-kiwi"
+                    />
 
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="new-password"
                         handleChange={onHandleChange}
                         required
@@ -110,7 +136,8 @@ export default function Register() {
                 <div className="mt-4">
                     <InputLabel
                         forInput="password_confirmation"
-                        value="Confirm Password"
+                        value="Confirmar contraseña"
+                        className="font-bold text-kiwi"
                     />
 
                     <TextInput
@@ -118,7 +145,7 @@ export default function Register() {
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="block w-full mt-1"
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="new-password"
                         handleChange={onHandleChange}
                         required
@@ -133,13 +160,13 @@ export default function Register() {
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href={route("login")}
-                        className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="text-sm underline rounded-md text-kiwi focus:outline-none "
                     >
-                        Already registered?
+                        ¿Ya tienes una cuenta?
                     </Link>
 
                     <PrimaryButton className="ml-4" processing={processing}>
-                        Register
+                        Registrarse
                     </PrimaryButton>
                 </div>
             </form>

@@ -2,7 +2,7 @@ import LogoSvg from "@/Components/svg/LogoSvg";
 
 const MovieAdditionalInfo = ({ info }) => {
     return (
-        <>
+        <div className="shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi p-4 sm:mx-auto sm:w-full sm:max-w-lg">
             <div className="flex items-center mb-4">
                 <LogoSvg className="mr-2 w-7 fill-white" />
                 <h2 className="text-lg ">Información Adicional</h2>
@@ -24,7 +24,7 @@ const MovieAdditionalInfo = ({ info }) => {
                     </a>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

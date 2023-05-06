@@ -6,6 +6,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
+import LogoSvg from "@/Components/svg/LogoSvg";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -50,6 +51,13 @@ export default function Login({ status, canResetPassword }) {
                 className="px-6 h-fit py-8  sm:mx-auto sm:w-full sm:max-w-lg bg-secundary/90 backdrop-blur-sm shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi"
             >
                 <div>
+                    <LogoSvg className="w-auto h-20 mx-auto fill-kiwi" />
+                    <p className="my-4 text-lg text-center text-light ">
+                        Inicia sesión para agregar tus películas y series
+                        favoritas
+                    </p>
+                </div>
+                <div>
                     <InputLabel
                         forInput="login"
                         value="Email / Username"
@@ -61,7 +69,7 @@ export default function Login({ status, canResetPassword }) {
                         type="text"
                         name="login"
                         value={data.login}
-                        className="block w-full mt-1 rounded-sm "
+                        className="block w-full mt-1 rounded-sm"
                         autoComplete="username"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -73,7 +81,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4">
                     <InputLabel
                         forInput="password"
-                        value="Password"
+                        value="Contraseña"
                         className="font-bold text-kiwi"
                     />
 
@@ -98,23 +106,29 @@ export default function Login({ status, canResetPassword }) {
                             handleChange={onHandleChange}
                         />
                         <span className="ml-2 text-sm text-kiwi">
-                            Remember me
+                            Recuerdame
                         </span>
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-end gap-4 mt-4">
+                    <Link
+                        href={route("register")}
+                        className="text-sm underline rounded-md text-kiwi focus:outline-none "
+                    >
+                        Registrarse
+                    </Link>
                     {canResetPassword && (
                         <Link
                             href={route("password.request")}
                             className="text-sm underline rounded-md text-kiwi focus:outline-none "
                         >
-                            Forgot your password?
+                            ¿Olvidaste tu contraseña?
                         </Link>
                     )}
 
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Log in
+                    <PrimaryButton processing={processing}>
+                        Inciar sesión
                     </PrimaryButton>
                 </div>
             </form>
