@@ -8,6 +8,10 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import UserIcon from "./svg/UserIcon";
 import ListIcon from "./svg/ListIcon";
+import Avatar from "./Avatar";
+import TvIcon from "./svg/TvIcon";
+import MovieIcon from "./svg/MovieIcon";
+import LogoutIcon from "./svg/LogoutIcon";
 
 const Header = ({ auth }) => {
     const [isOpen, setOpen] = useState(false);
@@ -60,64 +64,83 @@ const Header = ({ auth }) => {
                         size="20"
                     />
                 </div>
+                {/* Side Menu */}
                 <div
-                    className={`absolute md:hidden duration-300 transition-all  h-screen px-10 py-10 top-0 bg-secundary shadow-[1px_0px_0px_0px_#7ddb29] ${
+                    className={`absolute md:hidden duration-300 transition-all  h-screen px-6 py-10 top-0 bg-secundary shadow-[1px_0px_0px_0px_#7ddb29] ${
                         isOpen ? "left-0" : "-left-full"
                     }`}
                 >
-                    <nav className="flex flex-col gap-10 ">
-                        <ul className="flex flex-col items-center">
+                    <nav className="flex flex-col justify-between h-full gap-10 ">
+                        <ul className="flex flex-col gap-2 ">
                             <li>
                                 <NavLink
                                     href={route("series.index")}
                                     active={route().current("series.index")}
                                 >
+                                    <TvIcon
+                                        className="inline-block w-6 h-6 mr-2 "
+                                        strokeWidth={2}
+                                    />
                                     Series
                                 </NavLink>
                             </li>
                             <li>
                                 <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("movies.index")}
+                                    active={route().current("movies.index")}
                                 >
+                                    <MovieIcon
+                                        className="inline-block w-6 h-6 mr-2 "
+                                        strokeWidth={2}
+                                    />
                                     Peliculas
                                 </NavLink>
                             </li>
+                            {auth?.user ? (
+                                <li>
+                                    <NavLink
+                                        href={route("mylist.show", {
+                                            username: auth.user.username,
+                                        })}
+                                        active={route().current("mylist.show")}
+                                    >
+                                        <ListIcon
+                                            className="inline-block w-6 h-6 mr-2 "
+                                            strokeWidth={2}
+                                        />
+                                        Mis Listas
+                                    </NavLink>
+                                </li>
+                            ) : null}
                         </ul>
 
-                        <div className="flex flex-col items-center text-light">
+                        <div className="flex flex-col text-light">
                             {auth?.user ? (
-                                <div className="flex sm:items-center sm:ml-6">
-                                    <div className="">
-                                        <div className="flex items-center ">
-                                            <UserIcon />
-                                            <p
-                                                type="button"
-                                                className="px-3 py-2 text-base font-bold leading-4 bg-secundary hover:text-light"
-                                            >
-                                                {auth.user.name}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col items-center ">
-                                            <a href={route("profile.edit")}>
-                                                Profile
-                                            </a>
-                                            <a
-                                                href={route("logout")}
-                                                method="post"
-                                                as="button"
-                                            >
-                                                Log Out
-                                            </a>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <a
+                                        href={route("profile.edit")}
+                                        className="block hover:text-kiwi"
+                                    >
+                                        <UserIcon className="inline-block w-6 h-6 mb-2 mr-2 " />
+                                        Profile
+                                    </a>
+                                    <Link
+                                        href="/logout"
+                                        method="post"
+                                        as="button"
+                                        type="button"
+                                        className="hover:text-kiwi"
+                                    >
+                                        <LogoutIcon className="inline-block w-6 h-6 mr-2 " />
+                                        Cerrar sesion
+                                    </Link>
                                 </div>
                             ) : (
                                 <>
                                     <LinkCustom
                                         href={route("login")}
                                         styles={
-                                            " hover:bg-kiwi hover:text-secundary text-light px-6 py-2 mb-2"
+                                            " hover:bg-kiwi hover:text-secundary text-light px-2 py-1 mb-2 "
                                         }
                                     >
                                         Iniciar sesion
@@ -125,7 +148,7 @@ const Header = ({ auth }) => {
                                     <LinkCustom
                                         href={route("register")}
                                         styles={
-                                            " hover:bg-light hover:text-secundary text-light px-6 py-2"
+                                            " hover:bg-light hover:text-secundary text-light px-2 py-1"
                                         }
                                     >
                                         Registro
@@ -135,38 +158,42 @@ const Header = ({ auth }) => {
                         </div>
                     </nav>
                 </div>
-                <div className="flex items-center">
-                    {/* Lists */}
-                    {auth.user ? (
-                        <NavLink
-                            className="flex items-center"
-                            href={route("mylist.show", {
-                                username: auth.user.username,
-                            })}
-                            active={route().current("mylist.show")}
-                        >
-                            <ListIcon
-                                className="inline-block w-6 h-6 mr-2 "
-                                strokeWidth={2}
-                            />
-                            Mis Listas
-                        </NavLink>
-                    ) : null}
-
+                <div className="items-center hidden md:flex">
                     {/* link right */}
-                    <div className="hidden text-black md:flex" id="nav-content">
+                    <div className="flex text-black " id="nav-content">
+                        {/* Lists */}
+                        {auth.user ? (
+                            <NavLink
+                                className="flex items-center"
+                                href={route("mylist.show", {
+                                    username: auth.user.username,
+                                })}
+                                active={route().current("mylist.show")}
+                            >
+                                <ListIcon
+                                    className="inline-block w-6 h-6 mr-2 "
+                                    strokeWidth={2}
+                                />
+                                Mis Listas
+                            </NavLink>
+                        ) : null}
                         <ul>
                             <li className="flex gap-2">
                                 {auth?.user ? (
-                                    <div className="hidden sm:flex sm:items-center sm:ml-6">
+                                    <div className="flex sm:items-center ">
                                         <div className="relative ml-3">
                                             <Dropdown>
                                                 <Dropdown.Trigger>
                                                     <span className="inline-flex rounded-md">
                                                         <button
                                                             type="button"
-                                                            className="inline-flex items-center px-3 py-2 text-base font-medium leading-4 transition duration-150 ease-in-out text-kiwi bg-secundary hover:text-light "
+                                                            className="inline-flex items-center px-3 py-2 text-lg font-bold leading-4 transition duration-150 ease-in-out text-kiwi hover:text-light "
                                                         >
+                                                            <Avatar
+                                                                className="w-8 h-8 mr-2"
+                                                                src={`/storage/${auth.user.profile_photo_path}`}
+                                                                alt={`Foto de perfil de ${auth.user.name}`}
+                                                            />
                                                             {auth.user.name}
                                                             <svg
                                                                 className="ml-2 -mr-0.5 h-4 w-4"
@@ -197,7 +224,7 @@ const Header = ({ auth }) => {
                                                         method="post"
                                                         as="button"
                                                     >
-                                                        Log Out
+                                                        Cerrar sesion
                                                     </Dropdown.Link>
                                                 </Dropdown.Content>
                                             </Dropdown>
