@@ -32,7 +32,7 @@ const Header = ({ auth }) => {
                         MySeriesList
                     </Link>
 
-                    <nav className="ml-10 ">
+                    <nav className="hidden ml-10 sm:block ">
                         <ul className="flex gap-4 ">
                             <li>
                                 <NavLink
