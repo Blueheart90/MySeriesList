@@ -122,7 +122,7 @@ const Header = ({ auth }) => {
                                         className="block hover:text-kiwi"
                                     >
                                         <UserIcon className="inline-block w-6 h-6 mb-2 mr-2 " />
-                                        Profile
+                                        Perfil
                                     </a>
                                     <Link
                                         href="/logout"
@@ -217,7 +217,7 @@ const Header = ({ auth }) => {
                                                             "profile.edit"
                                                         )}
                                                     >
-                                                        Profile
+                                                        Perfil
                                                     </Dropdown.Link>
                                                     <Dropdown.Link
                                                         href={route("logout")}

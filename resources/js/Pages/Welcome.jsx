@@ -29,7 +29,7 @@ export default function Welcome(props) {
                             descubrir. Explora ahora.
                         </p>
                         <LinkCustom
-                            href={route("dashboard")}
+                            href={route("series.index")}
                             styles={
                                 "bg-kiwi hover:bg-light text-secundary hover:scale-105 px-6 py-3"
                             }

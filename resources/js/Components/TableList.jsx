@@ -76,6 +76,7 @@ const TableList = ({ headers, fields, data }) => {
                     states={stateWatchingList}
                     stateFilter={stateFilter}
                     setStateFilter={setStateFilter}
+                    colors={colorVariants}
                 />
                 <input
                     type="text"
@@ -159,8 +160,8 @@ const TableList = ({ headers, fields, data }) => {
                                 className={`w-1 ${
                                     colorVariants[
                                         stateWatchingList[
-                                            item.watching_state_id
-                                        ].color
+                                            item.watching_state_id - 1
+                                        ]?.color
                                     ]
                                 } `}
                             ></td>
