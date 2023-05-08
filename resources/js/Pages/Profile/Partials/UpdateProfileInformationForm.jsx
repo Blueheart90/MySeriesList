@@ -43,20 +43,22 @@ export default function UpdateProfileInformation({
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
+                <h2 className="text-lg font-medium text-kiwi">
+                    Información de perfil
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                <p className="mt-1 text-sm text-light">
+                    Actualice la información de perfil y la dirección de correo
+                    electrónico de su cuenta.
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6 ">
                 <div>
                     <InputLabel
+                        className="mb-2 text-light"
                         for="profile_photo_path"
-                        value="Profile Image"
+                        value="Imagen de perfil"
                     />
 
                     <InputAvatar
@@ -77,7 +79,11 @@ export default function UpdateProfileInformation({
                     />
                 </div>
                 <div>
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel
+                        for="name"
+                        value="Name"
+                        className=" text-light"
+                    />
 
                     <TextInput
                         id="name"
@@ -93,7 +99,11 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div>
-                    <InputLabel for="email" value="Email" />
+                    <InputLabel
+                        for="email"
+                        value="Email"
+                        className=" text-light"
+                    />
 
                     <TextInput
                         id="email"
@@ -117,21 +127,24 @@ export default function UpdateProfileInformation({
                                 as="button"
                                 className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Click here to re-send the verification email.
+                                Haga clic aquí para volver a enviar el email de
+                                verificación.
                             </Link>
                         </p>
 
                         {status === "verification-link-sent" && (
                             <div className="mt-2 text-sm font-medium text-green-600">
-                                A new verification link has been sent to your
-                                email address.
+                                Se ha enviado un nuevo enlace de verificación a
+                                su correo electrónico.
                             </div>
                         )}
                     </div>
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton processing={processing}>Save</PrimaryButton>
+                    <PrimaryButton processing={processing}>
+                        Guardar
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -139,7 +152,7 @@ export default function UpdateProfileInformation({
                         leaveTo="opacity-0"
                         className="transition ease-in-out"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">Guardado.</p>
                     </Transition>
                 </div>
             </form>
