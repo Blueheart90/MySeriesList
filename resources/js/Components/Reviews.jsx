@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Review from "./Review";
 
 const Reviews = ({ apiId, reviews, setReviews }) => {
-    console.log(reviews);
     useEffect(() => {
         axios
             .get(

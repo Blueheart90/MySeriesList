@@ -72,7 +72,7 @@ Route::put('/review/{review}', [ReviewController::class, 'update'])->name('revie
 
 
 // Mis Listas
-Route::get('/list/{username}', [MyListController::class, 'show'])->name('mylist.show');
+Route::get('/list/{username}', [MyListController::class, 'show'])->middleware(['auth', 'verified'])->name('mylist.show');
 
 
 

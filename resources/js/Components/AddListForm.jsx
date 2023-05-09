@@ -30,7 +30,6 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
                 setOldData(data);
                 setIsEditable(true);
                 close();
-                console.log(res);
                 toast.success(res.data.message, {
                     position: "bottom-left",
                     duration: 4000,
@@ -40,12 +39,10 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
                 toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
-                console.log(error);
             });
     };
 
     const handleUpdate = (values) => {
-        console.log("updatting..", tvListOldData);
         const data = {
             name: tvshow.name,
             api_id: tvshow.id,
@@ -65,7 +62,6 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
                 toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
-                console.log(error);
             });
     };
 
@@ -100,7 +96,6 @@ const AddListForm = ({ close, isEditable, setIsEditable }) => {
                                 const objKeys = Object.keys(tvshow.seasons);
                                 const lastSeason = objKeys[objKeys.length - 1];
                                 setFieldValue("season", lastSeason);
-                                console.log(errors);
                                 setseasonEpisodes(tvshow.seasons[lastSeason]);
                                 setFieldValue(
                                     "episode",

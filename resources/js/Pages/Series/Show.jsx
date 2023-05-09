@@ -21,7 +21,6 @@ const Show = ({ auth }) => {
         data: { info, tvshow, editMode, tvListOldData },
     } = usePage().props;
     const [reviews, setReviews] = useState([]);
-    console.log(usePage().props.data);
     const updateDataShow = useCallback(
         (data) => {
             setDataShow(data);

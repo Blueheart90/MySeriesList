@@ -44,7 +44,6 @@ class MovieListController extends Controller
         try {
             if (Auth::check()) {
                 $list = auth()->user()->movielists()->create($validatedData);
-                Log::debug($list);
                 return response()->json(['code' => 200, 'message' => 'Se agregó a tu lista con exito', 'movielists' => $list], 200);
             } else {
 
@@ -97,7 +96,11 @@ class MovieListController extends Controller
      */
     public function destroy(MovieList $list)
     {
-        $list->delete();
-        return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito', 'list' => $list], 200);
+        if ($list->user_id === Auth::user()->id) {
+            $list->delete();
+            return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito', 'list' => $list], 200);
+        } else {
+            return response()->json(['code' => 401, 'message' => 'No puedes eliminar la lista de otro usuario', 'list' => $list], 401);
+        }
     }
 }

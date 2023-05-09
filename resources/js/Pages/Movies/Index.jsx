@@ -19,8 +19,6 @@ const Index = ({ auth }) => {
         trendingMovie,
     } = usePage().props.data;
 
-    console.log(usePage().props.data);
-
     const tabs = [
         {
             id: 1,

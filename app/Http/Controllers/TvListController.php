@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreTvListRequest;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class TvListController extends Controller
 {
@@ -33,7 +35,6 @@ class TvListController extends Controller
         try {
             if (Auth::check()) {
                 $list = auth()->user()->tvlists()->create($validatedData);
-                Log::debug($list);
                 return response()->json(['code' => 200, 'message' => 'Se agregó a tu lista con exito', 'tvlist' => $list], 200);
             } else {
 
@@ -76,7 +77,11 @@ class TvListController extends Controller
      */
     public function destroy(TvList $list)
     {
-        $list->delete();
-        return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito', 'list' => $list], 200);
+        if ($list->user_id === Auth::user()->id) {
+            $list->delete();
+            return response()->json(['code' => 200, 'message' => 'Se eliminó tu lista con exito', 'list' => $list], 200);
+        } else {
+            return response()->json(['code' => 401, 'message' => 'No puedes eliminar la lista de otro usuario', 'list' => $list], 401);
+        }
     }
 }

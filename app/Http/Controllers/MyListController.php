@@ -33,14 +33,12 @@ class MyListController extends Controller
                 // ->orderBy($this->sortField, $this->sortDirection)
                 ->get();
         } catch (ModelNotFoundException $e) {
-
-            session()->flash('message', 'El usuario: ' . $username . ' no existe.');
-            return view('users.notfound');
+            return Inertia::render('Error', ['status' => 404]);
         }
 
         $data = collect(['lists' => $lists])->merge(['stateWatchingList' => $stateWatchingList]);
 
-        Log::debug($data);
+        // Log::debug($data);
         return Inertia::render('MyList/Index', ['data' => $data]);
     }
 }

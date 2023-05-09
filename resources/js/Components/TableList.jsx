@@ -65,7 +65,6 @@ const TableList = ({ headers, fields, data }) => {
                 toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
-                console.log(error);
             });
     };
 
@@ -195,14 +194,31 @@ const TableList = ({ headers, fields, data }) => {
                                     ? `${item.season}/${item.episode}`
                                     : "---"}
                             </td>
-                            <td className="p-3 space-x-2">
-                                <button
+                            {/* acciones */}
+
+                            <td className="flex justify-center gap-3 p-3">
+                                {/* <button
                                     className="p-2 rounded-full hover:bg-primary/80"
                                     type="button"
                                     onClick={() => handleOpenModal(item)}
                                 >
                                     <EditIcon className="w-6 h-6" />
-                                </button>
+                                </button> */}
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href={route(
+                                        item.type === "Movie"
+                                            ? "movie.show"
+                                            : "serie.show",
+                                        {
+                                            id: item.api_id,
+                                        }
+                                    )}
+                                    className="p-2 rounded-full hover:bg-primary/80 "
+                                >
+                                    <EditIcon className="w-6 h-6" />
+                                </a>
                                 <button
                                     className="p-2 rounded-full hover:bg-primary/80"
                                     type="button"

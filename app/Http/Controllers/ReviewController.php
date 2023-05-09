@@ -18,7 +18,6 @@ class ReviewController extends Controller
     {
         $allReviews = Review::where('api_id', $apiId)->with(['user', 'reviewable'])->get();
 
-        Log::debug($allReviews);
         return response()->json($allReviews);
     }
 
@@ -61,9 +60,9 @@ class ReviewController extends Controller
             $newRecord = collect($review)->merge(['reviewable' => $list, 'user' => auth()->user()]);
             return response()->json(['code' => 200, 'message' => 'Se agregó correctamente tu reseña', 'newRecord' => $newRecord], 200);
         } catch (ModelNotFoundException $th) {
-            Log::debug($th->getMessage());
-            Log::debug($th->getCode());
-            Log::debug(get_class($th));
+            // Log::debug($th->getMessage());
+            // Log::debug($th->getCode());
+            // Log::debug(get_class($th));
             return response()->json(['code' => 404, 'message' => 'Debes primero agregar una lista'], 404);
         }
     }
@@ -81,9 +80,9 @@ class ReviewController extends Controller
             $reviewUpdated = $review->fresh();
             return response()->json(['code' => 200, 'message' => 'Se Actualizo correctamente tu reseña', 'newRecord' => $reviewUpdated], 200);
         } catch (\Throwable $th) {
-            Log::debug($th->getMessage());
-            Log::debug($th->getCode());
-            Log::debug(get_class($th));
+            // Log::debug($th->getMessage());
+            // Log::debug($th->getCode());
+            // Log::debug(get_class($th));
             return response()->json(['code' => $th->getCode(), 'message' => $th->getMessage()], $th->getCode());
         }
     }

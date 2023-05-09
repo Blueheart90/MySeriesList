@@ -11,7 +11,6 @@ const Review = ({ review }) => {
             __html: DOMPurify.sanitize(html),
         };
     };
-    console.log("test review", review);
     return (
         <div className="py-10 ">
             <div className="flex w-full gap-4">

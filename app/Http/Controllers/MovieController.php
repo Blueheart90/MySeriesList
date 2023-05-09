@@ -43,7 +43,6 @@ class MovieController extends Controller
     public function searchFilter()
     {
         $params = Arr::add(Request::only('query', 'page'), 'language', $this->language);
-        Log::debug($params);
         $res = Http::withToken($this->tmdbToken)
             ->get("{$this->tmdbUrl}/search/movie", $params)
             ->json();

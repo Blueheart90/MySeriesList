@@ -22,7 +22,7 @@ const Show = ({ auth }) => {
     } = usePage().props;
 
     const [reviews, setReviews] = useState([]);
-    console.log(usePage().props.data);
+
     const updateDataShow = useCallback(
         (data) => {
             setDataShow(data);

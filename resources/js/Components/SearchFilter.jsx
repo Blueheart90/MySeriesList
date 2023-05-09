@@ -51,7 +51,6 @@ const SearchFilter = ({ type, card: Card }) => {
         }
 
         // access to latest state here
-        console.log(searchValue);
     });
 
     const handleChange = (e) => {

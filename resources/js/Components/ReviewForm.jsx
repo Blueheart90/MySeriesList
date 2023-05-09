@@ -19,7 +19,7 @@ const ReviewForm = ({
 }) => {
     const [oldReview, setOldReview] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    console.log("media", media);
+
     const handleSubmitReview = (values, resetForm) => {
         setIsLoading(true);
         const data = {
@@ -28,13 +28,11 @@ const ReviewForm = ({
             ...values,
         };
 
-        console.log("data", data);
         axios
             .post(route("review.store", { model: model }), data)
             .then((res) => {
                 // se agrega el nuevo review al array de reviews
                 setTimeout(() => {
-                    console.log("newrecord", res.data.newRecord);
                     setReviews([...reviews, res.data.newRecord]);
                     toast.success(res.data.message, {
                         position: "bottom-left",
@@ -49,15 +47,6 @@ const ReviewForm = ({
                 });
                 setIsLoading(false);
             });
-
-        // router.post(route("review.store"), data, {
-        //     onSuccess: (page) => {
-        //         console.log(page.props.toast);
-        //     },
-        //     onError: (errors) => {
-        //         console.log("errors", errors);
-        //     },
-        // });
     };
 
     const handleUpdateReview = (values, review) => {
@@ -141,8 +130,6 @@ const ReviewForm = ({
                                             "recommended",
                                             myReview.recommended * 1
                                         );
-                                        console.log("mi review", myReview);
-                                        console.log("form values", values);
                                     }
                                 }
                             }, [reviews]);

@@ -2,8 +2,6 @@ import { useField, ErrorMessage } from "formik";
 
 const AddListSelect = ({ children, label, ...props }) => {
     const [field, meta, helpers] = useField(props.name);
-    // console.log(props.type);
-    // console.log(field);
 
     return (
         <div className="flex items-center">

@@ -14,7 +14,6 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
         dataShow;
     // const [seasonEpisodes, setseasonEpisodes] = useState(tvshow.seasons[1]);
     const [oldData, setOldData] = useState(movieListOldData || {});
-    console.log("movieListOldData", movieListOldData);
     const handleSubmit = (values, resetForm) => {
         const data = {
             name: movie.name,
@@ -33,7 +32,6 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
                 setOldData(data);
                 setIsEditable(true);
                 close();
-                console.log(res);
                 toast.success(res.data.message, {
                     position: "bottom-left",
                     duration: 4000,
@@ -43,7 +41,6 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
                 toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
-                console.log(error);
             });
     };
 
@@ -70,7 +67,6 @@ const AddMovieListForm = ({ close, isEditable, setIsEditable }) => {
                 toast.error(error.response.data.message, {
                     position: "bottom-left",
                 });
-                console.log(error);
             });
     };
 

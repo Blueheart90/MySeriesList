@@ -1,10 +1,10 @@
 import AppLayout from "@/Layouts/AppLayout";
 import { Head } from "@inertiajs/react";
 import TableList from "@/Components/TableList";
-import { usePage } from "@inertiajs/react";
+// import { usePage } from "@inertiajs/react";
 
-const Index = ({ auth }) => {
-    console.log(usePage().props.data);
+const Index = ({ auth, data }) => {
+    // parace que no hace falta usar usepage para obtener la data del controller
 
     const headers = ["Nombre", "Puntuacion", "Tipo", "Temp/Ep"];
     const fields = [
@@ -13,6 +13,7 @@ const Index = ({ auth }) => {
         { value: "type", label: "Tipo" },
         { value: "watching_state_id", label: "Estado" },
     ];
+
     return (
         <AppLayout auth={auth}>
             <Head>
@@ -23,11 +24,7 @@ const Index = ({ auth }) => {
                 />
             </Head>
             <div className="container py-20 mx-auto">
-                <TableList
-                    headers={headers}
-                    data={usePage().props.data}
-                    fields={fields}
-                />
+                <TableList headers={headers} data={data} fields={fields} />
             </div>
         </AppLayout>
     );
