@@ -17,7 +17,7 @@ const Index = ({ auth, data }) => {
     return (
         <AppLayout auth={auth}>
             <Head>
-                <title>Peliculas</title>
+                <title>Lista de peliculas y series</title>
                 <meta
                     name="description"
                     content="Pagina principal con las peliculas mas poulares de la semana, ultimos lanzamientos, filtradas por categorias"

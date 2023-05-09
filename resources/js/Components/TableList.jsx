@@ -58,7 +58,6 @@ const TableList = ({ headers, fields, data }) => {
                         position: "bottom-left",
                         duration: 4000,
                     });
-                    setIsLoading(false);
                 }, 500);
             })
             .catch((error) => {
