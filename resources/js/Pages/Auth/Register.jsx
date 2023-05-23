@@ -6,6 +6,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
+import GoogleButton from "@/Components/GoogleButton";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -169,6 +170,7 @@ export default function Register() {
                         Registrarse
                     </PrimaryButton>
                 </div>
+                <GoogleButton />
             </form>
         </GuestLayout>
     );

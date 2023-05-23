@@ -1,15 +1,18 @@
 <?php
 
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\MovieListController;
-use App\Http\Controllers\MyListController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\SerieController;
-use App\Http\Controllers\TvListController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SerieController;
+use App\Http\Controllers\MyListController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TvListController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MovieListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,27 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+
+Route::get('/google-auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.auth');
+
+Route::get('/google-auth/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+    $user = User::updateOrCreate([
+        'google_id' => $googleUser->id,
+    ], [
+        'name' => $googleUser->name,
+        'email' => $googleUser->email,
+        'username' => explode('@', $googleUser->email)[0] . '@' . substr($googleUser->id, -5),
+        'google_token' => $googleUser->token,
+        'google_refresh_token' => $googleUser->refreshToken,
+    ]);
+    Auth::login($user);
+    return redirect('/');
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -73,8 +97,6 @@ Route::put('/review/{review}', [ReviewController::class, 'update'])->name('revie
 
 // Mis Listas
 Route::get('/list/{username}', [MyListController::class, 'show'])->middleware(['auth', 'verified'])->name('mylist.show');
-
-
 
 
 require __DIR__ . '/auth.php';

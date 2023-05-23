@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import GoogleIcon from "../../Components/svg/GoogleIcon";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
@@ -7,6 +8,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import LogoSvg from "@/Components/svg/LogoSvg";
+import GoogleButton from "@/Components/GoogleButton";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -131,6 +133,7 @@ export default function Login({ status, canResetPassword }) {
                         Inciar sesión
                     </PrimaryButton>
                 </div>
+                <GoogleButton />
             </form>
         </GuestLayout>
     );
