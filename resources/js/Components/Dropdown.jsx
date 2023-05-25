@@ -38,7 +38,7 @@ const Trigger = ({ children }) => {
 const Content = ({
     align = "right",
     width = "48",
-    contentClasses = " bg-white",
+    contentClasses = " bg-kiwi",
     children,
 }) => {
     const { open, setOpen } = useContext(DropDownContext);
@@ -70,12 +70,12 @@ const Content = ({
                 leaveTo="transform opacity-0 scale-95"
             >
                 <div
-                    className={`absolute z-50 mt-2  shadow-lg ${alignmentClasses} ${widthClasses}`}
+                    className={`absolute z-50    shadow-lg ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
                 >
                     <div
                         className={
-                            ` ring-1 ring-black ring-opacity-5 ` +
+                            ` ring-1 ring-black ring-opacity-5  ` +
                             contentClasses
                         }
                     >
@@ -93,7 +93,7 @@ const DropdownLink = ({ href, method, as, children }) => {
             href={href}
             method={method}
             as={as}
-            className="block w-full px-6 py-3 text-sm leading-5 text-left transition duration-150 ease-in-out text-secundary hover:bg-light focus:outline-none focus:bg-gray-100"
+            className="block w-full px-6 py-3 text-sm leading-5 text-left transition duration-150 ease-in-out text-primary hover:bg-secundary focus:outline-none focus:bg-gray-100 hover:text-kiwi"
         >
             {children}
         </Link>
