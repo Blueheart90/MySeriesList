@@ -3,21 +3,22 @@ import React from "react";
 const CardMovieAside = ({ data }) => {
     const { item, index } = data;
     return (
-        <div className="flex">
+        <a
+            href={route("movie.show", { id: item.id, slug: item.slug })}
+            className="flex transition duration-300 ease-in-out hover:bg-secundary"
+        >
             <figure className="relative overflow-hidden border rounded-sm border-kiwi ">
-                <a href={route("movie.show", { id: item.id, slug: item.slug })}>
-                    <span className="absolute pl-3.5 pr-2  bg-kiwi  text-primary font-semibold  text-sm">
-                        #{index + 1}
-                    </span>
-                    <span className="absolute bottom-0 right-0 px-2 text-sm font-semibold text-primary bg-kiwi ">
-                        {item.year}
-                    </span>
-                    <img
-                        src={item.poster_thumbnail}
-                        alt={`Poster de ${item.name}`}
-                        className="w-32 "
-                    />
-                </a>
+                <span className="absolute pl-3.5 pr-2  bg-kiwi  text-primary font-semibold  text-sm">
+                    #{index + 1}
+                </span>
+                <span className="absolute bottom-0 right-0 px-2 text-sm font-semibold text-primary bg-kiwi ">
+                    {item.year}
+                </span>
+                <img
+                    src={item.poster_thumbnail}
+                    alt={`Poster de ${item.name}`}
+                    className="w-32 "
+                />
             </figure>
             <div className="flex flex-col justify-around w-40 px-4">
                 <div className="">
@@ -33,7 +34,7 @@ const CardMovieAside = ({ data }) => {
                     </span>
                 </div>
             </div>
-        </div>
+        </a>
     );
 };
 
