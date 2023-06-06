@@ -2,6 +2,7 @@ import ProgressProvider from "@/Components/circular-progress/ProgressProvider";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ImdbIcon from "./svg/ImdbIcon";
+import ShowMoreStr from "./ShowMoreStr";
 
 const MovieInfo = ({ info }) => {
     const valueEnd = info["vote_average"].toFixed(1);
@@ -73,7 +74,9 @@ const MovieInfo = ({ info }) => {
             {info.cast.length > 0 && (
                 <div className="mb-2 ">
                     <span className="font-extrabold ">Protagonistas</span>
-                    <p>{info["cast_str_list"]}</p>
+                    <ShowMoreStr length={400}>
+                        {info["cast_str_list"]}
+                    </ShowMoreStr>
                 </div>
             )}
         </>
