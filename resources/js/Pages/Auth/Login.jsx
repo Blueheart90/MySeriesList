@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import GoogleIcon from "../../Components/svg/GoogleIcon";
+import ArrowBackIcon from "../../Components/svg/ArrowBackIcon";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
@@ -7,8 +7,8 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
-import LogoSvg from "@/Components/svg/LogoSvg";
 import GoogleButton from "@/Components/GoogleButton";
+import LogoWithText from "@/Components/LogoWithText";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -53,7 +53,7 @@ export default function Login({ status, canResetPassword }) {
                 className="px-6 h-fit py-8  sm:mx-auto sm:w-full sm:max-w-lg bg-secundary/90 backdrop-blur-sm shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi"
             >
                 <div>
-                    <LogoSvg className="w-auto h-20 mx-auto fill-kiwi" />
+                    <LogoWithText />
                     <p className="my-4 text-lg text-center text-light ">
                         Inicia sesión para agregar tus películas y series
                         favoritas
@@ -135,6 +135,17 @@ export default function Login({ status, canResetPassword }) {
                 </div>
                 <GoogleButton />
             </form>
+            <Link
+                className=" absolute top-2 font-bold gap-1 left-2 flex items-center justify-center bg-secundary shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi text-kiwi p-2 text-lg hover:bg-kiwi hover:text-secundary hover:shadow-[5px_5px_0px_0px_#20234f] hover:border-secundary transition-all duration-300"
+                as="button"
+                type="button"
+                onClick={() => {
+                    window.history.back();
+                }}
+            >
+                <ArrowBackIcon />
+                Volver
+            </Link>
         </GuestLayout>
     );
 }

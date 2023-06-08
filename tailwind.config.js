@@ -25,9 +25,9 @@ module.exports = {
                 sans: ["Open sans", ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                "hero-welcome": "url('../storage/img/man-watching-his-tv.jpg')",
+                "hero-welcome": "url('/storage/img/man-watching-his-tv.webp')",
                 "family-tv":
-                    "linear-gradient(59deg, rgba(18,6,46,0.7987570028011204) 30%, rgba(255,255,255,0.4009978991596639) 50%, rgba(32,35,79,0.7987570028011204) 70%), url('../storage/img/family-watching-his-tv.jpg')",
+                    "linear-gradient(59deg, rgba(18,6,46,0.7987570028011204) 30%, rgba(255,255,255,0.4009978991596639) 50%, rgba(32,35,79,0.7987570028011204) 70%), url('/storage/img/family-watching-his-tv.jpg')",
             },
         },
     },

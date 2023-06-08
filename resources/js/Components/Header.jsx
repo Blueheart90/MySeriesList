@@ -12,6 +12,7 @@ import Avatar from "./Avatar";
 import TvIcon from "./svg/TvIcon";
 import MovieIcon from "./svg/MovieIcon";
 import LogoutIcon from "./svg/LogoutIcon";
+import LogoWithText from "./LogoWithText";
 
 const Header = ({ auth }) => {
     const [isOpen, setOpen] = useState(false);
@@ -24,13 +25,7 @@ const Header = ({ auth }) => {
             >
                 {/* logo */}
                 <div className="flex items-center">
-                    <Link
-                        className="flex items-center gap-2 text-2xl font-bold no-underline text-light hover:no-underline lg:text-3xl"
-                        href="#"
-                    >
-                        <LogoSvg className=" fill-light" />
-                        MySeriesList
-                    </Link>
+                    <LogoWithText />
 
                     <nav className="hidden ml-10 sm:block ">
                         <ul className="flex gap-4 ">

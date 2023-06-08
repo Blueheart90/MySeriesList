@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import LogoSvg from "../../Components/svg/LogoSvg";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -7,6 +6,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import GoogleButton from "@/Components/GoogleButton";
+import LogoWithText from "@/Components/LogoWithText";
+import ArrowBackIcon from "@/Components/svg/ArrowBackIcon";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -40,14 +41,14 @@ export default function Register() {
 
     return (
         <GuestLayout className="my-auto bg-center bg-cover bg-family-tv ">
-            <Head title="Register" />
+            <Head title="Registro" />
 
             <form
                 onSubmit={submit}
                 className="px-6 h-fit py-8  sm:mx-auto sm:w-full sm:max-w-lg bg-secundary/90 backdrop-blur-sm shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi"
             >
                 <div>
-                    <LogoSvg className="w-auto h-20 mx-auto fill-kiwi" />
+                    <LogoWithText />
                     <p className="my-4 text-lg text-center text-light ">
                         Registrate para agregar tus películas y series favoritas
                     </p>
@@ -172,6 +173,17 @@ export default function Register() {
                 </div>
                 <GoogleButton />
             </form>
+            <Link
+                className=" absolute top-2 font-bold gap-1 left-2 flex items-center justify-center bg-secundary shadow-[5px_5px_0px_0px_#7ddb29] border border-kiwi text-kiwi p-2 text-lg hover:bg-kiwi hover:text-secundary hover:shadow-[5px_5px_0px_0px_#20234f] hover:border-secundary transition-all duration-300"
+                as="button"
+                type="button"
+                onClick={() => {
+                    window.history.back();
+                }}
+            >
+                <ArrowBackIcon />
+                Volver
+            </Link>
         </GuestLayout>
     );
 }
