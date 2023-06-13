@@ -47,10 +47,10 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
 
     return (
         <div className="flex flex-col items-center mt-10">
-            <div className="flex justify-center gap-2 px-4 mb-2 text-light ">
+            <div className="flex flex-wrap justify-center gap-2 px-4 mb-2 text-light ">
                 <button
-                    className={`px-4 transition-all duration-300 select-none text-xl font-extrabold text-light active:bg-kiwi  hover:bg-secundary rounded-lg active:text-secundary ${
-                        currentPage === 1 ? "invisible" : null
+                    className={`px-4 transition-all  duration-300 select-none text-xl font-extrabold text-light active:bg-kiwi  hover:bg-secundary rounded-lg active:text-secundary ${
+                        currentPage === 1 ? "hidden" : null
                     }`}
                     onClick={prevPage}
                 >
@@ -71,7 +71,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
 
                 <button
                     className={`px-4 transition-all duration-300 select-none text-xl font-extrabold text-light active:bg-kiwi  hover:bg-secundary rounded-lg active:text-secundary ${
-                        currentPage === totalPages ? " invisible" : null
+                        currentPage === totalPages ? " hidden" : null
                     }`}
                     onClick={nextPage}
                 >

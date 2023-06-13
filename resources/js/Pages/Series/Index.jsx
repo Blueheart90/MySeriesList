@@ -44,7 +44,7 @@ const Index = ({ auth }) => {
                     content="Pagina principal con las series mas poulares de la semana, ultimos lanzamientos, filtradas por categorias"
                 />
             </Head>
-            <div className="container py-20 mx-auto ">
+            <div className="container px-2 py-20 mx-auto xs:px-0">
                 <section>
                     <h1 className="text-4xl font-bold text-white">Series</h1>
                     <h2 className="mb-4 text-xl font-bold text-kiwi">
@@ -52,7 +52,7 @@ const Index = ({ auth }) => {
                     </h2>
                     <Carousel data={trendingTv.results} card={SerieCard} />
                 </section>
-                <div className="grid gap-4 mt-10 lg:grid-cols-4 ">
+                <div className="gap-4 mt-10 lg:grid lg:grid-cols-4 ">
                     <section className="col-span-3 ">
                         <MyTabs tabs={tabs} />
                     </section>
